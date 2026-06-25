@@ -28,4 +28,5 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: ["/admin/:path*"],
+  runtime: "nodejs" as any, // Forces this middleware layer to compile in the full Node.js runtime environment
 };
