@@ -22,7 +22,7 @@ cp .env.example .env.local
 - `DATABASE_URL` — Neon PostgreSQL connection string
 - `JWT_SECRET` — long random secret
 - `ADMIN_ID` / `ADMIN_PASSWORD` — staff login credentials
-- `WHATSAPP_NUMBER` — e.g. `919805837108` (no + prefix)
+- `WHATSAPP_NUMBER` — e.g. `919876543210` (no + prefix)
 - `SHOP_PHONE` — display/call number for the phone FAB
 
 3. Install and run:
