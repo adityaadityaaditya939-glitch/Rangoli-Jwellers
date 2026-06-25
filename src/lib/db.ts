@@ -54,11 +54,13 @@ export async function initDatabase() {
 
   const userCount = await sql`SELECT COUNT(*)::int AS count FROM users`;
   if ((userCount[0]?.count as number) === 0) {
+    // @ts-expect-error Neon type compatibility issue
     await seedDefaultAdmin(sql);
   }
 
   const count = await sql`SELECT COUNT(*)::int AS count FROM products`;
   if ((count[0]?.count as number) === 0) {
+    // @ts-expect-error Neon type compatibility issue
     await seedProducts(sql);
   }
 }

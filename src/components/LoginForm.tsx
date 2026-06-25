@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { SHOP } from "@/lib/constants";
+
 
 export default function LoginForm() {
   const router = useRouter();
@@ -89,7 +89,7 @@ export default function LoginForm() {
       </button>
 
       <p className="text-center text-sm text-gray-500">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link href="/signup" className="text-rangoli-maroon hover:underline">
           Sign up
         </Link>

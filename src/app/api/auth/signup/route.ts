@@ -47,7 +47,7 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return jsonError(error.errors[0].message, 400);
+      return jsonError(error.issues[0].message, 400);
     }
     console.error("Signup error:", error);
     return jsonError("Signup failed", 500);

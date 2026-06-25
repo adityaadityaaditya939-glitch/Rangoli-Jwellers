@@ -8,17 +8,17 @@ const emptyForm = {
   name: "",
   description: "",
   price: "",
-  category: "rings",
-  metal: "Gold",
-  gender: "women",
-  imageUrl: IMAGES.trending[0],
+  category: "rings" as const,
+  metal: "Gold" as const,
+  gender: "women" as const,
+  imageUrl: IMAGES.trending[0] as string,
   stock: "1",
   isFeatured: false,
 };
 
 export default function ProductManager() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [form, setForm] = useState(emptyForm);
+  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean}>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -88,7 +88,7 @@ export default function ProductManager() {
       category: product.category,
       metal: product.metal || "Gold",
       gender: product.gender || "women",
-      imageUrl: product.image_url,
+      imageUrl: product.image_url || IMAGES.trending[0],
       stock: String(product.stock),
       isFeatured: product.is_featured,
     });

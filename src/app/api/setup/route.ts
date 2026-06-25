@@ -1,4 +1,3 @@
-import { getDb } from "@/lib/db";
 import { initDatabase } from "@/lib/db";
 import { jsonError, jsonSuccess } from "@/lib/api-utils";
 
