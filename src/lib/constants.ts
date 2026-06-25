@@ -3,8 +3,8 @@ export const SHOP = {
   tagline: "Crafted with love, worn with pride",
   address: "The Mall Rd, Upper Bazar, Rohru, Himachal Pradesh 171207",
   email: "info@rangolijwellers.com",
-  whatsapp: process.env.WHATSAPP_NUMBER || "919876543210",
-  phone: process.env.SHOP_PHONE || "+919876543210",
+  whatsapp: process.env.WHATSAPP_NUMBER || "919805837108",
+  phone: process.env.SHOP_PHONE || "+919805837108",
   poweredBy: "TechExplorers",
 } as const;
 
