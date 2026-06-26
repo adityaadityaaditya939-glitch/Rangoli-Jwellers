@@ -55,7 +55,7 @@ export default function HomeSections() {
 
   return (
     <>
-      <section className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+      <section className="mx-auto px-4 py-12 lg:px-8">
         <SectionHeading
           title="Rangoli Collections"
           subtitle="Explore our newly launched collection"
@@ -149,7 +149,7 @@ export default function HomeSections() {
 
       <DiamondDivider />
 
-      <section className="mx-auto max-w-7xl px-4 py-4 lg:px-8">
+      <section className="mx-auto px-4 py-4 lg:px-8">
         <SectionHeading title="Rangoli World" subtitle="A companion for every occasion" />
         <div className="grid grid-cols-2 gap-3 md:gap-4">
           {WORLD_CATEGORIES.map((cat) => (
@@ -176,7 +176,7 @@ export default function HomeSections() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+      <section className="mx-auto px-4 py-12 lg:px-8">
         <SectionHeading title="Shop by Gender" subtitle="Curated picks for everyone" />
         <div className="grid gap-4 md:grid-cols-3">
           {GENDER_CATEGORIES.map((cat) => (
