@@ -7,13 +7,10 @@ export function buildWhatsAppUrl(message: string) {
 
 export function buildProductWhatsAppMessage(product: {
   name: string;
-  price: string | number;
+  price: number;
   id: number;
 }) {
-  const price =
-    typeof product.price === "number"
-      ? product.price.toLocaleString("en-IN")
-      : Number(product.price).toLocaleString("en-IN");
+  const price = product.price.toLocaleString("en-IN");
 
   return `Hello ${SHOP.name}! I am interested in:\n\n*${product.name}*\nPrice: ₹${price}\n\nProduct link: ${getProductUrl(product.id)}`;
 }
@@ -46,7 +43,6 @@ export function getProductUrl(id: number) {
   return `/catalog/${id}`;
 }
 
-export function formatPrice(price: string | number) {
-  const num = typeof price === "number" ? price : Number(price);
-  return num.toLocaleString("en-IN");
+export function formatPrice(price: number) {
+  return price.toLocaleString("en-IN");
 }

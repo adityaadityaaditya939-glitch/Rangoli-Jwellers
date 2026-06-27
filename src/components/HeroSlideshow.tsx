@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 interface HeroSlideshowProps {
@@ -28,10 +29,13 @@ export default function HeroSlideshow({ images, interval = 5000 }: HeroSlideshow
               index === current ? "opacity-100" : "opacity-0"
             }`}
           >
-            <img
+            <Image
               src={src}
               alt={`${index + 1} hero slide`}
-              className="absolute inset-0 block h-full w-full object-cover"
+              fill
+              priority={index === 0}
+              className="object-cover"
+              sizes="100vw"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent" />
           </div>

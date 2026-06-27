@@ -164,6 +164,42 @@ async function seedProducts(sql: ReturnType<typeof neon>) {
       gender: "men",
       image: "/images/(B)Hero_sec_2.png",
     },
+    {
+      name: "Banarasi Silk Saree",
+      description: "Traditional Banarasi silk saree with intricate zari work.",
+      price: 45000,
+      category: "sarees",
+      metal: null,
+      gender: "women",
+      image: "/images/(C)Collection_sec_type1.png",
+    },
+    {
+      name: "Bridal Lehenga",
+      description: "Stunning bridal lehenga with heavy embroidery and sequin work.",
+      price: 85000,
+      category: "lehengas",
+      metal: null,
+      gender: "women",
+      image: "/images/(C) Collection_sec_type2.png",
+    },
+    {
+      name: "Embroidered Kurti",
+      description: "Beautiful embroidered kurti perfect for festive occasions.",
+      price: 2500,
+      category: "kurtis",
+      metal: null,
+      gender: "women",
+      image: "/images/(C) Collection_sec_type3.png",
+    },
+    {
+      name: "Royal Sherwani",
+      description: "Elegant sherwani with intricate handwork for grooms.",
+      price: 65000,
+      category: "sherwanis",
+      metal: null,
+      gender: "men",
+      image: "/images/(D)Top_trending1.png",
+    },
   ];
 
   for (const item of samples) {
@@ -188,7 +224,7 @@ export interface Product {
   id: number;
   name: string;
   description: string | null;
-  price: string;
+  price: number;
   category: string;
   metal: string | null;
   gender: string | null;
