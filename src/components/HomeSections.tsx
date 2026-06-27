@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import {
+  CLOTHING_CATEGORIES,
   EXPERIENCE_SLIDES,
   GENDER_CATEGORIES,
   IMAGES,
@@ -314,6 +315,52 @@ export default function HomeSections() {
               </div>
             </Link>
           ))}
+        </div>
+      </section>
+
+      <section id="section-clothing" className="bg-gradient-to-br from-purple-50 to-pink-50 py-10 sm:py-14">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <SectionHeading 
+            title="Clothing Collection" 
+            subtitle="Discover our exquisite traditional and contemporary wear" 
+          />
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
+            {CLOTHING_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                href="/clothing"
+                className="group text-center"
+              >
+                <div className="relative aspect-square overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-300 hover:shadow-xl">
+                  <img
+                    src={cat.image}
+                    alt={cat.label}
+                    className="absolute inset-0 block h-full w-full object-cover transition group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity group-hover:opacity-100">
+                    <span className="rounded-full bg-white/90 px-4 py-2 text-sm font-semibold text-purple-900">
+                      View Collection
+                    </span>
+                  </div>
+                </div>
+                <p className="mt-3 px-1 font-serif text-sm font-medium text-gray-800 sm:text-base md:text-base">
+                  {cat.label}
+                </p>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link
+              href="/clothing"
+              className="inline-flex items-center rounded-full bg-purple-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-purple-800 sm:px-8 sm:text-base"
+            >
+              <span>View All Clothing</span>
+              <svg className="ml-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
 

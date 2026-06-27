@@ -101,6 +101,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/clothing" className="hover:text-rangoli-gold">
+                  Clothing
+                </Link>
+              </li>
+              <li>
                 <Link href="/contact" className="hover:text-rangoli-gold">
                   Book Consultation
                 </Link>

@@ -8,6 +8,7 @@ export default function HomeNav() {
 
   const sections = [
     { id: "collections", label: "Collections", icon: "💎" },
+    { id: "clothing", label: "Clothing", icon: "👗" },
     { id: "world", label: "Rangoli World", icon: "🌍" },
     { id: "gender", label: "Shop by Gender", icon: "👥" },
     { id: "traditional", label: "Traditional", icon: "✨" },
@@ -21,7 +22,7 @@ export default function HomeNav() {
 
       // Update active section based on scroll position
       const sectionElements = sections.map((section) => 
-        document.getElementById(`section-${section.id}`)
+        section.id === "clothing" ? null : document.getElementById(`section-${section.id}`)
       );
 
       let currentSection = "collections";
@@ -43,6 +44,12 @@ export default function HomeNav() {
   }, []);
 
   const scrollToSection = (sectionId: string) => {
+    // Handle clothing section - redirect to clothing page
+    if (sectionId === "clothing") {
+      window.location.href = "/clothing";
+      return;
+    }
+
     const element = document.getElementById(`section-${sectionId}`);
     if (element) {
       const offset = 80; // Account for fixed header

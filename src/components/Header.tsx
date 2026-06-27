@@ -63,6 +63,9 @@ export default function Header() {
             <Link href="/catalog" className="text-sm font-medium text-gray-700 hover:text-rangoli-maroon">
               All Jewellery
             </Link>
+            <Link href="/clothing" className="text-sm font-medium text-gray-700 hover:text-rangoli-maroon">
+              Clothing
+            </Link>
             <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-rangoli-maroon">
               Consultation
             </Link>
@@ -192,7 +195,7 @@ export default function Header() {
               {NAV_CATEGORIES.map((cat) => (
                 <Link
                   key={cat.slug}
-                  href={`/catalog?category=${cat.slug}`}
+                  href={cat.slug === "clothing" ? "/clothing" : `/catalog?category=${cat.slug}`}
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-gray-800 hover:bg-rangoli-cream/50"
                 >

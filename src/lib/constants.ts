@@ -39,6 +39,7 @@ export const NAV_CATEGORIES = [
   { label: "Gemstone", slug: "gemstone", icon: "🔮" },
   { label: "Wedding", slug: "wedding", icon: "💒" },
   { label: "Gifting", slug: "gifting", icon: "🎁" },
+  { label: "Clothing", slug: "clothing", icon: "👗" },
 ] as const;
 
 export const PERFECT_MATCH_CATEGORIES = [
@@ -59,6 +60,13 @@ export const GENDER_CATEGORIES = [
   { label: "For Her", slug: "women", image: IMAGES.collection[0] },
   { label: "For Him", slug: "men", image: IMAGES.collection[1] },
   { label: "For Kids", slug: "kids", image: IMAGES.collection[2] },
+] as const;
+
+export const CLOTHING_CATEGORIES = [
+  { label: "Sarees", slug: "sarees", image: IMAGES.trending[0] },
+  { label: "Lehengas", slug: "lehengas", image: IMAGES.trending[1] },
+  { label: "Kurtis", slug: "kurtis", image: IMAGES.trending[2] },
+  { label: "Sherwanis", slug: "sherwanis", image: IMAGES.collection[0] },
 ] as const;
 
 export const TRADITIONAL_CATEGORIES = [
@@ -97,6 +105,10 @@ export const PRODUCT_CATEGORIES = [
   "lehenga",
   "suits",
   "saree",
+  "sarees",
+  "lehengas",
+  "kurtis",
+  "sherwanis",
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
