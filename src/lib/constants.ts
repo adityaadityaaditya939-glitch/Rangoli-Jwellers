@@ -49,10 +49,10 @@ export const PERFECT_MATCH_CATEGORIES = [
 ] as const;
 
 export const WORLD_CATEGORIES = [
-  { label: "Wedding", slug: "wedding", image: IMAGES.hero[0], tall: true },
-  { label: "Diamond", slug: "diamond", image: IMAGES.hero[1], tall: false },
-  { label: "Gold", slug: "gold", image: IMAGES.hero[2], tall: false },
-  { label: "Dailywear", slug: "daily-wear", image: IMAGES.hero[3], tall: true },
+  { label: "Wedding", slug: "wedding", image: "/images/Rangoli_world_sec_Wedding1.png.jpg", tall: true },
+  { label: "Diamond", slug: "diamond", image: "/images/Rangoli_world_sec_Daimond1.png.jpg", tall: false },
+  { label: "Gold", slug: "gold", image: "/images/Rangoli_world_sec_Gold1.png.jpg", tall: false },
+  { label: "Dailywear", slug: "daily-wear", image: "/images/Rangoli_world_sec_dailywear1.png.jpg", tall: true },
 ] as const;
 
 export const GENDER_CATEGORIES = [

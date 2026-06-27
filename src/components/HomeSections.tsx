@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   EXPERIENCE_SLIDES,
@@ -23,16 +22,16 @@ function SectionHeading({
   subtitle?: string;
 }) {
   return (
-    <div className="mb-8 text-center">
-      <h2 className="font-serif text-2xl font-bold text-gray-900 md:text-3xl">{title}</h2>
-      {subtitle && <p className="mt-2 text-sm text-gray-500 md:text-base">{subtitle}</p>}
+    <div className="mb-8 px-2 text-center sm:mb-10 sm:px-4 md:px-0">
+      <h2 className="font-serif text-xl font-bold text-gray-900 sm:text-2xl md:text-2xl lg:text-3xl">{title}</h2>
+      {subtitle && <p className="mt-2 px-1 text-sm text-gray-500 sm:mt-3 sm:px-2 sm:text-base md:text-base md:px-0">{subtitle}</p>}
     </div>
   );
 }
 
 function DiamondDivider() {
   return (
-    <div className="my-10 flex items-center justify-center gap-4 px-8">
+    <div className="my-12 flex items-center justify-center gap-4 px-4 sm:my-16 sm:px-8">
       <div className="h-px flex-1 bg-gray-200" />
       <div className="h-3 w-3 rotate-45 border border-gray-300" />
       <div className="h-px flex-1 bg-gray-200" />
@@ -55,34 +54,87 @@ export default function HomeSections() {
 
   return (
     <>
-      <section className="mx-auto px-4 py-12 lg:px-8">
+      <section id="section-collections" className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
         <SectionHeading
           title="Rangoli Collections"
           subtitle="Explore our newly launched collection"
         />
-        <div className="grid gap-4 md:grid-cols-3">
-          {IMAGES.collection.map((src, index) => (
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          {/* Left: Large Featured Card */}
+          <Link
+            href={`/catalog?category=gold`}
+            className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-amber-50 to-amber-100 p-8 transition-all duration-300 hover:border-amber-300 hover:shadow-xl"
+          >
+            <div className="flex h-full flex-col justify-between">
+              <div>
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-200/50 text-amber-800">
+                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                </div>
+                <h3 className="font-serif text-2xl font-bold text-gray-900 sm:text-3xl">Gold Collection</h3>
+                <p className="mt-3 text-sm text-gray-600 sm:text-base">Timeless elegance crafted in pure gold</p>
+              </div>
+              <div className="mt-6 flex items-center text-amber-800 transition-transform group-hover:translate-x-2">
+                <span className="font-medium">Explore Collection</span>
+                <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
+            </div>
+          </Link>
+          {/* Right: Two Stacked Cards */}
+          <div className="grid grid-rows-2 gap-6">
             <Link
-              key={src}
-              href={`/catalog?category=${["gold", "diamond", "wedding"][index]}`}
-              className="group relative aspect-[4/5] overflow-hidden rounded-2xl md:aspect-[3/4]"
+              href={`/catalog?category=diamond`}
+              className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-slate-50 to-slate-100 p-6 transition-all duration-300 hover:border-slate-300 hover:shadow-xl"
             >
-              <Image
-                src={src}
-                alt={`Collection ${index + 1}`}
-                fill
-                className="object-cover transition duration-500 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-200/50 text-slate-800">
+                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                    </svg>
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-gray-900 sm:text-2xl">Diamond Collection</h3>
+                  <p className="mt-2 text-sm text-gray-600">Brilliance that lasts forever</p>
+                </div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200/50 text-slate-800 transition-transform group-hover:translate-x-1 group-hover:scale-110">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
             </Link>
-          ))}
+            <Link
+              href={`/catalog?category=wedding`}
+              className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-rose-50 to-rose-100 p-6 transition-all duration-300 hover:border-rose-300 hover:shadow-xl"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-rose-200/50 text-rose-800">
+                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="font-serif text-xl font-bold text-gray-900 sm:text-2xl">Wedding Collection</h3>
+                  <p className="mt-2 text-sm text-gray-600">Make your special day unforgettable</p>
+                </div>
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-200/50 text-rose-800 transition-transform group-hover:translate-x-1 group-hover:scale-110">
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+              </div>
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="bg-rangoli-cream py-12">
+      <section className="bg-rangoli-cream py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <SectionHeading title="Find Your Perfect Match" subtitle="Shop by Categories" />
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4">
             {PERFECT_MATCH_CATEGORIES.map((cat) => (
               <Link
                 key={cat.slug}
@@ -90,15 +142,13 @@ export default function HomeSections() {
                 className="group text-center"
               >
                 <div className="relative aspect-square overflow-hidden rounded-2xl bg-white">
-                  <Image
+                  <img
                     src={cat.image}
                     alt={cat.label}
-                    fill
-                    className="object-cover transition group-hover:scale-105"
-                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="absolute inset-0 block h-full w-full object-cover transition group-hover:scale-105"
                   />
                 </div>
-                <p className="mt-3 font-serif text-sm font-medium text-gray-800 md:text-base">
+                <p className="mt-3 px-1 font-serif text-sm font-medium text-gray-800 sm:text-base md:text-base">
                   {cat.label}
                 </p>
               </Link>
@@ -107,7 +157,7 @@ export default function HomeSections() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
         <SectionHeading
           title="Trending Now"
           subtitle="Jewellery pieces everyone's eyeing right now"
@@ -118,8 +168,8 @@ export default function HomeSections() {
             style={{ transform: `translateX(-${trendingIndex * 100}%)` }}
           >
             {IMAGES.trending.map((src) => (
-              <div key={src} className="relative min-w-full aspect-[16/10]">
-                <Image src={src} alt="Trending jewellery" fill className="object-cover" sizes="100vw" />
+              <div key={src} className="relative min-w-full aspect-[16/10] sm:aspect-[16/9]">
+                <img src={src} alt="Trending jewellery" className="absolute inset-0 block h-full w-full object-cover" />
               </div>
             ))}
           </div>
@@ -139,7 +189,7 @@ export default function HomeSections() {
         </div>
 
         {products.length > 0 && (
-          <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -149,96 +199,200 @@ export default function HomeSections() {
 
       <DiamondDivider />
 
-      <section className="mx-auto px-4 py-4 lg:px-8">
+      <section id="section-world" className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
         <SectionHeading title="Rangoli World" subtitle="A companion for every occasion" />
-        <div className="grid grid-cols-2 gap-3 md:gap-4">
-          {WORLD_CATEGORIES.map((cat) => (
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4 md:gap-6">
+          {WORLD_CATEGORIES.map((cat, index) => (
             <Link
               key={cat.slug}
               href={`/catalog?category=${cat.slug}`}
-              className={`group relative overflow-hidden rounded-2xl ${
-                cat.tall ? "row-span-2 aspect-[3/5]" : "aspect-[4/3]"
+              className={`group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br p-6 transition-all duration-300 hover:shadow-xl ${
+                cat.tall 
+                  ? "aspect-[3/4] md:row-span-2 md:aspect-[3/5] from-purple-50 to-purple-100 hover:border-purple-300" 
+                  : "aspect-square from-blue-50 to-blue-100 hover:border-blue-300"
               }`}
             >
-              <Image
-                src={cat.image}
-                alt={cat.label}
-                fill
-                className="object-cover transition duration-500 group-hover:scale-105"
-                sizes="50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <span className="absolute bottom-4 left-0 right-0 text-center font-serif text-lg text-white md:text-xl">
-                {cat.label}
-              </span>
+              <div className="flex h-full flex-col items-center justify-center text-center">
+                <div className={`flex items-center justify-center rounded-full ${
+                  cat.tall ? "h-16 w-16 bg-purple-200/50 text-purple-800" : "h-12 w-12 bg-blue-200/50 text-blue-800"
+                }`}>
+                  {index === 0 && (
+                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
+                    </svg>
+                  )}
+                  {index === 1 && (
+                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  )}
+                  {index === 2 && (
+                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  )}
+                  {index === 3 && (
+                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                    </svg>
+                  )}
+                  {index === 4 && (
+                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+                    </svg>
+                  )}
+                </div>
+                <span className={`font-serif font-medium text-gray-800 ${cat.tall ? "mt-4 text-base sm:text-lg" : "mt-3 text-sm sm:text-base"}`}>
+                  {cat.label}
+                </span>
+                {cat.tall && (
+                  <p className="mt-2 text-xs text-gray-600 sm:text-sm">Premium Collection</p>
+                )}
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto px-4 py-12 lg:px-8">
+      <section id="section-gender" className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
         <SectionHeading title="Shop by Gender" subtitle="Curated picks for everyone" />
-        <div className="grid gap-4 md:grid-cols-3">
-          {GENDER_CATEGORIES.map((cat) => (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {GENDER_CATEGORIES.map((cat, index) => (
             <Link
               key={cat.slug}
               href={`/catalog?gender=${cat.slug}`}
-              className="group relative aspect-[4/5] overflow-hidden rounded-2xl"
+              className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br p-8 transition-all duration-300 hover:shadow-xl aspect-[3/4] sm:aspect-[3/4] flex flex-col items-center justify-center text-center"
+              style={{
+                background: index === 0 
+                  ? 'linear-gradient(to bottom right, #fdf2f8, #fce7f3)' 
+                  : index === 1 
+                  ? 'linear-gradient(to bottom right, #ecfdf5, #d1fae5)' 
+                  : 'linear-gradient(to bottom right, #eff6ff, #dbeafe)'
+              }}
             >
-              <Image
-                src={cat.image}
-                alt={cat.label}
-                fill
-                className="object-cover transition group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
-              <span className="absolute bottom-5 left-0 right-0 text-center font-serif text-xl text-white">
+              <div className={`flex h-20 w-20 items-center justify-center rounded-full ${
+                index === 0 
+                  ? 'bg-pink-200/50 text-pink-800' 
+                  : index === 1 
+                  ? 'bg-emerald-200/50 text-emerald-800' 
+                  : 'bg-blue-200/50 text-blue-800'
+              }`}>
+                {index === 0 && (
+                  <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                )}
+                {index === 1 && (
+                  <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                )}
+                {index === 2 && (
+                  <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                )}
+              </div>
+              <h3 className="mt-6 font-serif text-xl font-bold text-gray-900 sm:text-2xl lg:text-3xl">
                 {cat.label}
-              </span>
+              </h3>
+              <p className="mt-3 text-sm text-gray-600 sm:text-base">
+                {index === 0 ? 'Elegant designs for her' : index === 1 ? 'Sophisticated pieces for him' : 'Beautiful creations for all'}
+              </p>
+              <div className={`mt-6 flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all ${
+                index === 0 
+                  ? 'bg-pink-100 text-pink-800 group-hover:bg-pink-200' 
+                  : index === 1 
+                  ? 'bg-emerald-100 text-emerald-800 group-hover:bg-emerald-200' 
+                  : 'bg-blue-100 text-blue-800 group-hover:bg-blue-200'
+              }`}>
+                <span>Shop Now</span>
+                <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
             </Link>
           ))}
         </div>
       </section>
 
-      <section className="bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark py-14 text-white">
+      <section className="bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark py-12 sm:py-16 text-white">
         <div className="mx-auto max-w-7xl px-4 text-center lg:px-8">
-          <p className="text-sm uppercase tracking-[0.25em] text-white/70">Gift of Choice</p>
-          <h2 className="mt-3 font-serif text-3xl font-bold md:text-4xl">
+          <p className="text-xs uppercase tracking-[0.2em] text-white/70 sm:text-sm sm:tracking-[0.25em]">Gift of Choice</p>
+          <h2 className="mt-2 font-serif text-xl font-bold sm:mt-3 sm:text-2xl md:text-3xl lg:text-4xl">
             Perfect Gifts for Every Celebration
           </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-white/85">
+          <p className="mx-auto mt-3 max-w-2xl px-2 text-sm text-white/85 sm:mt-4 sm:text-base">
             From festive surprises to wedding blessings — discover jewellery that speaks from the heart.
           </p>
           <Link
             href="/catalog?category=gifting"
-            className="mt-8 inline-flex rounded-full bg-white px-8 py-3 text-sm font-semibold text-rangoli-maroon transition hover:bg-rangoli-cream"
+            className="mt-6 inline-flex rounded-full bg-white px-6 py-2 text-xs font-semibold text-rangoli-maroon transition hover:bg-rangoli-cream sm:mt-8 sm:px-8 sm:py-3 sm:text-sm"
           >
             Explore Gifting
           </Link>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+      <section id="section-traditional" className="mx-auto max-w-7xl px-4 py-10 pb-24 sm:py-14 lg:px-8">
         <SectionHeading title="Traditional Elegance" subtitle="Lehenga, Suits & Saree jewellery" />
-        <div className="grid gap-4 md:grid-cols-3">
-          {TRADITIONAL_CATEGORIES.map((cat) => (
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          {TRADITIONAL_CATEGORIES.map((cat, index) => (
             <Link
               key={cat.slug}
               href={`/catalog?category=${cat.slug}`}
-              className="group relative aspect-[4/3] overflow-hidden rounded-2xl"
+              className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br p-8 transition-all duration-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
+              style={{
+                background: index === 0 
+                  ? 'linear-gradient(to bottom right, #fef3c7, #fde68a)' 
+                  : index === 1 
+                  ? 'linear-gradient(to bottom right, #fce7f3, #fbcfe8)' 
+                  : 'linear-gradient(to bottom right, #ddd6fe, #c4b5fd)'
+              }}
             >
-              <Image src={cat.image} alt={cat.label} fill className="object-cover transition group-hover:scale-105" />
-              <div className="absolute inset-0 bg-black/30 transition group-hover:bg-black/40" />
-              <span className="absolute inset-0 flex items-center justify-center font-serif text-xl text-white md:text-2xl">
+              <div className={`flex h-16 w-16 items-center justify-center rounded-full ${
+                index === 0 
+                  ? 'bg-amber-200/50 text-amber-800' 
+                  : index === 1 
+                  ? 'bg-pink-200/50 text-pink-800' 
+                  : 'bg-violet-200/50 text-violet-800'
+              }`}>
+                {index === 0 && (
+                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+                  </svg>
+                )}
+                {index === 1 && (
+                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                  </svg>
+                )}
+                {index === 2 && (
+                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                )}
+              </div>
+              <h3 className="mt-6 font-serif text-lg font-bold text-gray-900 sm:text-xl md:text-2xl">
                 {cat.label}
-              </span>
+              </h3>
+              <p className="mt-3 text-sm text-gray-600 sm:text-base">
+                {index === 0 ? 'Bridal lehenga essentials' : index === 1 ? 'Perfect for suits & occasions' : 'Complete your saree look'}
+              </p>
+              <div className={`mt-6 h-1 w-16 rounded-full transition-all group-hover:w-24 ${
+                index === 0 
+                  ? 'bg-amber-400' 
+                  : index === 1 
+                  ? 'bg-pink-400' 
+                  : 'bg-violet-400'
+              }`} />
             </Link>
           ))}
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-4 py-12 lg:px-8">
+      <section className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
         <SectionHeading
           title="Rangoli Experience"
           subtitle="Find a boutique or book a consultation"
@@ -247,35 +401,33 @@ export default function HomeSections() {
           <button
             type="button"
             onClick={() => openConsultation("experience")}
-            className="group relative block w-full aspect-[16/10] overflow-hidden"
+            className="group relative block w-full aspect-[16/10] sm:aspect-[16/9] overflow-hidden"
           >
-            <Image
+            <img
               src={EXPERIENCE_SLIDES[experienceIndex].image}
               alt={EXPERIENCE_SLIDES[experienceIndex].title}
-              fill
-              className="object-cover transition duration-500 group-hover:scale-105"
-              sizes="100vw"
+              className="absolute inset-0 block h-full w-full object-cover transition duration-500 group-hover:scale-105"
             />
           </button>
           <button
             type="button"
             onClick={() => openConsultation("experience")}
-            className="flex w-full items-center justify-between px-6 py-4 text-left transition hover:bg-rangoli-cream/50"
+            className="flex w-full items-center justify-between px-4 py-3 text-left transition hover:bg-rangoli-cream/50 sm:px-6 sm:py-4"
           >
             <div>
-              <p className="font-serif text-lg font-semibold text-gray-900">
+              <p className="font-serif text-base font-semibold text-gray-900 sm:text-lg">
                 {EXPERIENCE_SLIDES[experienceIndex].title}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-xs text-gray-500 sm:text-sm">
                 {EXPERIENCE_SLIDES[experienceIndex].subtitle}
               </p>
             </div>
-            <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-4 w-4 text-gray-400 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
         </div>
-        <div className="mt-4 flex justify-center gap-2">
+        <div className="mt-4 flex justify-center gap-2 sm:mt-6">
           {EXPERIENCE_SLIDES.map((_, index) => (
             <button
               key={index}
