@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   EXPERIENCE_SLIDES,
@@ -131,6 +132,62 @@ export default function HomeSections() {
         </div>
       </section>
 
+      <section id="section-clothing" className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
+        <SectionHeading title="Clothing Collection" subtitle="Traditional & Contemporary Wear" />
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+          <Link
+            href="/clothing?category=lehenga"
+            className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-pink-50 to-rose-100 p-8 transition-all duration-300 hover:border-pink-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-pink-200/50 text-pink-800">
+              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </div>
+            <h3 className="mt-6 font-serif text-xl font-bold text-gray-900 sm:text-2xl">Lehenga</h3>
+            <p className="mt-3 text-sm text-gray-600 sm:text-base">Bridal & festive lehengas</p>
+            <div className="mt-6 h-1 w-16 rounded-full bg-pink-400 transition-all group-hover:w-24" />
+          </Link>
+          <Link
+            href="/clothing?category=suits"
+            className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-purple-50 to-violet-100 p-8 transition-all duration-300 hover:border-purple-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-purple-200/50 text-purple-800">
+              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
+              </svg>
+            </div>
+            <h3 className="mt-6 font-serif text-xl font-bold text-gray-900 sm:text-2xl">Suits</h3>
+            <p className="mt-3 text-sm text-gray-600 sm:text-base">Elegant suits for occasions</p>
+            <div className="mt-6 h-1 w-16 rounded-full bg-purple-400 transition-all group-hover:w-24" />
+          </Link>
+          <Link
+            href="/clothing?category=saree"
+            className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-orange-50 to-amber-100 p-8 transition-all duration-300 hover:border-orange-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
+          >
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-orange-200/50 text-orange-800">
+              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h3 className="mt-6 font-serif text-xl font-bold text-gray-900 sm:text-2xl">Saree</h3>
+            <p className="mt-3 text-sm text-gray-600 sm:text-base">Beautiful saree collection</p>
+            <div className="mt-6 h-1 w-16 rounded-full bg-orange-400 transition-all group-hover:w-24" />
+          </Link>
+        </div>
+        <div className="mt-8 text-center">
+          <Link
+            href="/clothing"
+            className="inline-flex items-center gap-2 rounded-full bg-rangoli-maroon px-6 py-3 text-sm font-semibold text-white transition hover:bg-rangoli-maroon-dark sm:px-8 sm:text-base"
+          >
+            <span>View All Clothing</span>
+            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </Link>
+        </div>
+      </section>
+
       <section className="bg-rangoli-cream py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <SectionHeading title="Find Your Perfect Match" subtitle="Shop by Categories" />
@@ -142,10 +199,12 @@ export default function HomeSections() {
                 className="group text-center"
               >
                 <div className="relative aspect-square overflow-hidden rounded-2xl bg-white">
-                  <img
+                  <Image
                     src={cat.image}
                     alt={cat.label}
-                    className="h-full w-full object-cover transition group-hover:scale-105"
+                    fill
+                    className="object-cover transition group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, 25vw"
                   />
                 </div>
                 <p className="mt-3 px-1 font-serif text-sm font-medium text-gray-800 sm:text-base md:text-base">
@@ -169,10 +228,12 @@ export default function HomeSections() {
           >
             {IMAGES.trending.map((src) => (
               <div key={src} className="relative min-w-full aspect-[16/10] sm:aspect-[16/9]">
-                <img 
+                <Image 
                   src={src} 
                   alt="Trending jewellery" 
-                  className="h-full w-full object-cover" 
+                  fill
+                  className="object-cover"
+                  sizes="100vw"
                 />
               </div>
             ))}
@@ -407,10 +468,12 @@ export default function HomeSections() {
             onClick={() => openConsultation("experience")}
             className="group relative block w-full aspect-[16/10] sm:aspect-[16/9] overflow-hidden"
           >
-            <img 
+            <Image 
               src={EXPERIENCE_SLIDES[experienceIndex].image}
               alt={EXPERIENCE_SLIDES[experienceIndex].title}
-              className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+              fill
+              className="object-cover transition duration-500 group-hover:scale-105"
+              sizes="100vw"
             />
           </button>
           <button
