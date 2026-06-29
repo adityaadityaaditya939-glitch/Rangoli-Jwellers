@@ -137,46 +137,49 @@ export default function HomeSections() {
         <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
           <SectionHeading title="Clothing Collection" subtitle="Traditional & Contemporary Wear" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-          {CLOTHING_CATEGORIES.map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`/clothing?category=${cat.slug}`}
-              className="group relative block w-full overflow-hidden border-2 border-gray-200 transition-all duration-300 hover:border-amber-400"
-              style={{ 
-                aspectRatio: cat.tall ? '3/4' : '1/1',
-                minHeight: cat.tall ? '400px' : '300px'
-              }}
-            >
-              <Image
-                src={cat.image}
-                alt={cat.label}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/40" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10">
-                <h3 className={`font-serif font-bold text-white ${cat.tall ? "text-2xl sm:text-3xl md:text-4xl" : "text-xl sm:text-2xl md:text-3xl"}`}>
-                  {cat.label}
-                </h3>
-                {cat.tall && (
-                  <p className="mt-2 text-sm text-white/90 sm:text-base md:text-lg">Premium Collection</p>
-                )}
-                <div className="mt-4 flex items-center gap-2 text-amber-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                  <span className="font-medium">Explore</span>
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+        {/* Mobile: Horizontal scroll cards, Desktop: Grid */}
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible">
+            {CLOTHING_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/clothing?category=${cat.slug}`}
+                className="group relative flex-shrink-0 w-[280px] sm:w-full overflow-hidden rounded-2xl border-2 border-gray-200 transition-all duration-300 hover:border-amber-400 sm:block"
+                style={{ 
+                  aspectRatio: cat.tall ? '3/4' : '1/1',
+                  minHeight: cat.tall ? '350px' : '280px'
+                }}
+              >
+                <Image
+                  src={cat.image}
+                  alt={cat.label}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  sizes="(max-width: 768px) 280px, (max-width: 1024px) 50vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/40" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8">
+                  <h3 className={`font-serif font-bold text-white ${cat.tall ? "text-xl sm:text-2xl md:text-3xl" : "text-lg sm:text-xl md:text-2xl"}`}>
+                    {cat.label}
+                  </h3>
+                  {cat.tall && (
+                    <p className="mt-1 text-xs text-white/90 sm:text-sm md:text-base">Premium Collection</p>
+                  )}
+                  <div className="mt-3 flex items-center gap-2 text-amber-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 sm:mt-4">
+                    <span className="text-xs font-medium sm:text-sm">Explore</span>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
-        <div className="mx-auto mt-8 max-w-7xl px-4 text-center lg:px-8">
+        <div className="mx-auto mt-6 max-w-7xl px-4 text-center lg:px-8 sm:mt-8">
           <Link
             href="/clothing"
-            className="inline-flex items-center gap-2 rounded-full bg-rangoli-maroon px-6 py-3 text-sm font-semibold text-white transition hover:bg-rangoli-maroon-dark sm:px-8 sm:text-base"
+            className="inline-flex items-center gap-2 rounded-full bg-rangoli-maroon px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-rangoli-maroon-dark sm:px-6 sm:py-3 sm:text-base"
           >
             <span>View All Clothing</span>
             <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -266,41 +269,44 @@ export default function HomeSections() {
         <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
           <SectionHeading title="Rangoli World" subtitle="A companion for every occasion" />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-          {WORLD_CATEGORIES.map((cat) => (
-            <Link
-              key={cat.slug}
-              href={`/catalog?category=${cat.slug}`}
-              className="group relative block w-full overflow-hidden border-2 border-gray-200 transition-all duration-300 hover:border-amber-400"
-              style={{ 
-                aspectRatio: cat.tall ? '3/4' : '1/1',
-                minHeight: cat.tall ? '400px' : '300px'
-              }}
-            >
-              <Image
-                src={cat.image}
-                alt={cat.label}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/40" />
-              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10">
-                <h3 className={`font-serif font-bold text-white ${cat.tall ? "text-2xl sm:text-3xl md:text-4xl" : "text-xl sm:text-2xl md:text-3xl"}`}>
-                  {cat.label}
-                </h3>
-                {cat.tall && (
-                  <p className="mt-2 text-sm text-white/90 sm:text-base md:text-lg">Premium Collection</p>
-                )}
-                <div className="mt-4 flex items-center gap-2 text-amber-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
-                  <span className="font-medium">Explore</span>
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                  </svg>
+        {/* Mobile: Horizontal scroll cards, Desktop: Grid */}
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
+            {WORLD_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/catalog?category=${cat.slug}`}
+                className="group relative flex-shrink-0 w-[280px] sm:w-full overflow-hidden rounded-2xl border-2 border-gray-200 transition-all duration-300 hover:border-amber-400 sm:block"
+                style={{ 
+                  aspectRatio: cat.tall ? '3/4' : '1/1',
+                  minHeight: cat.tall ? '350px' : '280px'
+                }}
+              >
+                <Image
+                  src={cat.image}
+                  alt={cat.label}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  sizes="(max-width: 768px) 280px, (max-width: 1024px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/40" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 md:p-8">
+                  <h3 className={`font-serif font-bold text-white ${cat.tall ? "text-xl sm:text-2xl md:text-3xl" : "text-lg sm:text-xl md:text-2xl"}`}>
+                    {cat.label}
+                  </h3>
+                  {cat.tall && (
+                    <p className="mt-1 text-xs text-white/90 sm:text-sm md:text-base">Premium Collection</p>
+                  )}
+                  <div className="mt-3 flex items-center gap-2 text-amber-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 sm:mt-4">
+                    <span className="text-xs font-medium sm:text-sm">Explore</span>
+                    <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
 
