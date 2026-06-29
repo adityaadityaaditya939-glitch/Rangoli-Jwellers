@@ -63,10 +63,9 @@ export const GENDER_CATEGORIES = [
 ] as const;
 
 export const CLOTHING_CATEGORIES = [
-  { label: "Sarees", slug: "sarees", image: IMAGES.trending[0] },
-  { label: "Lehengas", slug: "lehengas", image: IMAGES.trending[1] },
-  { label: "Kurtis", slug: "kurtis", image: IMAGES.trending[2] },
-  { label: "Sherwanis", slug: "sherwanis", image: IMAGES.collection[0] },
+  { label: "Lehenga", slug: "lehenga", image: "/images/Clothing_collection_Lehanga.jpg", tall: true },
+  { label: "Suits", slug: "suits", image: "/images/Clothing_collection_Suit.jpg", tall: true },
+  { label: "Saree", slug: "saree", image: "/images/Clothing_collecting_Saare.jpg", tall: true },
 ] as const;
 
 export const TRADITIONAL_CATEGORIES = [

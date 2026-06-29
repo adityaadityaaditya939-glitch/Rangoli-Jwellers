@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
+  CLOTHING_CATEGORIES,
   EXPERIENCE_SLIDES,
   GENDER_CATEGORIES,
   IMAGES,
@@ -132,50 +133,47 @@ export default function HomeSections() {
         </div>
       </section>
 
-      <section id="section-clothing" className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
-        <SectionHeading title="Clothing Collection" subtitle="Traditional & Contemporary Wear" />
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-          <Link
-            href="/clothing?category=lehenga"
-            className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-pink-50 to-rose-100 p-8 transition-all duration-300 hover:border-pink-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
-          >
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-pink-200/50 text-pink-800">
-              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-              </svg>
-            </div>
-            <h3 className="mt-6 font-serif text-xl font-bold text-gray-900 sm:text-2xl">Lehenga</h3>
-            <p className="mt-3 text-sm text-gray-600 sm:text-base">Bridal & festive lehengas</p>
-            <div className="mt-6 h-1 w-16 rounded-full bg-pink-400 transition-all group-hover:w-24" />
-          </Link>
-          <Link
-            href="/clothing?category=suits"
-            className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-purple-50 to-violet-100 p-8 transition-all duration-300 hover:border-purple-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
-          >
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-purple-200/50 text-purple-800">
-              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-              </svg>
-            </div>
-            <h3 className="mt-6 font-serif text-xl font-bold text-gray-900 sm:text-2xl">Suits</h3>
-            <p className="mt-3 text-sm text-gray-600 sm:text-base">Elegant suits for occasions</p>
-            <div className="mt-6 h-1 w-16 rounded-full bg-purple-400 transition-all group-hover:w-24" />
-          </Link>
-          <Link
-            href="/clothing?category=saree"
-            className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-orange-50 to-amber-100 p-8 transition-all duration-300 hover:border-orange-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
-          >
-            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-orange-200/50 text-orange-800">
-              <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
-            </div>
-            <h3 className="mt-6 font-serif text-xl font-bold text-gray-900 sm:text-2xl">Saree</h3>
-            <p className="mt-3 text-sm text-gray-600 sm:text-base">Beautiful saree collection</p>
-            <div className="mt-6 h-1 w-16 rounded-full bg-orange-400 transition-all group-hover:w-24" />
-          </Link>
+      <section id="section-clothing" className="w-full">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
+          <SectionHeading title="Clothing Collection" subtitle="Traditional & Contemporary Wear" />
         </div>
-        <div className="mt-8 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {CLOTHING_CATEGORIES.map((cat) => (
+            <Link
+              key={cat.slug}
+              href={`/clothing?category=${cat.slug}`}
+              className="group relative block w-full overflow-hidden border-2 border-gray-200 transition-all duration-300 hover:border-amber-400"
+              style={{ 
+                aspectRatio: cat.tall ? '3/4' : '1/1',
+                minHeight: cat.tall ? '400px' : '300px'
+              }}
+            >
+              <Image
+                src={cat.image}
+                alt={cat.label}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/40" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10">
+                <h3 className={`font-serif font-bold text-white ${cat.tall ? "text-2xl sm:text-3xl md:text-4xl" : "text-xl sm:text-2xl md:text-3xl"}`}>
+                  {cat.label}
+                </h3>
+                {cat.tall && (
+                  <p className="mt-2 text-sm text-white/90 sm:text-base md:text-lg">Premium Collection</p>
+                )}
+                <div className="mt-4 flex items-center gap-2 text-amber-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                  <span className="font-medium">Explore</span>
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <div className="mx-auto mt-8 max-w-7xl px-4 text-center lg:px-8">
           <Link
             href="/clothing"
             className="inline-flex items-center gap-2 rounded-full bg-rangoli-maroon px-6 py-3 text-sm font-semibold text-white transition hover:bg-rangoli-maroon-dark sm:px-8 sm:text-base"
@@ -264,56 +262,42 @@ export default function HomeSections() {
 
       <DiamondDivider />
 
-      <section id="section-world" className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
-        <SectionHeading title="Rangoli World" subtitle="A companion for every occasion" />
-        <div className="grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-4 md:gap-6">
-          {WORLD_CATEGORIES.map((cat, index) => (
+      <section id="section-world" className="w-full">
+        <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
+          <SectionHeading title="Rangoli World" subtitle="A companion for every occasion" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+          {WORLD_CATEGORIES.map((cat) => (
             <Link
               key={cat.slug}
               href={`/catalog?category=${cat.slug}`}
-              className={`group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br p-6 transition-all duration-300 hover:shadow-xl ${
-                cat.tall 
-                  ? "aspect-[3/4] md:row-span-2 md:aspect-[3/5] from-purple-50 to-purple-100 hover:border-purple-300" 
-                  : "aspect-square from-blue-50 to-blue-100 hover:border-blue-300"
-              }`}
+              className="group relative block w-full overflow-hidden border-2 border-gray-200 transition-all duration-300 hover:border-amber-400"
+              style={{ 
+                aspectRatio: cat.tall ? '3/4' : '1/1',
+                minHeight: cat.tall ? '400px' : '300px'
+              }}
             >
-              <div className="flex h-full flex-col items-center justify-center text-center">
-                <div className={`flex items-center justify-center rounded-full ${
-                  cat.tall ? "h-16 w-16 bg-purple-200/50 text-purple-800" : "h-12 w-12 bg-blue-200/50 text-blue-800"
-                }`}>
-                  {index === 0 && (
-                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z" />
-                    </svg>
-                  )}
-                  {index === 1 && (
-                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  )}
-                  {index === 2 && (
-                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  )}
-                  {index === 3 && (
-                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                    </svg>
-                  )}
-                  {index === 4 && (
-                    <svg className={`${cat.tall ? "h-8 w-8" : "h-6 w-6"}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                    </svg>
-                  )}
-                </div>
-                <span className={`font-serif font-medium text-gray-800 ${cat.tall ? "mt-4 text-base sm:text-lg" : "mt-3 text-sm sm:text-base"}`}>
+              <Image
+                src={cat.image}
+                alt={cat.label}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/40" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10">
+                <h3 className={`font-serif font-bold text-white ${cat.tall ? "text-2xl sm:text-3xl md:text-4xl" : "text-xl sm:text-2xl md:text-3xl"}`}>
                   {cat.label}
-                </span>
+                </h3>
                 {cat.tall && (
-                  <p className="mt-2 text-xs text-gray-600 sm:text-sm">Premium Collection</p>
+                  <p className="mt-2 text-sm text-white/90 sm:text-base md:text-lg">Premium Collection</p>
                 )}
+                <div className="mt-4 flex items-center gap-2 text-amber-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                  <span className="font-medium">Explore</span>
+                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </div>
               </div>
             </Link>
           ))}
