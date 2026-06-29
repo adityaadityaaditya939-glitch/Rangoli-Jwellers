@@ -50,9 +50,9 @@ export default function Header() {
             <Image
               src={IMAGES.logo}
               alt={SHOP.name}
-              width={150}
-              height={150}
-              className="h-20 w-20 object-contain sm:h-24 sm:w-24"
+              width={200}
+              height={200}
+              className="h-28 w-28 object-contain sm:h-32 sm:w-32"
             />
           </Link>
 

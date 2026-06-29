@@ -17,14 +17,14 @@ export default function ProductCard({ product }: ProductCardProps) {
   );
 
   return (
-    <article className="group overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:shadow-lg">
+    <article className="group w-full overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition hover:shadow-lg">
       <Link href={`/catalog/${product.id}`} className="relative block aspect-square overflow-hidden bg-gray-50">
         <Image
           src={product.image_url}
           alt={product.name}
           fill
           className="object-cover transition duration-500 group-hover:scale-105"
-          sizes="(max-width: 768px) 50vw, 25vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
         />
         {product.stock === 1 && (
           <span className="absolute bottom-0 left-0 right-0 bg-amber-100/95 py-1 text-center text-xs font-semibold text-amber-800">
@@ -35,16 +35,16 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <div className="p-4">
         <Link href={`/catalog/${product.id}`}>
-          <h3 className="font-serif text-base font-medium text-gray-900 line-clamp-2">
+          <h3 className="font-serif text-sm sm:text-base font-medium text-gray-900 line-clamp-2">
             {product.name}
           </h3>
         </Link>
-        <p className="mt-2 text-lg font-semibold text-gray-900">₹ {formatPrice(product.price)}</p>
+        <p className="mt-2 text-base sm:text-lg font-semibold text-gray-900">₹ {formatPrice(product.price)}</p>
 
-        <div className="mt-4 flex gap-2">
+        <div className="mt-4 flex flex-col gap-2">
           <Link
             href={`/catalog/${product.id}`}
-            className="flex-1 rounded-lg border border-gray-200 py-2 text-center text-xs font-semibold text-rangoli-maroon hover:border-rangoli-maroon hover:text-rangoli-maroon-dark"
+            className="w-full rounded-lg border border-gray-200 py-2 text-center text-xs font-semibold text-rangoli-maroon hover:border-rangoli-maroon hover:text-rangoli-maroon-dark"
           >
             View Details
           </Link>
@@ -52,7 +52,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-1 items-center justify-center gap-1 rounded-lg bg-[#25D366] py-2 text-xs font-semibold text-white hover:bg-[#1da851]"
+            className="flex w-full items-center justify-center gap-1 rounded-lg bg-[#25D366] py-2 text-xs font-semibold text-white hover:bg-[#1da851]"
           >
             WhatsApp
           </a>
