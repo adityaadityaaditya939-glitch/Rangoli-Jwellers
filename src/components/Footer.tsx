@@ -15,9 +15,9 @@ export default function Footer() {
               <Image
                 src={IMAGES.logo}
                 alt={SHOP.name}
-                width={56}
-                height={56}
-                className="h-14 w-14 rounded-full bg-white/10 object-contain p-1"
+                width={100}
+                height={100}
+                className="h-20 w-20 object-contain"
               />
               <div>
                 <h2 className="font-serif text-2xl font-bold">{SHOP.name}</h2>

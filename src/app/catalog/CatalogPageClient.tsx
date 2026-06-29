@@ -59,7 +59,7 @@ export default function CatalogPageClient() {
           className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium ${
             category === "all" && !gender
               ? "bg-rangoli-maroon text-white"
-              : "border border-gray-200 text-gray-700 hover:border-rangoli-maroon"
+              : "border border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon"
           }`}
         >
           All
@@ -71,7 +71,7 @@ export default function CatalogPageClient() {
             className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium ${
               category === cat.slug
                 ? "bg-rangoli-maroon text-white"
-                : "border border-gray-200 text-gray-700 hover:border-rangoli-maroon"
+                : "border border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon"
             }`}
           >
             {cat.label}

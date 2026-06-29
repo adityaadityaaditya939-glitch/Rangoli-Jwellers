@@ -66,8 +66,8 @@ export default function ClothingPageClient() {
           href="/clothing"
           className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium ${
             category === "all"
-              ? "bg-purple-900 text-white"
-              : "border border-gray-200 text-gray-700 hover:border-purple-900"
+              ? "bg-rangoli-maroon text-white"
+              : "border border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon"
           }`}
         >
           All
@@ -78,8 +78,8 @@ export default function ClothingPageClient() {
             href={`/clothing?category=${cat.slug}`}
             className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium ${
               category === cat.slug
-                ? "bg-purple-900 text-white"
-                : "border border-gray-200 text-gray-700 hover:border-purple-900"
+                ? "bg-rangoli-maroon text-white"
+                : "border border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon"
             }`}
           >
             {cat.label}
@@ -92,7 +92,7 @@ export default function ClothingPageClient() {
       ) : products.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-200 py-20 text-center">
           <p className="text-gray-500">No products found in this category.</p>
-          <Link href="/clothing" className="mt-4 inline-block text-purple-900 hover:underline">
+          <Link href="/clothing" className="mt-4 inline-block text-rangoli-maroon hover:underline">
             View all clothing
           </Link>
         </div>

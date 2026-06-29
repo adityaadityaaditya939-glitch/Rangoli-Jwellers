@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Playfair_Display } from "next/font/google";
 import StoreChrome from "@/components/StoreChrome";
 import { SHOP, IMAGES } from "@/lib/constants";
@@ -18,8 +18,14 @@ export const metadata: Metadata = {
   title: `${SHOP.name} | Premium Jewellery in Rohru`,
   description: `${SHOP.name} — ${SHOP.tagline}. Gold, diamond & bridal jewellery at ${SHOP.address}.`,
   icons: {
-    icon: IMAGES.logo,
+    icon: "/images/Favicon.png",
   },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
 
 export default function RootLayout({

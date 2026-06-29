@@ -50,25 +50,28 @@ export default function Header() {
             <Image
               src={IMAGES.logo}
               alt={SHOP.name}
-              width={48}
-              height={48}
-              className="h-10 w-10 object-contain sm:h-12 sm:w-12"
+              width={150}
+              height={150}
+              className="h-20 w-20 object-contain sm:h-24 sm:w-24"
             />
-            <span className="hidden font-serif text-lg font-bold text-rangoli-maroon sm:inline">
-              {SHOP.name}
-            </span>
           </Link>
 
-          <nav className="hidden items-center gap-6 lg:flex">
-            <Link href="/catalog" className="text-sm font-medium text-gray-700 hover:text-rangoli-maroon">
-              All Jewellery
+          <nav className="hidden items-center gap-4 md:flex">
+            <Link href="/" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
+              Home
             </Link>
-            <Link href="/clothing" className="text-sm font-medium text-gray-700 hover:text-rangoli-maroon">
+            <Link href="/catalog" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
+              Catalog
+            </Link>
+            <Link href="/clothing" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
               Clothing
             </Link>
-            <Link href="/contact" className="text-sm font-medium text-gray-700 hover:text-rangoli-maroon">
-              Consultation
+            <Link href="/contact" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
+              Contact
             </Link>
+          </nav>
+
+          <div className="hidden items-center gap-3 lg:flex">
             <button
               type="button"
               onClick={() => openConsultation("header")}
@@ -85,11 +88,11 @@ export default function Header() {
                   </Link>
                 )}
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-700">Hi, {user.name}</span>
+                  <span className="text-sm font-medium text-rangoli-maroon">Hi, {user.name}</span>
                   <button
                     type="button"
                     onClick={handleLogout}
-                    className="text-sm font-medium text-gray-600 hover:text-rangoli-maroon"
+                    className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark"
                   >
                     Logout
                   </button>
@@ -97,7 +100,7 @@ export default function Header() {
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <Link href="/login" className="text-sm font-medium text-gray-700 hover:text-rangoli-maroon">
+                <Link href="/login" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
                   Login
                 </Link>
                 <Link href="/signup" className="rounded-full bg-rangoli-maroon px-5 py-2 text-sm font-semibold text-white hover:bg-rangoli-maroon-dark">
@@ -105,7 +108,7 @@ export default function Header() {
                 </Link>
               </div>
             )}
-          </nav>
+          </div>
 
           <div className="flex items-center gap-2">
             <a
@@ -197,13 +200,13 @@ export default function Header() {
                   key={cat.slug}
                   href={cat.slug === "clothing" ? "/clothing" : `/catalog?category=${cat.slug}`}
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-gray-800 hover:bg-rangoli-cream/50"
+                  className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-rangoli-maroon hover:bg-rangoli-cream/50"
                 >
                   <span className="flex items-center gap-3">
                     <span className="text-lg">{cat.icon}</span>
                     <span className="font-medium">{cat.label}</span>
                   </span>
-                  <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4 text-rangoli-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
@@ -212,16 +215,16 @@ export default function Header() {
               {user ? (
                 <div className="border-t border-gray-100 pt-4">
                   <div className="px-3 py-2 text-sm text-gray-600">
-                    Signed in as <span className="font-medium text-gray-900">{user.name}</span>
+                    Signed in as <span className="font-medium text-rangoli-maroon">{user.name}</span>
                   </div>
                   {user.role === "admin" && (
                     <Link
                       href="/admin"
                       onClick={() => setMenuOpen(false)}
-                      className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-gray-800 hover:bg-rangoli-cream/50"
+                      className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-rangoli-maroon hover:bg-rangoli-cream/50"
                     >
                       <span className="font-medium">Admin Dashboard</span>
-                      <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="h-4 w-4 text-rangoli-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                       </svg>
                     </Link>
@@ -242,10 +245,10 @@ export default function Header() {
                   <Link
                     href="/login"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-gray-800 hover:bg-rangoli-cream/50"
+                    className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-rangoli-maroon hover:bg-rangoli-cream/50"
                   >
                     <span className="font-medium">Login</span>
-                    <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-4 w-4 text-rangoli-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>
@@ -255,7 +258,7 @@ export default function Header() {
                     className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-rangoli-maroon hover:bg-rangoli-cream/50"
                   >
                     <span className="font-medium">Sign Up</span>
-                    <svg className="h-4 w-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-4 w-4 text-rangoli-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>

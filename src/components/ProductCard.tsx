@@ -44,7 +44,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="mt-4 flex gap-2">
           <Link
             href={`/catalog/${product.id}`}
-            className="flex-1 rounded-lg border border-gray-200 py-2 text-center text-xs font-semibold text-gray-700 hover:border-rangoli-maroon hover:text-rangoli-maroon"
+            className="flex-1 rounded-lg border border-gray-200 py-2 text-center text-xs font-semibold text-rangoli-maroon hover:border-rangoli-maroon hover:text-rangoli-maroon-dark"
           >
             View Details
           </Link>
