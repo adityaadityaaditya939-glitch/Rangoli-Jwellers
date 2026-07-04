@@ -89,9 +89,11 @@ export default function CatalogPageClient() {
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
+  {products.map((product) => (
+    <div key={product.id} className="min-w-0">
+      <ProductCard product={product} />
+    </div>
           ))}
         </div>
       )}

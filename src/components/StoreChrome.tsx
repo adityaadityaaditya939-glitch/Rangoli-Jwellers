@@ -7,9 +7,15 @@ import PhoneFab from "@/components/PhoneFab";
 import ConsultationModal from "@/components/ConsultationModal";
 import { ConsultationProvider } from "@/components/ConsultationProvider";
 
-export default function StoreChrome({ children }: { children: React.ReactNode }) {
+interface StoreChromeProps {
+  children: React.ReactNode;
+}
+
+export default function StoreChrome({ children }: StoreChromeProps) {
   const pathname = usePathname();
-  const hideStoreChrome = pathname.startsWith("/admin") || pathname === "/login";
+
+  const hideStoreChrome =
+    pathname.startsWith("/admin") || pathname === "/login";
 
   if (hideStoreChrome) {
     return <>{children}</>;
@@ -17,11 +23,17 @@ export default function StoreChrome({ children }: { children: React.ReactNode })
 
   return (
     <ConsultationProvider>
-      <Header />
-      {children}
-      <Footer />
-      <PhoneFab />
-      <ConsultationModal />
+      <div className="flex min-h-screen flex-col">
+        <Header />
+
+        <main className="flex-1">
+          {children}
+        </main>
+
+        <Footer />
+        <PhoneFab />
+        <ConsultationModal />
+      </div>
     </ConsultationProvider>
   );
 }
