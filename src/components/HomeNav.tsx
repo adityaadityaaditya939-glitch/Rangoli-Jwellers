@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export default function HomeNav() {
   const [activeSection, setActiveSection] = useState("collections");
   const [isVisible, setIsVisible] = useState(false);
 
-  const sections = [
+  const sections = useMemo(() => [
     { id: "collections", label: "Jewellery" },
     { id: "clothing", label: "Clothing" },
     { id: "world", label: "About" },
     { id: "gender", label: "Gender" },
     { id: "traditional", label: "Heritage" },
-  ];
+  ], []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,7 +44,7 @@ export default function HomeNav() {
     handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [sections]);
 
   const scrollToSection = (id: string) => {
     if (id === "clothing") {

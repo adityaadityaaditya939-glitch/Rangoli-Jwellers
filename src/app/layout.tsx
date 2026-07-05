@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Playfair_Display } from "next/font/google";
 import StoreChrome from "@/components/StoreChrome";
-import { SHOP, IMAGES } from "@/lib/constants";
+import { SHOP } from "@/lib/constants";
 import "./globals.css";
 
 const geistSans = Geist({

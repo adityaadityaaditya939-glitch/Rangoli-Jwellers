@@ -172,7 +172,7 @@ const onTouchEnd = () => {
                 </h3>
 
                 <p className="mt-3 text-sm leading-6 text-white/85">
-                  Sparkling brilliance crafted to celebrate life's finest moments.
+                  Sparkling brilliance crafted to celebrate life&apos;s finest moments.
                 </p>
 
                 <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
