@@ -70,31 +70,35 @@ export default function HomeNav() {
   if (!isVisible) return null;
 
   return (
-    <nav className="fixed bottom-4 left-4 right-4 z-40 rounded-2xl border border-white/20 bg-white/85 shadow-2xl backdrop-blur-xl md:hidden">
-      <div className="flex items-center justify-around px-2 py-2">
+    <nav className="fixed bottom-4 left-4 right-4 z-40 rounded-2xl border border-white/30 bg-white/90 shadow-2xl backdrop-blur-xl md:hidden animate-fade-in-up">
+      <div className="flex items-center justify-around px-3 py-3">
         {sections.map((section) => (
           <button
             key={section.id}
             onClick={() => scrollToSection(section.id)}
-            className="flex flex-col items-center"
+            className="flex flex-col items-center gap-1.5 group relative"
           >
-            <span
-              className={`h-0.5 w-8 rounded-full transition-all ${
+            <div
+              className={`h-2 w-2 rounded-full transition-all duration-300 ${
                 activeSection === section.id
-                  ? "bg-rangoli-gold"
-                  : "bg-transparent"
+                  ? "bg-rangoli-gold scale-125 shadow-lg shadow-rangoli-gold/50"
+                  : "bg-gray-300 group-hover:bg-gray-400"
               }`}
             />
 
             <span
-              className={`mt-2 text-[11px] font-medium transition ${
+              className={`text-[11px] font-semibold tracking-wide transition-all duration-300 ${
                 activeSection === section.id
                   ? "text-rangoli-maroon"
-                  : "text-gray-500"
+                  : "text-gray-500 group-hover:text-gray-700"
               }`}
             >
               {section.label}
             </span>
+
+            {activeSection === section.id && (
+              <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-1 h-1 bg-rangoli-gold rounded-full" />
+            )}
           </button>
         ))}
       </div>

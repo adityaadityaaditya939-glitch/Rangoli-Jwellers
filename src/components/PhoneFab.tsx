@@ -6,10 +6,10 @@ export default function PhoneFab() {
   return (
     <a
       href={`tel:${SHOP.phone}`}
-      className="fixed bottom-24 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-rangoli-maroon text-white shadow-lg transition hover:scale-105 hover:bg-rangoli-maroon-dark hover:shadow-xl"
+      className="fixed bottom-24 right-6 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-rangoli-maroon to-rangoli-maroon-dark text-white shadow-2xl transition-all duration-300 hover:scale-110 hover:shadow-rangoli-maroon/30 hover:shadow-2xl ring-4 ring-rangoli-maroon/20"
       aria-label="Call Rangoli Jwellers"
     >
-      <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="h-7 w-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path
           strokeLinecap="round"
           strokeLinejoin="round"

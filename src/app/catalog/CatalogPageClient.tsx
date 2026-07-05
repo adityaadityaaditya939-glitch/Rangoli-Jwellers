@@ -53,13 +53,13 @@ export default function CatalogPageClient() {
         </div>
       </div>
 
-      <div className="mb-8 flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+      <div className="mb-8 flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
         <Link
           href="/catalog"
-          className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium ${
+          className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
             category === "all" && !gender
-              ? "bg-rangoli-maroon text-white"
-              : "border border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon"
+              ? "bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark text-white shadow-lg shadow-rangoli-maroon/30"
+              : "border-2 border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon hover:bg-rangoli-cream"
           }`}
         >
           All
@@ -68,10 +68,10 @@ export default function CatalogPageClient() {
           <Link
             key={cat.slug}
             href={`/catalog?category=${cat.slug}`}
-            className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium ${
+            className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
               category === cat.slug
-                ? "bg-rangoli-maroon text-white"
-                : "border border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon"
+                ? "bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark text-white shadow-lg shadow-rangoli-maroon/30"
+                : "border-2 border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon hover:bg-rangoli-cream"
             }`}
           >
             {cat.label}
