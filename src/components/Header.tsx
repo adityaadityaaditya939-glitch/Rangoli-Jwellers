@@ -1,273 +1,446 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { IMAGES, NAV_CATEGORIES, SHOP } from "@/lib/constants";
+import { usePathname, useRouter } from "next/navigation";
+
+import { IMAGES, SHOP } from "@/lib/constants";
 import { useConsultation } from "@/components/ConsultationProvider";
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState<{ name: string; email: string; role: string } | null>(null);
-  const { openConsultation } = useConsultation();
+  const pathname = usePathname();
   const router = useRouter();
+  const { openConsultation } = useConsultation();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  const [user, setUser] = useState<{
+    name: string;
+    email: string;
+    role: string;
+  } | null>(null);
+
+  const navigation = [
+    { title: "Home", href: "/" },
+    { title: "Jewellery", href: "/catalog" },
+    { title: "Clothing", href: "/clothing" },
+    { title: "Contact", href: "/contact" },
+  ];
 
   useEffect(() => {
     fetch("/api/auth/me")
-      .then((res) => res.json())
+      .then((r) => r.json())
       .then((data) => {
-        if (data.user) {
-          setUser(data.user);
-        }
+        if (data.user) setUser(data.user);
       })
       .catch(() => {});
+
+    const onScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    onScroll();
+
+    window.addEventListener("scroll", onScroll);
+
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   async function handleLogout() {
-    await fetch("/api/auth/logout", { method: "POST" });
-    setUser(null);
-    router.push("/");
+    await fetch("/api/auth/logout", {
+      method: "POST",
+    });
+
     router.refresh();
+    router.push("/");
   }
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 lg:px-8">
+      <header
+        className={`sticky top-0 z-50 transition-all duration-300 ${
+          scrolled
+            ? "bg-white/90 backdrop-blur-xl shadow-lg border-b border-amber-100"
+            : "bg-white"
+        }`}
+      >
+        <div className="mx-auto flex h-24 max-w-7xl items-center justify-between px-5 lg:px-8">
+
+          {/* Mobile Menu */}
+
           <button
             type="button"
             onClick={() => setMenuOpen(true)}
-            className="rounded-lg p-2 text-rangoli-maroon hover:bg-rangoli-cream lg:hidden"
-            aria-label="Open menu"
+            className="rounded-xl p-2 text-rangoli-maroon transition hover:bg-rangoli-cream lg:hidden"
           >
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            <svg
+              className="h-7 w-7"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4 7h16M4 12h16M4 17h16"
+              />
             </svg>
           </button>
 
-          <Link href="/" className="flex items-center gap-3">
+          {/* Logo */}
+
+          <Link
+            href="/"
+            className="flex shrink-0 items-center"
+          >
             <Image
               src={IMAGES.logo}
               alt={SHOP.name}
-              width={200}
-              height={200}
-              className="h-28 w-28 object-contain sm:h-32 sm:w-32"
+              width={120}
+              height={120}
+              priority
+              className="h-20 w-20 object-contain transition duration-300 hover:scale-105 lg:h-24 lg:w-24"
             />
           </Link>
 
-          <nav className="hidden items-center gap-4 md:flex">
-            <Link href="/" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
-              Home
-            </Link>
-            <Link href="/catalog" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
-              Catalog
-            </Link>
-            <Link href="/clothing" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
-              Clothing
-            </Link>
-            <Link href="/contact" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
-              Contact
-            </Link>
+          {/* Desktop Navigation */}
+
+          <nav className="hidden flex-1 items-center justify-center gap-10 lg:flex">
+            {navigation.map((item) => {
+              const active =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="group relative py-2 font-medium tracking-wide text-rangoli-maroon"
+                >
+                  <span
+                    className={`transition ${
+                      active
+                        ? "text-rangoli-gold"
+                        : "group-hover:text-rangoli-gold"
+                    }`}
+                  >
+                    {item.title}
+                  </span>
+
+                  <span
+                    className={`absolute bottom-0 left-0 h-[2px] rounded-full bg-rangoli-gold transition-all duration-300 ${
+                      active
+                        ? "w-full"
+                        : "w-0 group-hover:w-full"
+                    }`}
+                  />
+                </Link>
+              );
+            })}
           </nav>
 
+          {/* Desktop Right */}
+
           <div className="hidden items-center gap-3 lg:flex">
+
+            <a
+              href={`tel:${SHOP.phone}`}
+              className="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-rangoli-maroon transition hover:border-rangoli-gold hover:bg-rangoli-cream"
+            >
+              📞
+              <span>Call</span>
+            </a>
+
+            <Link
+              href="/catalog"
+              className="rounded-full border border-gray-200 p-3 transition hover:border-rangoli-gold hover:bg-rangoli-cream"
+            >
+              🔍
+            </Link>
+
             <button
               type="button"
               onClick={() => openConsultation("header")}
-              className="rounded-full bg-rangoli-maroon px-5 py-2 text-sm font-semibold text-white hover:bg-rangoli-maroon-dark"
+              className="rounded-full bg-rangoli-maroon px-6 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-rangoli-maroon-dark"
             >
               Book Consultation
             </button>
-            
+
             {user ? (
               <div className="flex items-center gap-3">
+
                 {user.role === "admin" && (
-                  <Link href="/admin" className="text-sm font-medium text-rangoli-maroon hover:underline">
-                    Admin Dashboard
+                  <Link
+                    href="/admin"
+                    className="rounded-full border border-rangoli-gold px-4 py-2 text-sm font-medium text-rangoli-maroon hover:bg-rangoli-gold hover:text-white"
+                  >
+                    Dashboard
                   </Link>
                 )}
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-rangoli-maroon">Hi, {user.name}</span>
-                  <button
-                    type="button"
-                    onClick={handleLogout}
-                    className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark"
-                  >
-                    Logout
-                  </button>
+
+                <div className="hidden xl:block">
+                  <p className="text-xs text-gray-500">
+                    Welcome
+                  </p>
+
+                  <p className="max-w-[130px] truncate text-sm font-semibold text-rangoli-maroon">
+                    {user.name}
+                  </p>
                 </div>
+
+                <button
+                  onClick={handleLogout}
+                  className="rounded-full border border-gray-200 px-4 py-2 text-sm hover:bg-red-50 hover:text-red-600"
+                >
+                  Logout
+                </button>
+
               </div>
             ) : (
-              <div className="flex items-center gap-3">
-                <Link href="/login" className="text-sm font-medium text-rangoli-maroon hover:text-rangoli-maroon-dark">
-                  Login
-                </Link>
-                <Link href="/signup" className="rounded-full bg-rangoli-maroon px-5 py-2 text-sm font-semibold text-white hover:bg-rangoli-maroon-dark">
-                  Sign Up
-                </Link>
-              </div>
+              <Link
+                href="/login"
+                className="rounded-full border border-rangoli-maroon px-5 py-2 text-sm font-semibold text-rangoli-maroon transition hover:bg-rangoli-maroon hover:text-white"
+              >
+                Login
+              </Link>
             )}
           </div>
 
-          <div className="flex items-center gap-2">
-            <a
-              href={`tel:${SHOP.phone}`}
-              className="rounded-full p-2 text-rangoli-maroon hover:bg-rangoli-cream"
-              aria-label="Call us"
-            >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                />
-              </svg>
-            </a>
+          {/* Mobile Icons */}
+
+          <div className="flex items-center gap-2 lg:hidden">
+
             <Link
               href="/catalog"
-              className="rounded-full p-2 text-rangoli-maroon hover:bg-rangoli-cream"
-              aria-label="Browse catalogue"
+              className="rounded-xl p-2 hover:bg-rangoli-cream"
             >
-              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+              🔍
             </Link>
+
+            <a
+              href={`tel:${SHOP.phone}`}
+              className="rounded-xl p-2 hover:bg-rangoli-cream"
+            >
+              📞
+            </a>
+
           </div>
+
         </div>
 
-        <div className="border-t border-gray-100 px-4 py-3 lg:px-8">
-          <div className="mx-auto flex max-w-7xl items-center gap-3 rounded-full border border-gray-200 bg-gray-50 px-4 py-2.5">
-            <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            <input
-              type="search"
-              placeholder="Search for gold necklace, rings..."
-              className="w-full bg-transparent text-sm outline-none placeholder:text-gray-400"
-            />
-          </div>
-        </div>
       </header>
+            {/* ================= MOBILE MENU ================= */}
 
       {menuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/40"
+        <>
+          {/* Backdrop */}
+          <div
             onClick={() => setMenuOpen(false)}
-            aria-label="Close menu overlay"
+            className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm lg:hidden"
           />
-          <div className="absolute left-0 top-0 h-full w-[85%] max-w-sm overflow-y-auto bg-white shadow-xl">
-            <div className="flex items-center justify-between border-b px-4 py-4">
-              <span className="font-serif text-lg font-bold text-rangoli-maroon">Menu</span>
-              <button
-                type="button"
-                onClick={() => setMenuOpen(false)}
-                className="rounded-lg p-2 hover:bg-gray-100"
-                aria-label="Close menu"
-              >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
 
-            <div className="mx-4 my-4 rounded-2xl bg-gradient-to-r from-pink-50 to-rangoli-cream p-4">
-              <p className="font-serif text-lg text-rangoli-maroon">Custom Design Consultation</p>
-              <p className="mt-1 text-sm text-gray-600">Bridal sets & festive jewellery</p>
-              <button
-                type="button"
-                onClick={() => {
-                  setMenuOpen(false);
-                  openConsultation("mobile-nav");
-                }}
-                className="mt-3 text-sm font-semibold uppercase tracking-wide text-rangoli-maroon"
-              >
-                Book Now →
-              </button>
-            </div>
+          {/* Drawer */}
+          <aside className="fixed left-0 top-0 z-50 flex h-screen w-[88%] max-w-sm flex-col bg-white shadow-2xl lg:hidden">
 
-            <nav className="px-2 pb-8">
-              {NAV_CATEGORIES.map((cat) => (
+            {/* Top */}
+            <div className="border-b border-gray-100 p-6">
+
+              <div className="flex items-center justify-between">
+
                 <Link
-                  key={cat.slug}
-                  href={cat.slug === "clothing" ? "/clothing" : `/catalog?category=${cat.slug}`}
+                  href="/"
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-rangoli-maroon hover:bg-rangoli-cream/50"
+                  className="flex items-center gap-3"
                 >
-                  <span className="flex items-center gap-3">
-                    <span className="text-lg">{cat.icon}</span>
-                    <span className="font-medium">{cat.label}</span>
-                  </span>
-                  <svg className="h-4 w-4 text-rangoli-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </Link>
-              ))}
-              
-              {user ? (
-                <div className="border-t border-gray-100 pt-4">
-                  <div className="px-3 py-2 text-sm text-gray-600">
-                    Signed in as <span className="font-medium text-rangoli-maroon">{user.name}</span>
+                  <Image
+                    src={IMAGES.logo}
+                    alt={SHOP.name}
+                    width={70}
+                    height={70}
+                    className="h-16 w-16 object-contain"
+                  />
+
+                  <div>
+                    <h2 className="font-serif text-xl font-bold text-rangoli-maroon">
+                      {SHOP.name}
+                    </h2>
+
+                    <p className="text-xs text-gray-500">
+                      Premium Jewellery
+                    </p>
                   </div>
-                  {user.role === "admin" && (
+
+                </Link>
+
+                <button
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-xl p-2 hover:bg-gray-100"
+                >
+                  ✕
+                </button>
+
+              </div>
+
+            </div>
+
+            {/* Navigation */}
+
+            <nav className="flex-1 overflow-y-auto px-6 py-8">
+
+              <div className="space-y-2">
+
+                {navigation.map((item) => {
+
+                  const active =
+                    item.href === "/"
+                      ? pathname === "/"
+                      : pathname.startsWith(item.href);
+
+                  return (
                     <Link
-                      href="/admin"
+                      key={item.href}
+                      href={item.href}
                       onClick={() => setMenuOpen(false)}
-                      className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-rangoli-maroon hover:bg-rangoli-cream/50"
+                      className={`block rounded-2xl px-5 py-4 text-lg font-medium transition ${
+                        active
+                          ? "bg-rangoli-maroon text-white"
+                          : "text-rangoli-maroon hover:bg-rangoli-cream"
+                      }`}
                     >
-                      <span className="font-medium">Admin Dashboard</span>
-                      <svg className="h-4 w-4 text-rangoli-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
+                      {item.title}
                     </Link>
-                  )}
+                  );
+                })}
+
+              </div>
+
+              {/* Quick Actions */}
+
+              <div className="mt-10 border-t border-gray-100 pt-8">
+
+                <p className="mb-5 text-xs font-semibold uppercase tracking-[0.25em] text-gray-400">
+                  Quick Actions
+                </p>
+
+                <div className="space-y-3">
+
+                  <a
+                    href={`tel:${SHOP.phone}`}
+                    className="flex items-center justify-center rounded-xl border border-gray-200 py-4 font-medium transition hover:bg-rangoli-cream"
+                  >
+                    📞 Call Store
+                  </a>
+
                   <button
                     type="button"
                     onClick={() => {
-                      handleLogout();
+                      openConsultation("mobile-menu");
                       setMenuOpen(false);
                     }}
-                    className="flex w-full items-center justify-between border-b border-gray-100 px-3 py-4 text-left text-red-600 hover:bg-red-50"
+                    className="w-full rounded-xl bg-rangoli-maroon py-4 font-semibold text-white transition hover:bg-rangoli-maroon-dark"
                   >
-                    <span className="font-medium">Logout</span>
+                    Book Consultation
                   </button>
+
                 </div>
-              ) : (
-                <div className="border-t border-gray-100 pt-4">
+
+              </div>
+
+              {/* User */}
+
+              <div className="mt-10 border-t border-gray-100 pt-8">
+
+                {user ? (
+
+                  <div className="space-y-4">
+
+                    <div className="rounded-2xl bg-rangoli-cream p-5">
+
+                      <p className="text-xs uppercase tracking-widest text-gray-500">
+                        Welcome
+                      </p>
+
+                      <p className="mt-2 font-semibold text-rangoli-maroon">
+                        {user.name}
+                      </p>
+
+                      <p className="text-sm text-gray-500">
+                        {user.email}
+                      </p>
+
+                    </div>
+
+                    {user.role === "admin" && (
+
+                      <Link
+                        href="/admin"
+                        onClick={() => setMenuOpen(false)}
+                        className="block rounded-xl border border-rangoli-gold py-4 text-center font-semibold text-rangoli-maroon transition hover:bg-rangoli-gold hover:text-white"
+                      >
+                        Admin Dashboard
+                      </Link>
+
+                    )}
+
+                    <button
+                      onClick={async () => {
+                        setMenuOpen(false);
+                        await handleLogout();
+                      }}
+                      className="w-full rounded-xl border border-red-200 py-4 font-semibold text-red-600 transition hover:bg-red-50"
+                    >
+                      Logout
+                    </button>
+
+                  </div>
+
+                ) : (
+
                   <Link
                     href="/login"
                     onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-rangoli-maroon hover:bg-rangoli-cream/50"
+                    className="block rounded-xl border border-rangoli-maroon py-4 text-center font-semibold text-rangoli-maroon transition hover:bg-rangoli-maroon hover:text-white"
                   >
-                    <span className="font-medium">Login</span>
-                    <svg className="h-4 w-4 text-rangoli-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                    Login
                   </Link>
-                  <Link
-                    href="/signup"
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-between border-b border-gray-100 px-3 py-4 text-rangoli-maroon hover:bg-rangoli-cream/50"
-                  >
-                    <span className="font-medium">Sign Up</span>
-                    <svg className="h-4 w-4 text-rangoli-maroon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-              )}
+
+                )}
+
+              </div>
+
             </nav>
-          </div>
-        </div>
+
+            {/* Bottom */}
+
+            <div className="border-t border-gray-100 p-6">
+
+              <div className="text-center">
+
+                <p className="font-serif text-lg font-semibold text-rangoli-maroon">
+                  {SHOP.name}
+                </p>
+
+                <p className="mt-1 text-sm text-gray-500">
+                  {SHOP.tagline}
+                </p>
+
+                <p className="mt-5 text-xs text-gray-400">
+                  © {new Date().getFullYear()} {SHOP.name}
+                </p>
+
+              </div>
+
+            </div>
+
+          </aside>
+
+        </>
       )}
+
     </>
   );
 }

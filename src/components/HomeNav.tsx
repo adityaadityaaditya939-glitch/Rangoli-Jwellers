@@ -7,86 +7,96 @@ export default function HomeNav() {
   const [isVisible, setIsVisible] = useState(false);
 
   const sections = [
-    { id: "collections", label: "Collections", icon: "💎" },
-    { id: "clothing", label: "Clothing", icon: "👗" },
-    { id: "world", label: "Rangoli World", icon: "🌍" },
-    { id: "gender", label: "Shop by Gender", icon: "👥" },
-    { id: "traditional", label: "Traditional", icon: "✨" },
+    { id: "collections", label: "Jewellery" },
+    { id: "clothing", label: "Clothing" },
+    { id: "world", label: "About" },
+    { id: "gender", label: "Gender" },
+    { id: "traditional", label: "Heritage" },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show nav after scrolling past hero
       const heroHeight = window.innerHeight;
-      setIsVisible(window.scrollY > heroHeight * 0.5);
 
-      // Update active section based on scroll position
-      const scrollableSections = sections.filter(s => s.id !== "clothing");
-      const sectionElements = scrollableSections.map((section) => 
-        document.getElementById(`section-${section.id}`)
-      );
+      setIsVisible(window.scrollY > heroHeight * 0.55);
 
-      let currentSection = "collections";
-      sectionElements.forEach((element, index) => {
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            currentSection = scrollableSections[index].id;
-          }
+      const scrollableSections = sections.filter((s) => s.id !== "clothing");
+
+      let current = "collections";
+
+      scrollableSections.forEach((section) => {
+        const el = document.getElementById(`section-${section.id}`);
+
+        if (!el) return;
+
+        const rect = el.getBoundingClientRect();
+
+        if (rect.top <= 140) {
+          current = section.id;
         }
       });
-      setActiveSection(currentSection);
+
+      setActiveSection(current);
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+
+    handleScroll();
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    // Handle clothing section - redirect to clothing page
-    if (sectionId === "clothing") {
+  const scrollToSection = (id: string) => {
+    if (id === "clothing") {
       window.location.href = "/clothing";
       return;
     }
 
-    const element = document.getElementById(`section-${sectionId}`);
-    if (element) {
-      const offset = 80; // Account for fixed header
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-    }
+    const el = document.getElementById(`section-${id}`);
+
+    if (!el) return;
+
+    const y =
+      el.getBoundingClientRect().top +
+      window.pageYOffset -
+      80;
+
+    window.scrollTo({
+      top: y,
+      behavior: "smooth",
+    });
   };
 
   if (!isVisible) return null;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur border-t border-gray-200 shadow-lg md:hidden">
-      <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        <div className="flex items-center justify-around py-3">
-          {sections.map((section) => (
-            <button
-              key={section.id}
-              type="button"
-              onClick={() => scrollToSection(section.id)}
-              className={`flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-all duration-200 ${
+    <nav className="fixed bottom-4 left-4 right-4 z-40 rounded-2xl border border-white/20 bg-white/85 shadow-2xl backdrop-blur-xl md:hidden">
+      <div className="flex items-center justify-around px-2 py-2">
+        {sections.map((section) => (
+          <button
+            key={section.id}
+            onClick={() => scrollToSection(section.id)}
+            className="flex flex-col items-center"
+          >
+            <span
+              className={`h-0.5 w-8 rounded-full transition-all ${
                 activeSection === section.id
-                  ? "bg-rangoli-maroon/10 text-rangoli-maroon"
-                  : "text-rangoli-maroon hover:bg-rangoli-cream/50"
+                  ? "bg-rangoli-gold"
+                  : "bg-transparent"
               }`}
-              aria-label={`Navigate to ${section.label}`}
+            />
+
+            <span
+              className={`mt-2 text-[11px] font-medium transition ${
+                activeSection === section.id
+                  ? "text-rangoli-maroon"
+                  : "text-gray-500"
+              }`}
             >
-              <span className="text-lg">{section.icon}</span>
-              <span className="text-xs font-medium">{section.label}</span>
-            </button>
-          ))}
-        </div>
+              {section.label}
+            </span>
+          </button>
+        ))}
       </div>
     </nav>
   );

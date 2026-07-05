@@ -45,94 +45,195 @@ export default function HomeSections() {
   const { openConsultation } = useConsultation();
   const [trendingIndex, setTrendingIndex] = useState(0);
   const [experienceIndex, setExperienceIndex] = useState(0);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);  
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+const minSwipeDistance = 50;
 
   useEffect(() => {
     fetch("/api/products?featured=true")
       .then((res) => res.json())
       .then((data) => setProducts(data.products?.slice(0, 4) || []))
-      .catch(() => {});
+      .catch(() => { });
   }, []);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+  setTouchEnd(null);
+  setTouchStart(e.targetTouches[0].clientX);
+};
+
+const onTouchMove = (e: React.TouchEvent) => {
+  setTouchEnd(e.targetTouches[0].clientX);
+};
+
+const onTouchEnd = () => {
+  if (!touchStart || !touchEnd) return;
+
+  const distance = touchStart - touchEnd;
+
+  // Swipe Left → Next
+  if (distance > minSwipeDistance) {
+    setTrendingIndex((prev) =>
+      prev === IMAGES.trending.length - 1 ? 0 : prev + 1
+    );
+  }
+
+  // Swipe Right → Previous
+  if (distance < -minSwipeDistance) {
+    setTrendingIndex((prev) =>
+      prev === 0 ? IMAGES.trending.length - 1 : prev - 1
+    );
+  }
+};
 
   return (
     <>
-      <section id="section-collections" className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
+      <section
+        id="section-collections"
+        className="mx-auto max-w-7xl px-4 py-14 lg:px-8"
+      >
         <SectionHeading
-          title="Rangoli Collections"
-          subtitle="Explore our newly launched collection"
+          title="Our Signature Collections"
+          subtitle="Discover timeless jewellery crafted with elegance, tradition and unmatched craftsmanship."
         />
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          {/* Left: Large Featured Card */}
+
+        <div className="grid gap-5 lg:grid-cols-3">
+
+          {/* Gold */}
+
           <Link
-            href={`/catalog?category=gold`}
-            className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-amber-50 to-amber-100 p-8 transition-all duration-300 hover:border-amber-300 hover:shadow-xl"
+            href="/catalog?category=gold"
+            className="group relative overflow-hidden rounded-3xl"
           >
-            <div className="flex h-full flex-col justify-between">
-              <div>
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-amber-200/50 text-amber-800">
-                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
+            <div className="relative aspect-[4/5]">
+
+              <Image
+                src="/images/Collec_Gold.jpg"
+                alt="Gold Collection"
+                fill
+                className="object-cover transition duration-700 group-hover:scale-110"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+
+                <p className="text-sm uppercase tracking-[0.35em] text-rangoli-gold">
+                  Signature
+                </p>
+
+                <h3 className="mt-2 font-serif text-3xl font-bold text-white">
+                  Gold Jewellery
+                </h3>
+
+                <p className="mt-3 max-w-xs text-sm leading-6 text-white/85">
+                  Elegant necklaces, bangles and timeless pieces crafted in pure gold.
+                </p>
+
+                <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+
+                  Explore Collection
+
+                  →
+
                 </div>
-                <h3 className="font-serif text-2xl font-bold text-gray-900 sm:text-3xl">Gold Collection</h3>
-                <p className="mt-3 text-sm text-gray-600 sm:text-base">Timeless elegance crafted in pure gold</p>
+
               </div>
-              <div className="mt-6 flex items-center text-amber-800 transition-transform group-hover:translate-x-2">
-                <span className="font-medium">Explore Collection</span>
-                <svg className="ml-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </div>
+
             </div>
           </Link>
-          {/* Right: Two Stacked Cards */}
-          <div className="grid grid-rows-2 gap-6">
-            <Link
-              href={`/catalog?category=diamond`}
-              className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-slate-50 to-slate-100 p-6 transition-all duration-300 hover:border-slate-300 hover:shadow-xl"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-slate-200/50 text-slate-800">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                    </svg>
-                  </div>
-                  <h3 className="font-serif text-xl font-bold text-gray-900 sm:text-2xl">Diamond Collection</h3>
-                  <p className="mt-2 text-sm text-gray-600">Brilliance that lasts forever</p>
+
+          {/* Diamond */}
+
+          <Link
+            href="/catalog?category=diamond"
+            className="group relative overflow-hidden rounded-3xl"
+          >
+            <div className="relative aspect-[4/5]">
+
+              <Image
+                src="/images/Collec_Diamond.jpg"
+                alt="Diamond Collection"
+                fill
+                className="object-cover transition duration-700 group-hover:scale-110"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+
+                <p className="text-sm uppercase tracking-[0.35em] text-rangoli-gold">
+                  Luxury
+                </p>
+
+                <h3 className="mt-2 font-serif text-3xl font-bold text-white">
+                  Diamond
+                </h3>
+
+                <p className="mt-3 text-sm leading-6 text-white/85">
+                  Sparkling brilliance crafted to celebrate life's finest moments.
+                </p>
+
+                <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+
+                  Discover
+
+                  →
+
                 </div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-200/50 text-slate-800 transition-transform group-hover:translate-x-1 group-hover:scale-110">
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
+
               </div>
-            </Link>
-            <Link
-              href={`/catalog?category=wedding`}
-              className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br from-rose-50 to-rose-100 p-6 transition-all duration-300 hover:border-rose-300 hover:shadow-xl"
-            >
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-rose-200/50 text-rose-800">
-                    <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
-                  </div>
-                  <h3 className="font-serif text-xl font-bold text-gray-900 sm:text-2xl">Wedding Collection</h3>
-                  <p className="mt-2 text-sm text-gray-600">Make your special day unforgettable</p>
+
+            </div>
+          </Link>
+
+          {/* Wedding */}
+
+          <Link
+            href="/catalog?category=wedding"
+            className="group relative overflow-hidden rounded-3xl"
+          >
+            <div className="relative aspect-[4/5]">
+
+              <Image
+                src="/images/Collec_Wedding.jpg"
+                alt="Wedding Collection"
+                fill
+                className="object-cover transition duration-700 group-hover:scale-110"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+
+                <p className="text-sm uppercase tracking-[0.35em] text-rangoli-gold">
+                  Bridal
+                </p>
+
+                <h3 className="mt-2 font-serif text-3xl font-bold text-white">
+                  Wedding
+                </h3>
+
+                <p className="mt-3 text-sm leading-6 text-white/85">
+                  Beautiful bridal jewellery for unforgettable celebrations.
+                </p>
+
+                <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+
+                  View Collection
+
+                  →
+
                 </div>
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-rose-200/50 text-rose-800 transition-transform group-hover:translate-x-1 group-hover:scale-110">
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
+
               </div>
-            </Link>
-          </div>
+
+            </div>
+          </Link>
+
         </div>
       </section>
-
       <section id="section-clothing" className="w-full">
         <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
           <SectionHeading title="Clothing Collection" subtitle="Traditional & Contemporary Wear" />
@@ -145,7 +246,7 @@ export default function HomeSections() {
                 key={cat.slug}
                 href={`/clothing?category=${cat.slug}`}
                 className="group relative flex-shrink-0 w-[280px] sm:w-full overflow-hidden rounded-2xl border-2 border-gray-200 transition-all duration-300 hover:border-amber-400 sm:block"
-                style={{ 
+                style={{
                   aspectRatio: cat.tall ? '3/4' : '1/1',
                   minHeight: cat.tall ? '350px' : '280px'
                 }}
@@ -218,41 +319,89 @@ export default function HomeSections() {
       </section>
 
       <section className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
-        <SectionHeading
-          title="Trending Now"
-          subtitle="Jewellery pieces everyone's eyeing right now"
+       <SectionHeading
+  title="Trending Now"
+  subtitle="Discover our latest arrivals and customer favourites."
+/>
+
+<div
+  className="relative overflow-hidden rounded-[32px]"
+  onTouchStart={onTouchStart}
+  onTouchMove={onTouchMove}
+  onTouchEnd={onTouchEnd}
+>
+
+  <div
+    className="flex transition-transform duration-700"
+    style={{
+      transform: `translateX(-${trendingIndex * 100}%)`,
+    }}
+  >
+    {IMAGES.trending.map((src) => (
+      <div
+        key={src}
+        className="relative min-w-full aspect-[4/5] sm:aspect-[16/9]"
+      >
+        <Image
+          src={src}
+          alt="Trending Collection"
+          fill
+          className="object-cover"
+          sizes="100vw"
         />
-        <div className="relative overflow-hidden rounded-3xl">
-          <div
-            className="flex transition-transform duration-500 ease-out"
-            style={{ transform: `translateX(-${trendingIndex * 100}%)` }}
-          >
-            {IMAGES.trending.map((src) => (
-              <div key={src} className="relative min-w-full aspect-[16/10] sm:aspect-[16/9]">
-                <Image 
-                  src={src} 
-                  alt="Trending jewellery" 
-                  fill
-                  className="object-cover"
-                  sizes="100vw"
-                />
-              </div>
-            ))}
-          </div>
-          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
-            {IMAGES.trending.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => setTrendingIndex(index)}
-                className={`h-2 rounded-full transition-all ${
-                  index === trendingIndex ? "w-6 bg-rangoli-maroon" : "w-2 bg-white/70"
-                }`}
-                aria-label={`Trending slide ${index + 1}`}
-              />
-            ))}
-          </div>
+
+        {/* Overlay */}
+
+        <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/30 to-transparent" />
+
+        {/* Text */}
+
+       <div className="absolute inset-0 flex flex-col justify-end px-5 pb-8 sm:justify-center sm:px-14 sm:pb-0">
+
+  <p className="text-[10px] uppercase tracking-[0.25em] text-rangoli-gold sm:text-sm sm:tracking-[0.35em]">
+    New Collection
+  </p>
+
+  <h3 className="mt-2 max-w-xs font-serif text-2xl font-bold leading-tight text-white sm:mt-3 sm:max-w-xl sm:text-5xl">
+    Discover Timeless Beauty
+  </h3>
+
+  <p className="mt-2 hidden max-w-lg text-sm leading-7 text-white/85 sm:block sm:text-base">
+    Explore handcrafted jewellery designed for everyday elegance and unforgettable celebrations.
+  </p>
+
+  <Link
+    href="/catalog"
+    className="mt-5 inline-flex w-fit items-center rounded-full bg-rangoli-gold px-5 py-2 text-sm font-semibold text-black transition hover:scale-105 sm:mt-8 sm:px-7 sm:py-3 sm:text-base"
+  >
+            Explore Collection →
+          </Link>
+
         </div>
+
+      </div>
+    ))}
+  </div>
+
+  {/* Indicators */}
+
+  <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-3">
+
+    {IMAGES.trending.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setTrendingIndex(index)}
+        className={`transition-all ${
+          trendingIndex === index
+            ? "h-2 w-10 rounded-full bg-rangoli-gold"
+            : "h-2 w-2 rounded-full bg-white/70"
+        }`}
+      />
+    ))}
+
+  </div>
+
+</div>
 
         {products.length > 0 && (
           <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -277,7 +426,7 @@ export default function HomeSections() {
                 key={cat.slug}
                 href={`/catalog?category=${cat.slug}`}
                 className="group relative flex-shrink-0 w-[280px] sm:w-full overflow-hidden rounded-2xl border-2 border-gray-200 transition-all duration-300 hover:border-amber-400 sm:block"
-                style={{ 
+                style={{
                   aspectRatio: cat.tall ? '3/4' : '1/1',
                   minHeight: cat.tall ? '350px' : '280px'
                 }}
@@ -319,20 +468,19 @@ export default function HomeSections() {
               href={`/catalog?gender=${cat.slug}`}
               className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br p-8 transition-all duration-300 hover:shadow-xl aspect-[3/4] sm:aspect-[3/4] flex flex-col items-center justify-center text-center"
               style={{
-                background: index === 0 
-                  ? 'linear-gradient(to bottom right, #fdf2f8, #fce7f3)' 
-                  : index === 1 
-                  ? 'linear-gradient(to bottom right, #ecfdf5, #d1fae5)' 
-                  : 'linear-gradient(to bottom right, #eff6ff, #dbeafe)'
+                background: index === 0
+                  ? 'linear-gradient(to bottom right, #fdf2f8, #fce7f3)'
+                  : index === 1
+                    ? 'linear-gradient(to bottom right, #ecfdf5, #d1fae5)'
+                    : 'linear-gradient(to bottom right, #eff6ff, #dbeafe)'
               }}
             >
-              <div className={`flex h-20 w-20 items-center justify-center rounded-full ${
-                index === 0 
-                  ? 'bg-pink-200/50 text-pink-800' 
-                  : index === 1 
-                  ? 'bg-emerald-200/50 text-emerald-800' 
-                  : 'bg-blue-200/50 text-blue-800'
-              }`}>
+              <div className={`flex h-20 w-20 items-center justify-center rounded-full ${index === 0
+                  ? 'bg-pink-200/50 text-pink-800'
+                  : index === 1
+                    ? 'bg-emerald-200/50 text-emerald-800'
+                    : 'bg-blue-200/50 text-blue-800'
+                }`}>
                 {index === 0 && (
                   <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -355,13 +503,12 @@ export default function HomeSections() {
               <p className="mt-3 text-sm text-gray-600 sm:text-base">
                 {index === 0 ? 'Elegant designs for her' : index === 1 ? 'Sophisticated pieces for him' : 'Beautiful creations for all'}
               </p>
-              <div className={`mt-6 flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all ${
-                index === 0 
-                  ? 'bg-pink-100 text-pink-800 group-hover:bg-pink-200' 
-                  : index === 1 
-                  ? 'bg-emerald-100 text-emerald-800 group-hover:bg-emerald-200' 
-                  : 'bg-blue-100 text-blue-800 group-hover:bg-blue-200'
-              }`}>
+              <div className={`mt-6 flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all ${index === 0
+                  ? 'bg-pink-100 text-pink-800 group-hover:bg-pink-200'
+                  : index === 1
+                    ? 'bg-emerald-100 text-emerald-800 group-hover:bg-emerald-200'
+                    : 'bg-blue-100 text-blue-800 group-hover:bg-blue-200'
+                }`}>
                 <span>Shop Now</span>
                 <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -399,20 +546,19 @@ export default function HomeSections() {
               href={`/catalog?category=${cat.slug}`}
               className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br p-8 transition-all duration-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
               style={{
-                background: index === 0 
-                  ? 'linear-gradient(to bottom right, #fef3c7, #fde68a)' 
-                  : index === 1 
-                  ? 'linear-gradient(to bottom right, #fce7f3, #fbcfe8)' 
-                  : 'linear-gradient(to bottom right, #ddd6fe, #c4b5fd)'
+                background: index === 0
+                  ? 'linear-gradient(to bottom right, #fef3c7, #fde68a)'
+                  : index === 1
+                    ? 'linear-gradient(to bottom right, #fce7f3, #fbcfe8)'
+                    : 'linear-gradient(to bottom right, #ddd6fe, #c4b5fd)'
               }}
             >
-              <div className={`flex h-16 w-16 items-center justify-center rounded-full ${
-                index === 0 
-                  ? 'bg-amber-200/50 text-amber-800' 
-                  : index === 1 
-                  ? 'bg-pink-200/50 text-pink-800' 
-                  : 'bg-violet-200/50 text-violet-800'
-              }`}>
+              <div className={`flex h-16 w-16 items-center justify-center rounded-full ${index === 0
+                  ? 'bg-amber-200/50 text-amber-800'
+                  : index === 1
+                    ? 'bg-pink-200/50 text-pink-800'
+                    : 'bg-violet-200/50 text-violet-800'
+                }`}>
                 {index === 0 && (
                   <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
@@ -435,13 +581,12 @@ export default function HomeSections() {
               <p className="mt-3 text-sm text-gray-600 sm:text-base">
                 {index === 0 ? 'Bridal lehenga essentials' : index === 1 ? 'Perfect for suits & occasions' : 'Complete your saree look'}
               </p>
-              <div className={`mt-6 h-1 w-16 rounded-full transition-all group-hover:w-24 ${
-                index === 0 
-                  ? 'bg-amber-400' 
-                  : index === 1 
-                  ? 'bg-pink-400' 
-                  : 'bg-violet-400'
-              }`} />
+              <div className={`mt-6 h-1 w-16 rounded-full transition-all group-hover:w-24 ${index === 0
+                  ? 'bg-amber-400'
+                  : index === 1
+                    ? 'bg-pink-400'
+                    : 'bg-violet-400'
+                }`} />
             </Link>
           ))}
         </div>
@@ -458,7 +603,7 @@ export default function HomeSections() {
             onClick={() => openConsultation("experience")}
             className="group relative block w-full aspect-[16/10] sm:aspect-[16/9] overflow-hidden"
           >
-            <Image 
+            <Image
               src={EXPERIENCE_SLIDES[experienceIndex].image}
               alt={EXPERIENCE_SLIDES[experienceIndex].title}
               fill
@@ -490,9 +635,8 @@ export default function HomeSections() {
               key={index}
               type="button"
               onClick={() => setExperienceIndex(index)}
-              className={`h-2 rounded-full transition-all ${
-                index === experienceIndex ? "w-6 bg-rangoli-maroon" : "w-2 bg-gray-300"
-              }`}
+              className={`h-2 rounded-full transition-all ${index === experienceIndex ? "w-6 bg-rangoli-maroon" : "w-2 bg-gray-300"
+                }`}
               aria-label={`Experience slide ${index + 1}`}
             />
           ))}
