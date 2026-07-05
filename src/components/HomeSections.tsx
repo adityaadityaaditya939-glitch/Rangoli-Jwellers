@@ -466,53 +466,29 @@ const onTouchEnd = () => {
             <Link
               key={cat.slug}
               href={`/catalog?gender=${cat.slug}`}
-              className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br p-8 transition-all duration-300 hover:shadow-xl aspect-[3/4] sm:aspect-[3/4] flex flex-col items-center justify-center text-center"
-              style={{
-                background: index === 0
-                  ? 'linear-gradient(to bottom right, #fdf2f8, #fce7f3)'
-                  : index === 1
-                    ? 'linear-gradient(to bottom right, #ecfdf5, #d1fae5)'
-                    : 'linear-gradient(to bottom right, #eff6ff, #dbeafe)'
-              }}
+              className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 transition-all duration-300 hover:border-amber-400 aspect-[3/4] sm:aspect-[3/4]"
             >
-              <div className={`flex h-20 w-20 items-center justify-center rounded-full ${index === 0
-                  ? 'bg-pink-200/50 text-pink-800'
-                  : index === 1
-                    ? 'bg-emerald-200/50 text-emerald-800'
-                    : 'bg-blue-200/50 text-blue-800'
-                }`}>
-                {index === 0 && (
-                  <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              <Image
+                src={cat.image}
+                alt={cat.label}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/40" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+                <h3 className="font-serif text-2xl font-bold text-white sm:text-3xl">
+                  {cat.label}
+                </h3>
+                <p className="mt-2 text-sm text-white/90 sm:text-base">
+                  {index === 0 ? 'Elegant designs for her' : index === 1 ? 'Sophisticated pieces for him' : 'Beautiful creations for all'}
+                </p>
+                <div className="mt-4 flex items-center justify-center gap-2 text-amber-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
+                  <span className="text-sm font-medium">Shop Now</span>
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                   </svg>
-                )}
-                {index === 1 && (
-                  <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 012-4.444M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                )}
-                {index === 2 && (
-                  <svg className="h-10 w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                )}
-              </div>
-              <h3 className="mt-6 font-serif text-xl font-bold text-gray-900 sm:text-2xl lg:text-3xl">
-                {cat.label}
-              </h3>
-              <p className="mt-3 text-sm text-gray-600 sm:text-base">
-                {index === 0 ? 'Elegant designs for her' : index === 1 ? 'Sophisticated pieces for him' : 'Beautiful creations for all'}
-              </p>
-              <div className={`mt-6 flex items-center rounded-full px-4 py-2 text-sm font-medium transition-all ${index === 0
-                  ? 'bg-pink-100 text-pink-800 group-hover:bg-pink-200'
-                  : index === 1
-                    ? 'bg-emerald-100 text-emerald-800 group-hover:bg-emerald-200'
-                    : 'bg-blue-100 text-blue-800 group-hover:bg-blue-200'
-                }`}>
-                <span>Shop Now</span>
-                <svg className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
+                </div>
               </div>
             </Link>
           ))}
@@ -538,55 +514,36 @@ const onTouchEnd = () => {
       </section>
 
       <section id="section-traditional" className="mx-auto max-w-7xl px-4 py-10 pb-24 sm:py-14 lg:px-8">
-        <SectionHeading title="Traditional Elegance" subtitle="Lehenga, Suits & Saree jewellery" />
+        <SectionHeading title="Traditional Elegance" />
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
           {TRADITIONAL_CATEGORIES.map((cat, index) => (
             <Link
               key={cat.slug}
               href={`/catalog?category=${cat.slug}`}
-              className="group relative overflow-hidden rounded-2xl border-2 border-gray-100 bg-gradient-to-br p-8 transition-all duration-300 hover:shadow-xl aspect-[3/4] flex flex-col items-center justify-center text-center"
-              style={{
-                background: index === 0
-                  ? 'linear-gradient(to bottom right, #fef3c7, #fde68a)'
-                  : index === 1
-                    ? 'linear-gradient(to bottom right, #fce7f3, #fbcfe8)'
-                    : 'linear-gradient(to bottom right, #ddd6fe, #c4b5fd)'
-              }}
+              className="group relative overflow-hidden rounded-2xl border-2 border-gray-200 transition-all duration-300 hover:border-amber-400 aspect-[3/4]"
             >
-              <div className={`flex h-16 w-16 items-center justify-center rounded-full ${index === 0
-                  ? 'bg-amber-200/50 text-amber-800'
-                  : index === 1
-                    ? 'bg-pink-200/50 text-pink-800'
-                    : 'bg-violet-200/50 text-violet-800'
-                }`}>
-                {index === 0 && (
-                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                  </svg>
-                )}
-                {index === 1 && (
-                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                  </svg>
-                )}
-                {index === 2 && (
-                  <svg className="h-8 w-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                  </svg>
-                )}
+              <Image
+                src={cat.image}
+                alt={cat.label}
+                fill
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent transition-all duration-300 group-hover:from-black/80 group-hover:via-black/40" />
+              <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+                <h3 className="font-serif text-xl font-bold text-white sm:text-2xl">
+                  {cat.label}
+                </h3>
+                <p className="mt-2 text-sm text-white/90 sm:text-base">
+                  {index === 0 ? 'Exquisite bridal wear' : index === 1 ? 'Elegant occasion wear' : 'Timeless ethnic fashion'}
+                </p>
+                <div className={`mt-4 h-1 w-16 mx-auto rounded-full transition-all group-hover:w-24 ${index === 0
+                    ? 'bg-amber-400'
+                    : index === 1
+                      ? 'bg-pink-400'
+                      : 'bg-violet-400'
+                  }`} />
               </div>
-              <h3 className="mt-6 font-serif text-lg font-bold text-gray-900 sm:text-xl md:text-2xl">
-                {cat.label}
-              </h3>
-              <p className="mt-3 text-sm text-gray-600 sm:text-base">
-                {index === 0 ? 'Bridal lehenga essentials' : index === 1 ? 'Perfect for suits & occasions' : 'Complete your saree look'}
-              </p>
-              <div className={`mt-6 h-1 w-16 rounded-full transition-all group-hover:w-24 ${index === 0
-                  ? 'bg-amber-400'
-                  : index === 1
-                    ? 'bg-pink-400'
-                    : 'bg-violet-400'
-                }`} />
             </Link>
           ))}
         </div>

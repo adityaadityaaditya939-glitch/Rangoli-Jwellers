@@ -11,11 +11,10 @@ export const SHOP = {
 export const IMAGES = {
   logo: "/images/New_logo1.png",
   hero: [
-    "/images/(B)Hero_sec_1.png",
-    "/images/(B)Hero_sec_2.png",
-    "/images/(B)Hero_sec_3.png",
-    "/images/(B)Hero_sec_4.png",
-    "/images/(B)Hero_sec_5.png",
+    "/images/Hero_sec_1.jpg",
+    "/images/Hero_sec_2.jpg",
+    "/images/Hero_sec_3.jpg",
+    "/images/Hero_sec_4.jpg",
   ],
   collection: [
     "/images/(C)Collection_sec_type1.png",
@@ -57,9 +56,9 @@ export const WORLD_CATEGORIES = [
 ] as const;
 
 export const GENDER_CATEGORIES = [
-  { label: "For Her", slug: "women", image: IMAGES.collection[0] },
-  { label: "For Him", slug: "men", image: IMAGES.collection[1] },
-  { label: "For Kids", slug: "kids", image: IMAGES.collection[2] },
+  { label: "For Her", slug: "women", image: "/images/Shop_by_gender_female.jpg" },
+  { label: "For Him", slug: "men", image: "/images/Shop_by_gender_male.jpg" },
+  { label: "For Kids", slug: "kids", image: "/images/Shop_by_gender_kid.jpg" },
 ] as const;
 
 export const CLOTHING_CATEGORIES = [
@@ -69,16 +68,16 @@ export const CLOTHING_CATEGORIES = [
 ] as const;
 
 export const TRADITIONAL_CATEGORIES = [
-  { label: "Lehenga Jewellery", slug: "lehenga", image: IMAGES.trending[0] },
-  { label: "Bridal Suits", slug: "suits", image: IMAGES.trending[1] },
-  { label: "Saree Collection", slug: "saree", image: IMAGES.trending[2] },
+  { label: "Traditional dresses", slug: "lehenga", image: "/images/Traditional_Elegance_1.jpg" },
+  { label: "Traditional dresses", slug: "suits", image: "/images/Traditional_Elegance_2.jpg" },
+  { label: "Traditional dresses", slug: "saree", image: "/images/Traditional_Elegance_3.jpg" },
 ] as const;
 
 export const EXPERIENCE_SLIDES = [
   {
     title: "Visit Our Store",
     subtitle: "Experience luxury in person at Rohru",
-    image: IMAGES.hero[4],
+    image: IMAGES.hero[0],
   },
   {
     title: "Book a Consultation",
