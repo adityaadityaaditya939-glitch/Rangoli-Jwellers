@@ -30,17 +30,9 @@ export default function ProductCard({ product }: ProductCardProps) {
           src={product.image_url}
           alt={product.name}
           fill
-          className="bg-white object-contain p-3 transition duration-500 group-hover:scale-105"
+          className="bg-white object-cover transition duration-500 group-hover:scale-105"
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
-
-        {product.stock === 1 && (
-          <div className="absolute top-3 left-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 px-3 py-1.5 shadow-md">
-            <span className="text-xs font-bold text-white tracking-wide">
-              ONLY 1 LEFT
-            </span>
-          </div>
-        )}
 
         <div className="absolute inset-0 bg-gradient-to-t from-black/0 via-transparent to-black/0 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       </Link>
@@ -52,11 +44,13 @@ export default function ProductCard({ product }: ProductCardProps) {
           </h3>
         </Link>
 
-        <div className="mt-2 flex items-baseline gap-1">
-          <p className="text-base font-bold text-gray-900 sm:text-lg">
-            ₹ {formatPrice(product.price)}
-          </p>
-        </div>
+        {product.price > 0 && (
+          <div className="mt-2 flex items-baseline gap-1">
+            <p className="text-base font-bold text-gray-900 sm:text-lg">
+              ₹ {formatPrice(product.price)}
+            </p>
+          </div>
+        )}
 
         <div className="mt-4 flex flex-col gap-2">
           <Link
@@ -70,7 +64,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#25D366] to-[#128C7E] py-2.5 text-xs font-semibold text-white transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark py-2.5 text-xs font-semibold text-white transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5"
           >
             <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />

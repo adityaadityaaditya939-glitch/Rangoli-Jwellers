@@ -101,12 +101,43 @@ export default function ProductManager() {
     loadProducts();
   }
 
+  async function handleResetProducts() {
+    if (!confirm("Reset all products? This will delete existing products and seed gold, diamond, and silver products.")) return;
+    setLoading(true);
+    try {
+      const res = await fetch("/api/setup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reset: true })
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setMessage(data.message);
+        loadProducts();
+      }
+    } catch {
+      setMessage("Reset failed");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="font-serif text-xl font-bold text-gray-900">
-          {editingId ? "Edit Product" : "Add Product"}
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="font-serif text-xl font-bold text-gray-900">
+            {editingId ? "Edit Product" : "Add Product"}
+          </h2>
+          <button
+            type="button"
+            onClick={handleResetProducts}
+            disabled={loading}
+            className="text-sm font-medium text-rangoli-maroon hover:underline disabled:opacity-50"
+          >
+            Reset Products
+          </button>
+        </div>
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <input
             required
@@ -180,6 +211,19 @@ export default function ProductManager() {
             onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
             className="w-full rounded-lg border border-gray-300 px-4 py-2.5"
           />
+          {form.imageUrl && (
+            <div className="mt-2">
+              <p className="text-xs text-gray-500 mb-1">Preview:</p>
+              <img
+                src={form.imageUrl}
+                alt="Product preview"
+                className="w-full max-h-48 object-contain rounded-lg border border-gray-200"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+            </div>
+          )}
           <label className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"
@@ -218,11 +262,21 @@ export default function ProductManager() {
               key={product.id}
               className="flex items-start justify-between gap-4 rounded-xl border border-gray-100 p-4"
             >
-              <div>
-                <p className="font-medium text-gray-900">{product.name}</p>
-                <p className="text-sm text-gray-500">
-                  ₹{Number(product.price).toLocaleString("en-IN")} · {product.category}
-                </p>
+              <div className="flex gap-3 items-start">
+                <img
+                  src={product.image_url}
+                  alt={product.name}
+                  className="w-16 h-16 object-cover rounded-lg border border-gray-200 shrink-0"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+                <div>
+                  <p className="font-medium text-gray-900">{product.name}</p>
+                  <p className="text-sm text-gray-500">
+                    ₹{Number(product.price).toLocaleString("en-IN")} · {product.category}
+                  </p>
+                </div>
               </div>
               <div className="flex shrink-0 gap-2">
                 <button

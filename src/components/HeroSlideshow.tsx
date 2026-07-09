@@ -171,7 +171,7 @@ export default function HeroSlideshow({
                   alt={`Hero Slide ${index + 1}`}
                   fill
                   priority={index === 0}
-                  className="object-cover"
+                  className="object-cover object-center lg:object-[center_15%]"
                   sizes="100vw"
                 />
 

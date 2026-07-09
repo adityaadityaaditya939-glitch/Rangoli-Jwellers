@@ -65,6 +65,13 @@ export async function initDatabase() {
   }
 }
 
+export async function resetProducts() {
+  const sql = getDb();
+  await sql`DELETE FROM products`;
+  // @ts-expect-error Neon type compatibility issue
+  await seedProducts(sql);
+}
+
 async function seedDefaultAdmin(sql: ReturnType<typeof neon>) {
   const adminEmail = process.env.ADMIN_EMAIL || "admin@rangolijwellers.com";
   const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
@@ -91,116 +98,69 @@ async function hashPassword(password: string): Promise<string> {
 }
 
 async function seedProducts(sql: ReturnType<typeof neon>) {
-  const samples = [
-    {
-      name: "Bloom Bud Gold Ring",
-      description: "Elegant gold ring with floral motif, perfect for daily wear.",
-      price: 66942,
-      category: "rings",
+  const samples = [];
+  
+  // Gold products
+  for (let i = 38; i >= 1; i--) {
+    samples.push({
+      name: "Gold Jewellery",
+      description: "",
+      price: 0,
+      category: "gold",
       metal: "Gold",
       gender: "women",
-      image: "/images/(D)Top_trending1.png",
-    },
-    {
-      name: "Bloom Cluster Gold Ring",
-      description: "Statement cluster ring crafted in 22K gold.",
-      price: 69044,
-      category: "rings",
-      metal: "Gold",
-      gender: "women",
-      image: "/images/(D)Top_trending2.png",
-    },
-    {
-      name: "Verdant Bloom Gold Ring",
-      description: "Nature-inspired gold ring with intricate detailing.",
-      price: 64351,
-      category: "rings",
-      metal: "Gold",
-      gender: "women",
-      image: "/images/(D)Top_trending3.png",
-    },
-    {
-      name: "Tropical Canopy Gold Drop Earrings",
-      description: "Stunning drop earrings for festive occasions.",
-      price: 119164,
-      category: "earrings",
-      metal: "Gold",
-      gender: "women",
-      image: "/images/(C)Collection_sec_type1.png",
-    },
-    {
-      name: "Coral Bloom Diamond Pendant",
-      description: "Diamond pendant with rose gold finish.",
-      price: 85400,
+      image: `/images/Gold_gdq/gp_${i}.JPG`,
+    });
+  }
+
+  // Diamond products
+  const diamondImages = [
+    "DSC01494.JPG",
+    "DSC01517.JPG",
+    "DSC01551.JPG",
+    "DSC01552.JPG",
+    "DSC01555.JPG",
+    "DSC01558.JPG",
+    "DSC01561.JPG"
+  ];
+  for (const img of diamondImages) {
+    samples.push({
+      name: "Diamond Jewellery",
+      description: "",
+      price: 0,
       category: "diamond",
       metal: "Diamond",
       gender: "women",
-      image: "/images/(C) Collection_sec_type2.png",
-    },
-    {
-      name: "Heritage Gold Necklace",
-      description: "Traditional gold necklace for weddings.",
-      price: 245000,
-      category: "wedding",
-      metal: "Gold",
-      gender: "women",
-      image: "/images/(C) Collection_sec_type3.png",
-    },
-    {
-      name: "Classic Daily Wear Bangles",
-      description: "Lightweight bangles for everyday elegance.",
-      price: 48200,
-      category: "daily-wear",
-      metal: "Gold",
-      gender: "women",
-      image: "/images/(B)Hero_sec_1.png",
-    },
-    {
-      name: "Royal Gemstone Ring",
-      description: "Premium gemstone ring with gold band.",
-      price: 92000,
-      category: "gemstone",
-      metal: "Mixed",
-      gender: "men",
-      image: "/images/(B)Hero_sec_2.png",
-    },
-    {
-      name: "Banarasi Silk Saree",
-      description: "Traditional Banarasi silk saree with intricate zari work.",
-      price: 45000,
-      category: "sarees",
-      metal: null,
-      gender: "women",
-      image: "/images/(C)Collection_sec_type1.png",
-    },
-    {
-      name: "Bridal Lehenga",
-      description: "Stunning bridal lehenga with heavy embroidery and sequin work.",
-      price: 85000,
-      category: "lehengas",
-      metal: null,
-      gender: "women",
-      image: "/images/(C) Collection_sec_type2.png",
-    },
-    {
-      name: "Embroidered Kurti",
-      description: "Beautiful embroidered kurti perfect for festive occasions.",
-      price: 2500,
-      category: "kurtis",
-      metal: null,
-      gender: "women",
-      image: "/images/(C) Collection_sec_type3.png",
-    },
-    {
-      name: "Royal Sherwani",
-      description: "Elegant sherwani with intricate handwork for grooms.",
-      price: 65000,
-      category: "sherwanis",
-      metal: null,
-      gender: "men",
-      image: "/images/(D)Top_trending1.png",
-    },
+      image: `/images/Daimond_products/${img}`,
+    });
+  }
+
+  // Silver products
+  const silverImages = [
+    "DSC01538.JPG",
+    "DSC01539.JPG",
+    "DSC01588.JPG",
+    "DSC08341.JPG",
+    "DSC08447.JPG",
+    "DSC08448.JPG",
+    "DSC08449.JPG",
+    "DSC08450.JPG",
+    "DSC08452.JPG",
+    "DSC08453.JPG",
+    "DSC08454.JPG",
+    "DSC08455.JPG"
   ];
+  for (const img of silverImages) {
+    samples.push({
+      name: "Silver Jewellery",
+      description: "",
+      price: 0,
+      category: "silver",
+      metal: "Silver",
+      gender: "women",
+      image: `/images/Silver_Products/${img}`,
+    });
+  }
 
   for (const item of samples) {
     await sql`

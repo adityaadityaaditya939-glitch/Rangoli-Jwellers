@@ -1,19 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { NAV_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
+
 export default function CatalogPageClient() {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "all";
   const gender = searchParams.get("gender");
-  const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch products
   useEffect(() => {
     setLoading(true);
     const params = new URLSearchParams();
@@ -26,11 +38,32 @@ export default function CatalogPageClient() {
         if (gender) {
           items = items.filter((p) => p.gender === gender);
         }
-        setProducts(items);
+        setAllProducts(items);
+        // Shuffle only for "all" category initially
+        if (category === "all" && !gender) {
+          setDisplayProducts(shuffleArray(items));
+        } else {
+          setDisplayProducts(items);
+        }
       })
-      .catch(() => setProducts([]))
+      .catch(() => {
+        setAllProducts([]);
+        setDisplayProducts([]);
+      })
       .finally(() => setLoading(false));
   }, [category, gender]);
+
+  // Auto-shuffle for "all" category only
+  useEffect(() => {
+    if (category !== "all" || gender) return;
+
+    // Shuffle every 30 seconds
+    const shuffleInterval = setInterval(() => {
+      setDisplayProducts((prev) => shuffleArray(prev));
+    }, 30000);
+
+    return () => clearInterval(shuffleInterval);
+  }, [category, gender, allProducts]);
 
   const categoryLabel =
     NAV_CATEGORIES.find((c) => c.slug === category)?.label ||
@@ -49,7 +82,7 @@ export default function CatalogPageClient() {
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold text-gray-900">{categoryLabel}</h1>
-          <p className="mt-1 text-sm text-gray-500">({products.length} results)</p>
+          <p className="mt-1 text-sm text-gray-500">({displayProducts.length} results)</p>
         </div>
       </div>
 
@@ -81,7 +114,7 @@ export default function CatalogPageClient() {
 
       {loading ? (
         <div className="py-20 text-center text-gray-500">Loading collection...</div>
-      ) : products.length === 0 ? (
+      ) : displayProducts.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-200 py-20 text-center">
           <p className="text-gray-500">No products found in this category.</p>
           <Link href="/catalog" className="mt-4 inline-block text-rangoli-maroon hover:underline">
@@ -90,7 +123,7 @@ export default function CatalogPageClient() {
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6">
-  {products.map((product) => (
+  {displayProducts.map((product) => (
     <div key={product.id} className="min-w-0">
       <ProductCard product={product} />
     </div>
