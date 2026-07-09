@@ -109,19 +109,19 @@ async function seedProducts(sql: ReturnType<typeof neon>) {
       category: "gold",
       metal: "Gold",
       gender: "women",
-      image: `/images/Gold_gdq/gp_${i}.JPG`,
+      image: `/images/Gold_gdq/gp_${i}.jpg`,
     });
   }
 
   // Diamond products
   const diamondImages = [
-    "DSC01494.JPG",
-    "DSC01517.JPG",
-    "DSC01551.JPG",
-    "DSC01552.JPG",
-    "DSC01555.JPG",
-    "DSC01558.JPG",
-    "DSC01561.JPG"
+    "DSC01494.jpg",
+    "DSC01517.jpg",
+    "DSC01551.jpg",
+    "DSC01552.jpg",
+    "DSC01555.jpg",
+    "DSC01558.jpg",
+    "DSC01561.jpg"
   ];
   for (const img of diamondImages) {
     samples.push({
@@ -137,18 +137,18 @@ async function seedProducts(sql: ReturnType<typeof neon>) {
 
   // Silver products
   const silverImages = [
-    "DSC01538.JPG",
-    "DSC01539.JPG",
-    "DSC01588.JPG",
-    "DSC08341.JPG",
-    "DSC08447.JPG",
-    "DSC08448.JPG",
-    "DSC08449.JPG",
-    "DSC08450.JPG",
-    "DSC08452.JPG",
-    "DSC08453.JPG",
-    "DSC08454.JPG",
-    "DSC08455.JPG"
+    "DSC01538.jpg",
+    "DSC01539.jpg",
+    "DSC01588.jpg",
+    "DSC08341.jpg",
+    "DSC08447.jpg",
+    "DSC08448.jpg",
+    "DSC08449.jpg",
+    "DSC08450.jpg",
+    "DSC08452.jpg",
+    "DSC08453.jpg",
+    "DSC08454.jpg",
+    "DSC08455.jpg"
   ];
   for (const img of silverImages) {
     samples.push({
