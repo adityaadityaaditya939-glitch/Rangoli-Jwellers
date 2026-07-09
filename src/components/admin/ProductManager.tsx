@@ -214,6 +214,7 @@ export default function ProductManager() {
           {form.imageUrl && (
             <div className="mt-2">
               <p className="text-xs text-gray-500 mb-1">Preview:</p>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={form.imageUrl}
                 alt="Product preview"
@@ -263,6 +264,7 @@ export default function ProductManager() {
               className="flex items-start justify-between gap-4 rounded-xl border border-gray-100 p-4"
             >
               <div className="flex gap-3 items-start">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={product.image_url}
                   alt={product.name}
