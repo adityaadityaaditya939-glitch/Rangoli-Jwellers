@@ -131,7 +131,7 @@ async function seedProducts(sql: ReturnType<typeof neon>) {
       category: "diamond",
       metal: "Diamond",
       gender: "women",
-      image: `/images/Daimond_products/${img}`,
+      image: `/images/Diamond_products/${img}`,
     });
   }
 
