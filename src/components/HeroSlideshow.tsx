@@ -144,7 +144,7 @@ export default function HeroSlideshow({
 
   return (
     <section className="relative overflow-hidden bg-white">
-      <div className="relative aspect-[4/5] w-full sm:aspect-[16/9] lg:aspect-[16/9]">
+      <div className="relative aspect-[4/5] w-full sm:aspect-[16/9] lg:aspect-[21.5/9]">
         {/* Carousel Container */}
         <div
           ref={containerRef}
@@ -166,7 +166,7 @@ export default function HeroSlideshow({
             return (
               <div
                 key={src}
-                className="absolute h-full w-[90%] overflow-hidden rounded-3xl shadow-2xl"
+                className="absolute h-full w-[60%] overflow-hidden rounded-3xl shadow-3xl"
                 style={style}
               >
                 {/* Mobile Image */}
@@ -184,7 +184,7 @@ export default function HeroSlideshow({
                   alt={`Hero Slide ${index + 1}`}
                   fill
                   priority={index === 0}
-                  className="object-cover object-center hidden lg:block"
+                  className="object-cover object-top hidden lg:block"
                   sizes="100vw"
                 />
 

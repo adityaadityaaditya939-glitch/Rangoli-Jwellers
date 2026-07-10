@@ -53,10 +53,10 @@ export const NAV_CATEGORIES = [
 ] as const;
 
 export const PERFECT_MATCH_CATEGORIES = [
-  { label: "Earrings", slug: "earrings", image: IMAGES.collection[0] },
-  { label: "Pendants", slug: "pendants", image: IMAGES.collection[1] },
-  { label: "Finger Rings", slug: "rings", image: IMAGES.trending[0] },
-  { label: "Mangalsutra", slug: "mangalsutra", image: IMAGES.trending[1] },
+  { label: "Earrings", slug: "earrings", image: "/images/shop_by_category_earrings.jpg" },
+  { label: "Pendants", slug: "pendants", image: "/images/shop_by_category_pendant.jpg" },
+  { label: "Finger Rings", slug: "rings", image: "/images/shop_by_category_fingerrings.jpg" },
+  { label: "Mangalsutra", slug: "mangalsutra", image: "/images/shop_by_category_magalsutra.jpg" },
 ] as const;
 
 export const WORLD_CATEGORIES = [
@@ -88,7 +88,7 @@ export const EXPERIENCE_SLIDES = [
   {
     title: "Visit Our Store",
     subtitle: "Experience luxury in person at Rohru",
-    image: IMAGES.hero[0],
+    image: "/images/Visit_our_store.png",
   },
   {
     title: "Book a Consultation",
