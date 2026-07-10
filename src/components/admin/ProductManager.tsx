@@ -1,8 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES } from "@/lib/constants";
+import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
+
+const JEWELRY_CATEGORIES = PRODUCT_CATEGORIES.filter(
+  (cat) => cat !== "all" && 
+  !["lehenga", "suits", "saree", "sarees", "lehengas", "kurtis", "sherwanis", "traditional-wears"].includes(cat)
+);
+
+const CLOTHING_SLUGS = CLOTHING_CATEGORIES.map((c) => c.slug);
 
 const emptyForm = {
   name: "",
@@ -14,14 +21,16 @@ const emptyForm = {
   imageUrl: IMAGES.trending[0] as string,
   stock: "1",
   isFeatured: false,
+  productType: "jewelry" as "jewelry" | "clothing",
 };
 
 export default function ProductManager() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean}>(emptyForm);
+  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean; productType: "jewelry" | "clothing"}>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [inventoryFilter, setInventoryFilter] = useState<"all" | "jewelry" | "clothing">("all");
 
   const loadProducts = useCallback(() => {
     fetch("/api/products")
@@ -37,6 +46,11 @@ export default function ProductManager() {
   function resetForm() {
     setForm(emptyForm);
     setEditingId(null);
+  }
+
+  function handleProductTypeChange(type: "jewelry" | "clothing") {
+    const defaultCategory = type === "jewelry" ? "rings" : ("lehenga" as const);
+    setForm({ ...form, productType: type, category: defaultCategory });
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -81,6 +95,7 @@ export default function ProductManager() {
 
   function startEdit(product: Product) {
     setEditingId(product.id);
+    const isClothing = CLOTHING_SLUGS.includes(product.category);
     setForm({
       name: product.name,
       description: product.description || "",
@@ -91,6 +106,7 @@ export default function ProductManager() {
       imageUrl: product.image_url || IMAGES.trending[0],
       stock: String(product.stock),
       isFeatured: product.is_featured,
+      productType: isClothing ? "clothing" : "jewelry",
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -171,29 +187,74 @@ export default function ProductManager() {
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5"
             />
           </div>
-          <select
-            value={form.category}
-            onChange={(e) => setForm({ ...form, category: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5"
-          >
-            {PRODUCT_CATEGORIES.filter((c) => c !== "all").map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
-            ))}
-          </select>
-          <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Product Type</label>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => handleProductTypeChange("jewelry")}
+                className={`flex-1 rounded-lg px-4 py-2.5 font-medium transition-all ${
+                  form.productType === "jewelry"
+                    ? "bg-rangoli-maroon text-white"
+                    : "border-2 border-gray-300 text-gray-700 hover:border-rangoli-maroon"
+                }`}
+              >
+                💎 Jewelry
+              </button>
+              <button
+                type="button"
+                onClick={() => handleProductTypeChange("clothing")}
+                className={`flex-1 rounded-lg px-4 py-2.5 font-medium transition-all ${
+                  form.productType === "clothing"
+                    ? "bg-rangoli-maroon text-white"
+                    : "border-2 border-gray-300 text-gray-700 hover:border-rangoli-maroon"
+                }`}
+              >
+                👗 Clothing
+              </button>
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {form.productType === "jewelry" ? "Jewelry Category" : "Clothing Category"}
+            </label>
             <select
-              value={form.metal}
-              onChange={(e) => setForm({ ...form, metal: e.target.value })}
+              value={form.category}
+              onChange={(e) => setForm({ ...form, category: e.target.value })}
               className="w-full rounded-lg border border-gray-300 px-4 py-2.5"
             >
-              {METAL_OPTIONS.map((metal) => (
-                <option key={metal} value={metal}>
-                  {metal}
-                </option>
-              ))}
+              {form.productType === "jewelry" 
+                ? JEWELRY_CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                    </option>
+                  ))
+                : CLOTHING_SLUGS.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {CLOTHING_CATEGORIES.find((c) => c.slug === cat)?.label || cat}
+                    </option>
+                  ))
+              }
             </select>
+          </div>
+          {form.productType === "jewelry" && (
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Metal Type</label>
+              <select
+                value={form.metal}
+                onChange={(e) => setForm({ ...form, metal: e.target.value })}
+                className="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+              >
+                {METAL_OPTIONS.map((metal) => (
+                  <option key={metal} value={metal}>
+                    {metal}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
             <select
               value={form.gender}
               onChange={(e) => setForm({ ...form, gender: e.target.value })}
@@ -256,9 +317,52 @@ export default function ProductManager() {
       </div>
 
       <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
-        <h2 className="font-serif text-xl font-bold text-gray-900">Inventory ({products.length})</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-serif text-xl font-bold text-gray-900">Inventory ({products.length})</h2>
+          <div className="flex gap-2">
+            <button
+              type="button"
+              onClick={() => setInventoryFilter("all")}
+              className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${
+                inventoryFilter === "all"
+                  ? "bg-rangoli-maroon text-white"
+                  : "border border-gray-300 text-gray-700 hover:border-rangoli-maroon"
+              }`}
+            >
+              All
+            </button>
+            <button
+              type="button"
+              onClick={() => setInventoryFilter("jewelry")}
+              className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${
+                inventoryFilter === "jewelry"
+                  ? "bg-rangoli-maroon text-white"
+                  : "border border-gray-300 text-gray-700 hover:border-rangoli-maroon"
+              }`}
+            >
+              Jewelry
+            </button>
+            <button
+              type="button"
+              onClick={() => setInventoryFilter("clothing")}
+              className={`px-3 py-1.5 text-sm font-medium rounded-lg transition-all ${
+                inventoryFilter === "clothing"
+                  ? "bg-rangoli-maroon text-white"
+                  : "border border-gray-300 text-gray-700 hover:border-rangoli-maroon"
+              }`}
+            >
+              Clothing
+            </button>
+          </div>
+        </div>
         <div className="mt-4 max-h-[700px] space-y-3 overflow-y-auto">
-          {products.map((product) => (
+          {products
+            .filter((product) => {
+              if (inventoryFilter === "all") return true;
+              const isClothing = CLOTHING_SLUGS.includes(product.category);
+              return inventoryFilter === "clothing" ? isClothing : !isClothing;
+            })
+            .map((product) => (
             <div
               key={product.id}
               className="flex items-start justify-between gap-4 rounded-xl border border-gray-100 p-4"

@@ -76,6 +76,7 @@ export const CLOTHING_CATEGORIES = [
   { label: "Lehenga", slug: "lehenga", image: "/images/Clothing_collection_Lehanga.jpg", tall: true },
   { label: "Suits", slug: "suits", image: "/images/Clothing_collection_Suit.jpg", tall: true },
   { label: "Saree", slug: "saree", image: "/images/Clothing_collecting_Saare.jpg", tall: true },
+  { label: "Traditional Wears", slug: "traditional-wears", image: "/images/Traditional_Elegance_1.1.JPG", tall: true },
 ] as const;
 
 export const TRADITIONAL_CATEGORIES = [
@@ -119,6 +120,7 @@ export const PRODUCT_CATEGORIES = [
   "lehengas",
   "kurtis",
   "sherwanis",
+  "traditional-wears",
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];

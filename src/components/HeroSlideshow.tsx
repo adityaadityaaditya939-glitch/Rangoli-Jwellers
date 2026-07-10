@@ -118,7 +118,7 @@ export default function HeroSlideshow({
   const getSlideStyle = (index: number) => {
     const totalSlides = images.length;
     const centerIndex = currentIndex;
-    
+
     // Calculate distance from center (with wrap-around)
     let distance = index - centerIndex;
     if (distance > totalSlides / 2) distance -= totalSlides;
@@ -126,7 +126,7 @@ export default function HeroSlideshow({
 
     // Base translation
     const slideWidth = 100; // percentage
-    const gap = 8; // percentage gap
+    const gap = 3; // percentage gap
     const baseTranslate = distance * (slideWidth + gap);
 
     // Scale and opacity based on distance
@@ -166,7 +166,16 @@ export default function HeroSlideshow({
             return (
               <div
                 key={src}
-                className="absolute h-full w-[60%] overflow-hidden rounded-3xl shadow-3xl"
+                className="
+absolute
+h-full
+w-[88%]
+sm:w-[72%]
+lg:w-[60%]
+overflow-hidden
+rounded-3xl
+shadow-3xl
+"
                 style={style}
               >
                 {/* Mobile Image */}
@@ -195,7 +204,7 @@ export default function HeroSlideshow({
                 {isActive && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white">
                     <span className="mb-3 h-0.5 w-12 rounded-full bg-rangoli-gold sm:mb-4 sm:w-16" />
-                    
+
                     <p className="text-[10px] uppercase tracking-[0.35em] text-rangoli-gold sm:text-xs sm:tracking-[0.4em]">
                       Since 1998 • Rohru
                     </p>
@@ -248,11 +257,10 @@ export default function HeroSlideshow({
             <button
               key={index}
               onClick={() => goToSlide(index)}
-              className={`rounded-full transition-all duration-300 ${
-                index === currentIndex
-                  ? "h-2 w-8 bg-rangoli-gold sm:h-2.5 sm:w-10"
-                  : "h-2 w-2 bg-white/50 hover:bg-white/70 sm:h-2.5 sm:w-2.5"
-              }`}
+              className={`rounded-full transition-all duration-300 ${index === currentIndex
+                ? "h-2 w-8 bg-rangoli-gold sm:h-2.5 sm:w-10"
+                : "h-2 w-2 bg-white/50 hover:bg-white/70 sm:h-2.5 sm:w-2.5"
+                }`}
               aria-label={`Slide ${index + 1}`}
             />
           ))}
