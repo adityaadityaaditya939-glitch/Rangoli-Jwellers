@@ -95,7 +95,7 @@ export default function ProductManager() {
 
   function startEdit(product: Product) {
     setEditingId(product.id);
-    const isClothing = CLOTHING_SLUGS.includes(product.category as any);
+    const isClothing = CLOTHING_SLUGS.includes(product.category as "lehenga" | "suits" | "saree" | "traditional-wears");
     setForm({
       name: product.name,
       description: product.description || "",
@@ -359,7 +359,7 @@ export default function ProductManager() {
           {products
             .filter((product) => {
               if (inventoryFilter === "all") return true;
-              const isClothing = CLOTHING_SLUGS.includes(product.category as any);
+              const isClothing = CLOTHING_SLUGS.includes(product.category as "lehenga" | "suits" | "saree" | "traditional-wears");
               return inventoryFilter === "clothing" ? isClothing : !isClothing;
             })
             .map((product) => (
