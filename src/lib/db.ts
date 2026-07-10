@@ -162,6 +162,27 @@ async function seedProducts(sql: ReturnType<typeof neon>) {
     });
   }
 
+  // Clothing products
+  const clothingProducts = [
+    { name: "Pink Lehenga", category: "lehenga", image: "/images/Clothes/Pink_Rejta.jpg", gender: "women" },
+    { name: "Sadri Saree", category: "saree", image: "/images/Clothes/Sadri.jpg", gender: "women" },
+    { name: "Elegant Suit", category: "suits", image: "/images/Clothes/Suit.jpg", gender: "women" },
+    { name: "Traditional Lehenga", category: "lehenga", image: "/images/Clothing_collection_Lehanga.jpg", gender: "women" },
+    { name: "Traditional Saree", category: "saree", image: "/images/Clothing_collecting_Saare.jpg", gender: "women" },
+    { name: "Traditional Suit", category: "suits", image: "/images/Clothing_collection_Suit.jpg", gender: "women" },
+  ];
+  for (const item of clothingProducts) {
+    samples.push({
+      name: item.name,
+      description: "",
+      price: 0,
+      category: item.category,
+      metal: null,
+      gender: item.gender,
+      image: item.image,
+    });
+  }
+
   for (const item of samples) {
     await sql`
       INSERT INTO products (name, description, price, category, metal, gender, image_url, stock, is_featured)
