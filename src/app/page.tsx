@@ -6,7 +6,7 @@ import { IMAGES } from "@/lib/constants";
 export default function HomePage() {
   return (
     <>
-      <HeroSlideshow images={IMAGES.hero} />
+      <HeroSlideshow images={IMAGES.hero} desktopImages={IMAGES.heroDesktop} />
       <HomeNav />
       <HomeSections />
     </>

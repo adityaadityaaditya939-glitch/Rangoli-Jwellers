@@ -6,11 +6,13 @@ import Link from "next/link";
 
 interface HeroSlideshowProps {
   images: readonly string[];
+  desktopImages?: readonly string[];
   interval?: number;
 }
 
 export default function HeroSlideshow({
   images,
+  desktopImages,
   interval = 5000,
 }: HeroSlideshowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -142,7 +144,7 @@ export default function HeroSlideshow({
 
   return (
     <section className="relative overflow-hidden bg-white">
-      <div className="relative aspect-[4/5] w-full sm:aspect-[16/9] lg:aspect-[22/9]">
+      <div className="relative aspect-[4/5] w-full sm:aspect-[16/9] lg:aspect-[16/9]">
         {/* Carousel Container */}
         <div
           ref={containerRef}
@@ -159,6 +161,7 @@ export default function HeroSlideshow({
           {images.map((src, index) => {
             const style = getSlideStyle(index);
             const isActive = index === currentIndex;
+            const desktopImageSrc = desktopImages ? desktopImages[index] || src : src;
 
             return (
               <div
@@ -166,12 +169,22 @@ export default function HeroSlideshow({
                 className="absolute h-full w-[90%] overflow-hidden rounded-3xl shadow-2xl"
                 style={style}
               >
+                {/* Mobile Image */}
                 <Image
                   src={src}
                   alt={`Hero Slide ${index + 1}`}
                   fill
                   priority={index === 0}
-                  className="object-cover object-center lg:object-[center_15%]"
+                  className="object-cover object-center lg:hidden"
+                  sizes="100vw"
+                />
+                {/* Desktop Image */}
+                <Image
+                  src={desktopImageSrc}
+                  alt={`Hero Slide ${index + 1}`}
+                  fill
+                  priority={index === 0}
+                  className="object-cover object-center hidden lg:block"
                   sizes="100vw"
                 />
 

@@ -12,6 +12,16 @@ export const IMAGES = {
   logo: "/images/New_logo1.png",
   hero: [
     "/images/Latest_Hero_sec_1.png",
+    "/images/Hero_sec_2_new.JPG",
+    "/images/Hero_sec_3_new.JPG",
+    "/images/Hero_sec_2.jpg",
+    "/images/Hero_sec_3.jpg",
+    "/images/Hero_sec_4.jpg",
+  ],
+  heroDesktop: [
+    "/images/Latest_Hero_sec_1.png",
+    "/images/Hero_sec_2_new - Crop.JPG",
+    "/images/Hero_sec_3_new - Crop.JPG",
     "/images/Hero_sec_2.jpg",
     "/images/Hero_sec_3.jpg",
     "/images/Hero_sec_4.jpg",
@@ -69,7 +79,7 @@ export const CLOTHING_CATEGORIES = [
 ] as const;
 
 export const TRADITIONAL_CATEGORIES = [
-  { label: "Traditional dresses", slug: "lehenga", image: "/images/Traditional_Elegance_1.jpg" },
+  { label: "Traditional dresses", slug: "lehenga", image: "/images/Traditional_Elegance_1.1.JPG" },
   { label: "Traditional dresses", slug: "suits", image: "/images/Traditional_Elegance_2.jpg" },
   { label: "Traditional dresses", slug: "saree", image: "/images/Traditional_Elegance_3.jpg" },
 ] as const;
