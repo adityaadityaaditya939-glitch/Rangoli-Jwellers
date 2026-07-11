@@ -33,7 +33,9 @@ export async function PUT(request: Request, { params }: RouteParams) {
     const parsed = productSchema.safeParse(body);
 
     if (!parsed.success) {
-      return jsonError(parsed.error.issues[0]?.message || "Invalid input");
+      console.error("Validation error:", parsed.error.issues);
+      const errorDetails = parsed.error.issues.map(issue => `${issue.path.join('.')}: ${issue.message}`).join(', ');
+      return jsonError(`Validation failed: ${errorDetails}`);
     }
 
     const data = parsed.data;
@@ -50,6 +52,9 @@ export async function PUT(request: Request, { params }: RouteParams) {
         image_url = ${sanitizeString(data.imageUrl, 500)},
         stock = ${data.stock},
         is_featured = ${data.isFeatured},
+        image_position_x = ${data.imagePositionX ?? 50},
+        image_position_y = ${data.imagePositionY ?? 50},
+        image_scale = ${data.imageScale ?? 100},
         updated_at = NOW()
       WHERE id = ${Number(id)}
       RETURNING *

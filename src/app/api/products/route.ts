@@ -9,6 +9,7 @@ export async function GET(request: Request) {
     const category = searchParams.get("category");
     const featured = searchParams.get("featured");
     const type = searchParams.get("type"); // 'jewellery' or 'clothing'
+    const admin = searchParams.get("admin"); // 'true' for admin dashboard
     const sql = getDb();
 
     let rows;
@@ -29,6 +30,12 @@ export async function GET(request: Request) {
       rows = await sql`
         SELECT * FROM products
         WHERE category IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears')
+        ORDER BY created_at DESC
+      `;
+    } else if (admin === "true") {
+      // Admin dashboard: return all products
+      rows = await sql`
+        SELECT * FROM products
         ORDER BY created_at DESC
       `;
     } else {
@@ -64,7 +71,7 @@ export async function POST(request: Request) {
     const sql = getDb();
 
     const rows = await sql`
-      INSERT INTO products (name, description, price, category, metal, gender, image_url, stock, is_featured)
+      INSERT INTO products (name, description, price, category, metal, gender, image_url, stock, is_featured, image_position_x, image_position_y, image_scale)
       VALUES (
         ${sanitizeString(data.name, 255)},
         ${data.description ? sanitizeString(data.description, 2000) : null},
@@ -74,7 +81,10 @@ export async function POST(request: Request) {
         ${data.gender ? sanitizeString(data.gender, 20) : null},
         ${sanitizeString(data.imageUrl, 500)},
         ${data.stock},
-        ${data.isFeatured}
+        ${data.isFeatured},
+        ${data.imagePositionX ?? 50},
+        ${data.imagePositionY ?? 50},
+        ${data.imageScale ?? 100}
       )
       RETURNING *
     `;

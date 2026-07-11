@@ -15,15 +15,18 @@ export const consultationSchema = z.object({
 });
 
 export const productSchema = z.object({
-  name: z.string().min(2, "Product name is required"),
+  name: z.string().min(1, "Product name is required"),
   description: z.string().optional(),
-  price: z.number().positive("Price must be positive"),
+  price: z.number().min(0, "Price must be 0 or greater"),
   category: z.string().min(1, "Category is required"),
   metal: z.string().optional(),
   gender: z.string().optional(),
-  imageUrl: z.string().min(1, "Image URL is required"),
+  imageUrl: z.string().optional(),
   stock: z.number().int().min(0).default(1),
   isFeatured: z.boolean().default(false),
+  imagePositionX: z.number().min(0).max(100).optional(),
+  imagePositionY: z.number().min(0).max(100).optional(),
+  imageScale: z.number().min(10).max(300).optional(),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;

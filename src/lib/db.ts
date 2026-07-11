@@ -34,6 +34,9 @@ export async function initDatabase() {
       image_url VARCHAR(500) NOT NULL,
       stock INTEGER DEFAULT 1,
       is_featured BOOLEAN DEFAULT false,
+      image_position_x DECIMAL(5, 2) DEFAULT 50,
+      image_position_y DECIMAL(5, 2) DEFAULT 50,
+      image_scale DECIMAL(5, 2) DEFAULT 100,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
     )
@@ -212,6 +215,9 @@ export interface Product {
   image_url: string;
   stock: number;
   is_featured: boolean;
+  image_position_x: number;
+  image_position_y: number;
+  image_scale: number;
   created_at: string;
   updated_at: string;
 }

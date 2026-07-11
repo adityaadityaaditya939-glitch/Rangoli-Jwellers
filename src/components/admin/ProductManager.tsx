@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
+import ImagePositionEditor from "./ImagePositionEditor";
 
 const JEWELRY_CATEGORIES = PRODUCT_CATEGORIES.filter(
   (cat) => cat !== "all" && 
@@ -22,18 +23,21 @@ const emptyForm = {
   stock: "1",
   isFeatured: false,
   productType: "jewelry" as "jewelry" | "clothing",
+  imagePositionX: 50,
+  imagePositionY: 50,
+  imageScale: 100,
 };
 
 export default function ProductManager() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean; productType: "jewelry" | "clothing"}>(emptyForm);
+  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean; productType: "jewelry" | "clothing"; imagePositionX: number; imagePositionY: number; imageScale: number}>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [inventoryFilter, setInventoryFilter] = useState<"all" | "jewelry" | "clothing">("all");
 
   const loadProducts = useCallback(() => {
-    fetch("/api/products")
+    fetch("/api/products?admin=true")
       .then((res) => res.json())
       .then((data) => setProducts(data.products || []))
       .catch(() => {});
@@ -58,6 +62,28 @@ export default function ProductManager() {
     setLoading(true);
     setMessage("");
 
+    // Client-side validation
+    if (!form.name.trim()) {
+      setMessage("Product name is required");
+      setLoading(false);
+      return;
+    }
+    if (form.price === "" || isNaN(Number(form.price)) || Number(form.price) < 0) {
+      setMessage("Price must be a valid number (0 or greater)");
+      setLoading(false);
+      return;
+    }
+    if (form.stock === "" || isNaN(Number(form.stock)) || Number(form.stock) < 0) {
+      setMessage("Stock must be a valid number (0 or greater)");
+      setLoading(false);
+      return;
+    }
+    if (!form.imageUrl.trim()) {
+      setMessage("Image URL is required");
+      setLoading(false);
+      return;
+    }
+
     const payload = {
       name: form.name,
       description: form.description,
@@ -68,6 +94,9 @@ export default function ProductManager() {
       imageUrl: form.imageUrl,
       stock: Number(form.stock),
       isFeatured: form.isFeatured,
+      imagePositionX: Number(form.imagePositionX) || 50,
+      imagePositionY: Number(form.imagePositionY) || 50,
+      imageScale: Number(form.imageScale) || 100,
     };
 
     try {
@@ -83,11 +112,12 @@ export default function ProductManager() {
         return;
       }
 
-      setMessage(editingId ? "Product updated" : "Product added");
+      setMessage(editingId ? "Product updated successfully" : "Product added successfully");
+      setTimeout(() => setMessage(""), 3000);
       resetForm();
       loadProducts();
     } catch {
-      setMessage("Something went wrong");
+      setMessage("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -107,6 +137,9 @@ export default function ProductManager() {
       stock: String(product.stock),
       isFeatured: product.is_featured,
       productType: isClothing ? "clothing" : "jewelry",
+      imagePositionX: product.image_position_x || 50,
+      imagePositionY: product.image_position_y || 50,
+      imageScale: product.image_scale || 100,
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -173,6 +206,8 @@ export default function ProductManager() {
             <input
               required
               type="number"
+              min="0"
+              step="0.01"
               placeholder="Price"
               value={form.price}
               onChange={(e) => setForm({ ...form, price: e.target.value })}
@@ -181,6 +216,7 @@ export default function ProductManager() {
             <input
               required
               type="number"
+              min="0"
               placeholder="Stock"
               value={form.stock}
               onChange={(e) => setForm({ ...form, stock: e.target.value })}
@@ -286,6 +322,15 @@ export default function ProductManager() {
               />
             </div>
           )}
+          {form.imageUrl && (
+            <ImagePositionEditor
+              imageUrl={form.imageUrl}
+              positionX={form.imagePositionX}
+              positionY={form.imagePositionY}
+              scale={form.imageScale}
+              onChange={(x, y, s) => setForm({ ...form, imagePositionX: x, imagePositionY: y, imageScale: s })}
+            />
+          )}
           <label className="flex items-center gap-2 text-sm">
             <input
               type="checkbox"
@@ -294,7 +339,15 @@ export default function ProductManager() {
             />
             Featured on homepage
           </label>
-          {message && <p className="text-sm text-rangoli-maroon">{message}</p>}
+          {message && (
+            <div className={`p-3 rounded-lg text-sm ${
+              message.includes("successfully") 
+                ? "bg-green-50 text-green-700 border border-green-200" 
+                : "bg-red-50 text-red-700 border border-red-200"
+            }`}>
+              {message}
+            </div>
+          )}
           <div className="flex gap-3">
             <button
               type="submit"
