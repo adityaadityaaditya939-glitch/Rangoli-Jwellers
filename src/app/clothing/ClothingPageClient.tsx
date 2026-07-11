@@ -16,15 +16,13 @@ export default function ClothingPageClient() {
   useEffect(() => {
     setLoading(true);
     const params = new URLSearchParams();
+    params.set("type", "clothing");
     if (category && category !== "all") params.set("category", category);
- 
+
     fetch(`/api/products?${params.toString()}`)
       .then((res) => res.json())
       .then((data) => {
         let items: Product[] = data.products || [];
-        // Filter for clothing categories
-        const clothingSlugs = CLOTHING_CATEGORIES.map((c) => c.slug) as string[];
-        items = items.filter((p) => clothingSlugs.includes(p.category));
         if (category && category !== "all") {
           items = items.filter((p) => p.category === category);
         }

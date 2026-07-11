@@ -8,6 +8,7 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const category = searchParams.get("category");
     const featured = searchParams.get("featured");
+    const type = searchParams.get("type"); // 'jewellery' or 'clothing'
     const sql = getDb();
 
     let rows;
@@ -23,8 +24,20 @@ export async function GET(request: Request) {
         WHERE is_featured = true
         ORDER BY created_at DESC
       `;
+    } else if (type === "clothing") {
+      // Only clothing categories
+      rows = await sql`
+        SELECT * FROM products
+        WHERE category IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears')
+        ORDER BY created_at DESC
+      `;
     } else {
-      rows = await sql`SELECT * FROM products ORDER BY created_at DESC`;
+      // Default: exclude clothing categories (jewellery)
+      rows = await sql`
+        SELECT * FROM products
+        WHERE category NOT IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears')
+        ORDER BY created_at DESC
+      `;
     }
 
     return jsonSuccess({ products: rows });

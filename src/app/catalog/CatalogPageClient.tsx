@@ -97,7 +97,7 @@ export default function CatalogPageClient() {
         >
           All
         </Link>
-        {NAV_CATEGORIES.filter((c) => c.slug !== "all").map((cat) => (
+        {NAV_CATEGORIES.filter((c) => c.slug !== "all" && c.slug !== "clothing").map((cat) => (
           <Link
             key={cat.slug}
             href={`/catalog?category=${cat.slug}`}
