@@ -49,7 +49,7 @@ export async function PUT(request: Request, { params }: RouteParams) {
         category = ${sanitizeString(data.category, 50)},
         metal = ${data.metal ? sanitizeString(data.metal, 50) : null},
         gender = ${data.gender ? sanitizeString(data.gender, 20) : null},
-        image_url = ${sanitizeString(data.imageUrl, 500)},
+        image_url = ${data.imageUrl ? sanitizeString(data.imageUrl, 500) : null},
         stock = ${data.stock},
         is_featured = ${data.isFeatured},
         image_position_x = ${data.imagePositionX ?? 50},
