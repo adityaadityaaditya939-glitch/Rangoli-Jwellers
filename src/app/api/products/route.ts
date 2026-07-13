@@ -79,7 +79,7 @@ export async function POST(request: Request) {
         ${sanitizeString(data.category, 50)},
         ${data.metal ? sanitizeString(data.metal, 50) : null},
         ${data.gender ? sanitizeString(data.gender, 20) : null},
-        ${sanitizeString(data.imageUrl, 500)},
+        ${data.imageUrl ? sanitizeString(data.imageUrl, 500) : null},
         ${data.stock},
         ${data.isFeatured},
         ${data.imagePositionX ?? 50},
