@@ -11,7 +11,7 @@ export const SHOP = {
 export const IMAGES = {
   logo: "/images/New_logo1.png",
   hero: [
-    "/images/Latest_Hero_sec_1.png",
+    "/images/Hero_sec_1_updated.jpg.JPG",
     "/images/Hero_sec_2_new.JPG",
     "/images/Hero_sec_3_new.JPG",
     "/images/Hero_sec_2.jpg",
@@ -19,7 +19,7 @@ export const IMAGES = {
     "/images/Hero_sec_4.jpg",
   ],
   heroDesktop: [
-    "/images/Latest_Hero_sec_1.png",
+    "/images/Hero_sec_1_updated.jpg.JPG",
     "/images/Hero_sec_2_new - Crop.JPG",
     "/images/Hero_sec_3_new - Crop.JPG",
     "/images/Hero_sec_2.jpg",

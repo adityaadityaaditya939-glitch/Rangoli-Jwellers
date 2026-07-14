@@ -193,6 +193,14 @@ async function seedProducts(sql: ReturnType<typeof neon>) {
     { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_18.jpg.jpg", gender: "women" },
     { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_19.jpg.jpg", gender: "women" },
     { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_20.jpg.jpg", gender: "women" },
+    { name: "Rejta", category: "traditional-wears", image: "/images/Clothes/Traditional_21.jpg.jpg", gender: "women" },
+    { name: "Rejta", category: "traditional-wears", image: "/images/Clothes/Traditional_22.jpg.jpg", gender: "women" },
+    { name: "Rejta", category: "traditional-wears", image: "/images/Clothes/Traditional_23.jpg.jpg", gender: "women" },
+    { name: "Rejta", category: "traditional-wears", image: "/images/Clothes/Traditional_24.jpg.jpg", gender: "women" },
+    { name: "Rejta", category: "traditional-wears", image: "/images/Clothes/Traditional_25.jpg.jpg", gender: "women" },
+    { name: "Rejta", category: "traditional-wears", image: "/images/Clothes/Traditional_26.jpg.jpg", gender: "women" },
+    { name: "Rejta", category: "traditional-wears", image: "/images/Clothes/Traditional_27.jpg.jpg", gender: "women" },
+    { name: "Rejta", category: "traditional-wears", image: "/images/Clothes/Traditional_28.jpg.jpg", gender: "women" },
   ];
   for (const item of clothingProducts) {
     samples.push({
