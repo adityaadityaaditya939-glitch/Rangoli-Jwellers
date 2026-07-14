@@ -183,6 +183,16 @@ async function seedProducts(sql: ReturnType<typeof neon>) {
     { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_8.jpg.jpg", gender: "women" },
     { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_9.jpg.jpg", gender: "women" },
     { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_10.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_11.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_12.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_13.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_14.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_15.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_16.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_17.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_18.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_19.jpg.jpg", gender: "women" },
+    { name: "Dhatu", category: "traditional-wears", image: "/images/Clothes/Traditional_20.jpg.jpg", gender: "women" },
   ];
   for (const item of clothingProducts) {
     samples.push({
