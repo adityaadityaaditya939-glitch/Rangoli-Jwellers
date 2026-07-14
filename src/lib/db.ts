@@ -173,6 +173,16 @@ async function seedProducts(sql: ReturnType<typeof neon>) {
     { name: "Traditional Lehenga", category: "lehenga", image: "/images/Clothing_collection_Lehanga.jpg", gender: "women" },
     { name: "Traditional Saree", category: "saree", image: "/images/Clothing_collecting_Saare.jpg", gender: "women" },
     { name: "Traditional Suit", category: "suits", image: "/images/Clothing_collection_Suit.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_1.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_2.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_3.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_4.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_5.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_6.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_7.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_8.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_9.jpg.jpg", gender: "women" },
+    { name: "Sadri", category: "traditional-wears", image: "/images/Clothes/Traditional_10.jpg.jpg", gender: "women" },
   ];
   for (const item of clothingProducts) {
     samples.push({

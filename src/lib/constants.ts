@@ -73,10 +73,10 @@ export const GENDER_CATEGORIES = [
 ] as const;
 
 export const CLOTHING_CATEGORIES = [
-  { label: "Lehenga", slug: "lehenga", image: "/images/Clothes/Pink_Rejta.jpg", tall: true },
+  { label: "Traditional Wears", slug: "traditional-wears", image: "/images/Clothes/Traditional_1.jpg.jpg", tall: true },
   { label: "Suits", slug: "suits", image: "/images/Clothes/Suit.jpg", tall: true },
+  { label: "Lehenga", slug: "lehenga", image: "/images/Clothes/Pink_Rejta.jpg", tall: true },
   { label: "Saree", slug: "saree", image: "/images/Clothes/Sadri.jpg", tall: true },
-  { label: "Traditional Wears", slug: "traditional-wears", image: "/images/Traditional_Elegance_1.1.JPG", tall: true },
 ] as const;
 
 export const TRADITIONAL_CATEGORIES = [
