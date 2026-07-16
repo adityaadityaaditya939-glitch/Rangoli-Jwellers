@@ -6,11 +6,22 @@ import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import { CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
+
+// Fisher-Yates shuffle algorithm
+function shuffleArray<T>(array: T[]): T[] {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+}
  
 export default function ClothingPageClient() {
   const searchParams = useSearchParams();
   const category = searchParams.get("category") || "all";
-  const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
  
   useEffect(() => {
@@ -26,11 +37,32 @@ export default function ClothingPageClient() {
         if (category && category !== "all") {
           items = items.filter((p) => p.category === category);
         }
-        setProducts(items);
+        setAllProducts(items);
+        // Shuffle only for "all" category initially
+        if (category === "all") {
+          setDisplayProducts(shuffleArray(items));
+        } else {
+          setDisplayProducts(items);
+        }
       })
-      .catch(() => setProducts([]))
+      .catch(() => {
+        setAllProducts([]);
+        setDisplayProducts([]);
+      })
       .finally(() => setLoading(false));
   }, [category]);
+
+  // Auto-shuffle for "all" category only
+  useEffect(() => {
+    if (category !== "all") return;
+
+    // Shuffle every 30 seconds
+    const shuffleInterval = setInterval(() => {
+      setDisplayProducts((prev) => shuffleArray(prev));
+    }, 30000);
+
+    return () => clearInterval(shuffleInterval);
+  }, [category, allProducts]);
  
   const categoryLabel =
     CLOTHING_CATEGORIES.find((c) => c.slug === category)?.label ||
@@ -55,7 +87,7 @@ export default function ClothingPageClient() {
       <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="font-serif text-3xl font-bold text-gray-900">{categoryLabel}</h1>
-          <p className="mt-1 text-sm text-gray-500">({products.length} results)</p>
+          <p className="mt-1 text-sm text-gray-500">({displayProducts.length} results)</p>
         </div>
       </div>
  
@@ -87,7 +119,7 @@ export default function ClothingPageClient() {
  
       {loading ? (
         <div className="py-20 text-center text-gray-500">Loading collection...</div>
-      ) : products.length === 0 ? (
+      ) : displayProducts.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-gray-200 py-20 text-center">
           <p className="text-gray-500">No products found in this category.</p>
           <Link href="/clothing" className="mt-4 inline-block text-rangoli-maroon hover:underline">
@@ -96,7 +128,7 @@ export default function ClothingPageClient() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {products.map((product) => (
+          {displayProducts.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

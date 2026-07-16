@@ -75,16 +75,16 @@ export const GENDER_CATEGORIES = [
 export const CLOTHING_CATEGORIES = [
   { label: "Traditional Wears", slug: "traditional-wears", image: "/images/Clothes/Traditional_1.jpg.jpg", tall: true },
   { label: "Suits", slug: "suits", image: "/images/Clothes/Suit.jpg", tall: true },
-  { label: "Lehenga", slug: "lehenga", image: "/images/Clothes/Lehenga_2.jpg.JPG", tall: true },
-  { label: "Saree", slug: "saree", image: "/images/Clothes/Saree_2.jpg.JPG", tall: true },
+  { label: "Lehenga", slug: "lehenga", image: "/images/Clothes/Lehenga_2.jpg.jpg", tall: true },
+  { label: "Saree", slug: "saree", image: "/images/Clothes/Saree_2.jpg.jpg", tall: true },
 ] as const;
 
 export const TRADITIONAL_CATEGORIES = [
-  { label: "Traditional dresses", slug: "traditional-first", image: "/images/Clothes/Traditional_firstPhoto.jpg.JPG" },
+  { label: "Traditional dresses", slug: "traditional-first", image: "/images/Clothes/Traditional_firstPhoto.jpg.jpg" },
   { label: "Traditional dresses", slug: "lehenga", image: "/images/Traditional_Elegance_1.1.JPG" },
   { label: "Traditional dresses", slug: "suits", image: "/images/Traditional_Elegance_2.jpg" },
   { label: "Traditional dresses", slug: "saree", image: "/images/Traditional_Elegance_3.jpg" },
-  { label: "Sadri", slug: "sadri", image: "/images/Clothes/Traditional_10.1.jpg.JPG" },
+  { label: "Sadri", slug: "sadri", image: "/images/Clothes/Traditional_10.1.jpg.jpg" },
 ] as const;
 
 export const EXPERIENCE_SLIDES = [
