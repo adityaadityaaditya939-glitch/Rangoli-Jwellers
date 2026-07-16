@@ -16,7 +16,6 @@ export const IMAGES = {
     "/images/Hero_sec_3_new.JPG",
     "/images/Hero_sec_2.jpg",
     "/images/Hero_sec_3.jpg",
-    "/images/Hero_sec_4.1.jpg.JPG",
     "/images/Hero_sec_4.jpg",
   ],
   heroDesktop: [
@@ -25,7 +24,6 @@ export const IMAGES = {
     "/images/Hero_sec_3_new - Crop.JPG",
     "/images/Hero_sec_2.jpg",
     "/images/Hero_sec_3.jpg",
-    "/images/Hero_sec_4.1.jpg.JPG",
     "/images/Hero_sec_4.jpg",
   ],
   collection: [
