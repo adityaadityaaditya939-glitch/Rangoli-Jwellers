@@ -14,11 +14,20 @@ export async function GET(request: Request) {
 
     let rows;
     if (category && category !== "all") {
-      rows = await sql`
-        SELECT * FROM products
-        WHERE category = ${category}
-        ORDER BY created_at DESC
-      `;
+      // For traditional-wears, sort by id ASC to maintain seed order
+      if (category === "traditional-wears") {
+        rows = await sql`
+          SELECT * FROM products
+          WHERE category = ${category}
+          ORDER BY id ASC
+        `;
+      } else {
+        rows = await sql`
+          SELECT * FROM products
+          WHERE category = ${category}
+          ORDER BY created_at DESC
+        `;
+      }
     } else if (featured === "true") {
       rows = await sql`
         SELECT * FROM products
