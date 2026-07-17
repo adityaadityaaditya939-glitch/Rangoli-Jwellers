@@ -21,11 +21,10 @@ cp .env.example .env.local
 
 - `DATABASE_URL` — Neon PostgreSQL connection string
 - `JWT_SECRET` — long random secret
-- `ADMIN_ID` / `ADMIN_PASSWORD` — staff login credentials
+- `ADMIN_EMAIL` / `ADMIN_PASSWORD` — staff login credentials
 - `WHATSAPP_NUMBER` — e.g. `919876543210` (no + prefix)
 - `SHOP_PHONE` — display/call number for the phone FAB
-- `UPLOADTHING_SECRET` — from https://uploadthing.com/dashboard
-- `UPLOADTHING_APP_ID` — from https://uploadthing.com/dashboard
+- `BLOB_READ_WRITE_TOKEN` — from Vercel Blob Storage settings
 
 3. Install and run:
 
