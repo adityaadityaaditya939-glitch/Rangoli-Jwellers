@@ -189,11 +189,12 @@ export default function ProductManager() {
     setMessage("");
 
     try {
-      const [response] = await startUpload([file]);
-      if (!response) {
+      const result = await startUpload([file]);
+      if (!result || result.length === 0) {
         setMessage('Upload failed');
         return;
       }
+      const [response] = result;
       setForm({ ...form, imageUrl: response.fileUrl });
     } catch {
       setMessage('Upload failed. Please try again.');
@@ -210,11 +211,12 @@ export default function ProductManager() {
     setMessage("");
 
     try {
-      const [response] = await startUpload([file]);
-      if (!response) {
+      const result = await startUpload([file]);
+      if (!result || result.length === 0) {
         setMessage('Upload failed');
         return;
       }
+      const [response] = result;
       const newImages = [...form.images];
       newImages[index].imageUrl = response.fileUrl;
       setForm({ ...form, images: newImages });
