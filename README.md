@@ -24,6 +24,8 @@ cp .env.example .env.local
 - `ADMIN_ID` / `ADMIN_PASSWORD` — staff login credentials
 - `WHATSAPP_NUMBER` — e.g. `919876543210` (no + prefix)
 - `SHOP_PHONE` — display/call number for the phone FAB
+- `UPLOADTHING_SECRET` — from https://uploadthing.com/dashboard
+- `UPLOADTHING_APP_ID` — from https://uploadthing.com/dashboard
 
 3. Install and run:
 
