@@ -195,7 +195,7 @@ export default function ProductManager() {
         return;
       }
       const [response] = result;
-      setForm({ ...form, imageUrl: response.fileUrl });
+      setForm({ ...form, imageUrl: response.data.fileUrl });
     } catch {
       setMessage('Upload failed. Please try again.');
     } finally {
@@ -218,7 +218,7 @@ export default function ProductManager() {
       }
       const [response] = result;
       const newImages = [...form.images];
-      newImages[index].imageUrl = response.fileUrl;
+      newImages[index].imageUrl = response.data.fileUrl;
       setForm({ ...form, images: newImages });
     } catch {
       setMessage('Upload failed. Please try again.');
