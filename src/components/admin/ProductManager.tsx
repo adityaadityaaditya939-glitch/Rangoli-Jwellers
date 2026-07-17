@@ -4,8 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 import ImagePositionEditor from "./ImagePositionEditor";
-import { UploadDropzone } from "@uploadthing/react";
-import type { OurFileRouter } from "@/app/api/uploadthing/core";
 
 const JEWELRY_CATEGORIES = PRODUCT_CATEGORIES.filter(
   (cat) => cat !== "all" && 
@@ -38,6 +36,7 @@ export default function ProductManager() {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [inventoryFilter, setInventoryFilter] = useState<"all" | "jewelry" | "clothing">("all");
+  const [uploading, setUploading] = useState(false);
 
   const loadProducts = useCallback(() => {
     fetch("/api/products?admin=true")
@@ -176,6 +175,36 @@ export default function ProductManager() {
     }
   }
 
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setMessage("");
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage(data.error || 'Upload failed');
+        return;
+      }
+
+      setForm({ ...form, imageUrl: data.fileUrl });
+    } catch {
+      setMessage('Upload failed. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  }
+
   return (
     <div className="grid gap-8 lg:grid-cols-2">
       <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -308,18 +337,21 @@ export default function ProductManager() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Primary Product Image</label>
-            <UploadDropzone<OurFileRouter, "imageUploader">
-              endpoint="imageUploader"
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              onClientUploadComplete={(res: any) => {
-                if (res && res[0]) {
-                  setForm({ ...form, imageUrl: res[0].fileUrl });
-                }
-              }}
-              onUploadError={(error: Error) => {
-                setMessage(`Upload failed: ${error.message}`);
-              }}
-            />
+            <div className="relative">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageUpload}
+                disabled={uploading}
+                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-rangoli-maroon file:text-white hover:file:bg-rangoli-maroon-dark disabled:opacity-50"
+              />
+              {uploading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-white/80 rounded-lg">
+                  <span className="text-sm text-gray-600">Uploading...</span>
+                </div>
+              )}
+            </div>
+            <p className="text-xs text-gray-500 mt-1">Images up to 4MB</p>
             {form.imageUrl && (
               <div className="mt-2">
                 <p className="text-xs text-gray-500 mb-1">Preview:</p>
