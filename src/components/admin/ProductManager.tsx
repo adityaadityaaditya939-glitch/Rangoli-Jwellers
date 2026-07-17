@@ -102,6 +102,8 @@ export default function ProductManager() {
       images: form.images,
     };
 
+    console.log("Submitting payload:", payload);
+
     try {
       const res = await fetch(editingId ? `/api/products/${editingId}` : "/api/products", {
         method: editingId ? "PUT" : "POST",
@@ -110,6 +112,7 @@ export default function ProductManager() {
       });
 
       const data = await res.json();
+      console.log("API response:", data);
       if (!res.ok) {
         setMessage(data.error || "Save failed");
         return;
@@ -198,6 +201,38 @@ export default function ProductManager() {
       }
 
       setForm({ ...form, imageUrl: data.fileUrl });
+    } catch {
+      setMessage('Upload failed. Please try again.');
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function handleColorImageUpload(e: React.ChangeEvent<HTMLInputElement>, index: number) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setMessage("");
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setMessage(data.error || 'Upload failed');
+        return;
+      }
+
+      const newImages = [...form.images];
+      newImages[index].imageUrl = data.fileUrl;
+      setForm({ ...form, images: newImages });
     } catch {
       setMessage('Upload failed. Please try again.');
     } finally {
@@ -371,53 +406,60 @@ export default function ProductManager() {
             <label className="block text-sm font-medium text-gray-700 mb-2">Additional Images (Color Options)</label>
             <div className="space-y-3">
               {form.images.map((img, index) => (
-                <div key={index} className="flex gap-2 items-start">
-                  <input
-                    type="text"
-                    placeholder="Color name (e.g., Red, Blue)"
-                    value={img.colorName}
-                    onChange={(e) => {
-                      const newImages = [...form.images];
-                      newImages[index].colorName = e.target.value;
-                      setForm({ ...form, images: newImages });
-                    }}
-                    className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Image URL"
-                    value={img.imageUrl}
-                    onChange={(e) => {
-                      const newImages = [...form.images];
-                      newImages[index].imageUrl = e.target.value;
-                      setForm({ ...form, images: newImages });
-                    }}
-                    className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5"
-                  />
-                  <label className="flex items-center gap-2 text-sm mt-2">
+                <div key={index} className="border border-gray-200 rounded-lg p-3 space-y-2">
+                  <div className="flex gap-2 items-start">
                     <input
-                      type="checkbox"
-                      checked={img.isPrimary}
+                      type="text"
+                      placeholder="Color name (e.g., Red, Blue)"
+                      value={img.colorName}
                       onChange={(e) => {
-                        const newImages = form.images.map((i, idx) => ({
-                          ...i,
-                          isPrimary: idx === index ? e.target.checked : false
-                        }));
+                        const newImages = [...form.images];
+                        newImages[index].colorName = e.target.value;
                         setForm({ ...form, images: newImages });
                       }}
+                      className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5"
                     />
-                    Primary
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newImages = form.images.filter((_, i) => i !== index);
-                      setForm({ ...form, images: newImages });
-                    }}
-                    className="text-red-600 hover:text-red-800 mt-2"
-                  >
-                    Remove
-                  </button>
+                    <label className="flex items-center gap-2 text-sm mt-2">
+                      <input
+                        type="checkbox"
+                        checked={img.isPrimary}
+                        onChange={(e) => {
+                          const newImages = form.images.map((i, idx) => ({
+                            ...i,
+                            isPrimary: idx === index ? e.target.checked : false
+                          }));
+                          setForm({ ...form, images: newImages });
+                        }}
+                      />
+                      Primary
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newImages = form.images.filter((_, i) => i !== index);
+                        setForm({ ...form, images: newImages });
+                      }}
+                      className="text-red-600 hover:text-red-800 mt-2"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => handleColorImageUpload(e, index)}
+                      disabled={uploading}
+                      className="flex-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-rangoli-maroon file:text-white hover:file:bg-rangoli-maroon-dark disabled:opacity-50"
+                    />
+                    {img.imageUrl && (
+                      <img
+                        src={img.imageUrl}
+                        alt="Color preview"
+                        className="w-12 h-12 object-cover rounded-lg border border-gray-200"
+                      />
+                    )}
+                  </div>
                 </div>
               ))}
               <button

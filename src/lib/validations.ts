@@ -27,6 +27,11 @@ export const productSchema = z.object({
   imagePositionX: z.number().min(0).max(100).optional(),
   imagePositionY: z.number().min(0).max(100).optional(),
   imageScale: z.number().min(10).max(300).optional(),
+  images: z.array(z.object({
+    imageUrl: z.string().optional(),
+    colorName: z.string().optional(),
+    isPrimary: z.boolean().default(false),
+  })).optional(),
 });
 
 export type LoginInput = z.infer<typeof loginSchema>;

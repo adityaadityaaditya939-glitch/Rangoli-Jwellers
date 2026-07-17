@@ -129,15 +129,18 @@ export async function POST(request: Request) {
     // Handle multiple images with color options
     if (body.images && Array.isArray(body.images) && body.images.length > 0) {
       for (const img of body.images) {
-        await sql`
-          INSERT INTO product_images (product_id, image_url, color_name, is_primary)
-          VALUES (
-            ${product.id},
-            ${sanitizeString(img.imageUrl, 500)},
-            ${img.colorName ? sanitizeString(img.colorName, 50) : null},
-            ${img.isPrimary || false}
-          )
-        `;
+        // Only insert if imageUrl is provided and not empty
+        if (img.imageUrl && img.imageUrl.trim()) {
+          await sql`
+            INSERT INTO product_images (product_id, image_url, color_name, is_primary)
+            VALUES (
+              ${product.id},
+              ${sanitizeString(img.imageUrl, 500)},
+              ${img.colorName ? sanitizeString(img.colorName, 50) : null},
+              ${img.isPrimary || false}
+            )
+          `;
+        }
       }
     }
 
