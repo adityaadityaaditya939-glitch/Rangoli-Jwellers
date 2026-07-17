@@ -20,8 +20,6 @@ export default function ProductDetailClient({ product, images }: { product: Prod
     })
   ), [product.name, product.price, product.id]);
 
-  const allImages = [product.image_url, ...images.map(img => img.image_url)].filter(Boolean);
-
   return (
     <div className="mx-auto max-w-7xl px-4 py-8 lg:px-8">
       <nav className="mb-6 text-sm text-gray-500">
