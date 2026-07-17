@@ -11,12 +11,13 @@ import {
 } from "@/lib/whatsapp";
 
 interface ProductCardProps {
-  product: Product;
+  product: Product & { images?: Array<{ id: number; image_url: string; color_name: string | null; is_primary: boolean }> };
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [showQuickView, setShowQuickView] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(product.image_url);
   
   const whatsappUrl = buildWhatsAppUrl(
     buildProductWhatsAppMessage({
@@ -57,6 +58,10 @@ export default function ProductCard({ product }: ProductCardProps) {
   
   // Check if product is featured
   const isFeatured = product.is_featured;
+
+  // Get available color options
+  const colorOptions = product.images || [];
+  const hasMultipleImages = colorOptions.length > 0;
 
   return (
     <article className="group relative w-full min-w-0 overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
@@ -105,13 +110,37 @@ export default function ProductCard({ product }: ProductCardProps) {
         className="relative block aspect-[3/4] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100"
       >
         <Image
-          src={product.image_url}
+          src={selectedImage}
           alt={product.name}
           fill
           className="bg-white transition duration-500 group-hover:scale-105"
           style={imageStyle}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
+
+        {/* Color Options */}
+        {hasMultipleImages && (
+          <div className="absolute bottom-3 left-3 right-3 flex gap-2 z-10">
+            {colorOptions.map((img) => (
+              <button
+                key={img.id}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedImage(img.image_url);
+                }}
+                className={`w-6 h-6 rounded-full border-2 transition-all ${
+                  selectedImage === img.image_url
+                    ? 'border-rangoli-maroon scale-110'
+                    : 'border-white'
+                }`}
+                style={{
+                  backgroundColor: img.color_name || '#ccc',
+                }}
+                title={img.color_name || 'Default'}
+              />
+            ))}
+          </div>
+        )}
 
         {/* Quick View Overlay on Hover */}
         <div className="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex items-center justify-center">

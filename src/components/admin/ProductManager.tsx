@@ -28,11 +28,12 @@ const emptyForm = {
   imagePositionX: 50,
   imagePositionY: 50,
   imageScale: 100,
+  images: [] as Array<{ imageUrl: string; colorName: string; isPrimary: boolean }>,
 };
 
 export default function ProductManager() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean; productType: "jewelry" | "clothing"; imagePositionX: number; imagePositionY: number; imageScale: number}>(emptyForm);
+  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean; productType: "jewelry" | "clothing"; imagePositionX: number; imagePositionY: number; imageScale: number; images: Array<{ imageUrl: string; colorName: string; isPrimary: boolean }> }>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -99,6 +100,7 @@ export default function ProductManager() {
       imagePositionX: Number(form.imagePositionX) || 50,
       imagePositionY: Number(form.imagePositionY) || 50,
       imageScale: Number(form.imageScale) || 100,
+      images: form.images,
     };
 
     try {
@@ -142,6 +144,7 @@ export default function ProductManager() {
       imagePositionX: product.image_position_x || 50,
       imagePositionY: product.image_position_y || 50,
       imageScale: product.image_scale || 100,
+      images: [],
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -304,7 +307,7 @@ export default function ProductManager() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Primary Product Image</label>
             <UploadDropzone<OurFileRouter, "imageUploader">
               endpoint="imageUploader"
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -331,6 +334,73 @@ export default function ProductManager() {
                 />
               </div>
             )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Additional Images (Color Options)</label>
+            <div className="space-y-3">
+              {form.images.map((img, index) => (
+                <div key={index} className="flex gap-2 items-start">
+                  <input
+                    type="text"
+                    placeholder="Color name (e.g., Red, Blue)"
+                    value={img.colorName}
+                    onChange={(e) => {
+                      const newImages = [...form.images];
+                      newImages[index].colorName = e.target.value;
+                      setForm({ ...form, images: newImages });
+                    }}
+                    className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Image URL"
+                    value={img.imageUrl}
+                    onChange={(e) => {
+                      const newImages = [...form.images];
+                      newImages[index].imageUrl = e.target.value;
+                      setForm({ ...form, images: newImages });
+                    }}
+                    className="flex-1 rounded-lg border border-gray-300 px-4 py-2.5"
+                  />
+                  <label className="flex items-center gap-2 text-sm mt-2">
+                    <input
+                      type="checkbox"
+                      checked={img.isPrimary}
+                      onChange={(e) => {
+                        const newImages = form.images.map((i, idx) => ({
+                          ...i,
+                          isPrimary: idx === index ? e.target.checked : false
+                        }));
+                        setForm({ ...form, images: newImages });
+                      }}
+                    />
+                    Primary
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newImages = form.images.filter((_, i) => i !== index);
+                      setForm({ ...form, images: newImages });
+                    }}
+                    className="text-red-600 hover:text-red-800 mt-2"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={() => {
+                  setForm({
+                    ...form,
+                    images: [...form.images, { imageUrl: "", colorName: "", isPrimary: false }]
+                  });
+                }}
+                className="text-sm font-medium text-rangoli-maroon hover:underline"
+              >
+                + Add Color Option
+              </button>
+            </div>
           </div>
           {form.imageUrl && (
             <ImagePositionEditor

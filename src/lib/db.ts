@@ -55,6 +55,17 @@ export async function initDatabase() {
     )
   `;
 
+  await sql`
+    CREATE TABLE IF NOT EXISTS product_images (
+      id SERIAL PRIMARY KEY,
+      product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+      image_url VARCHAR(500) NOT NULL,
+      color_name VARCHAR(50),
+      is_primary BOOLEAN DEFAULT false,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+
   const userCount = await sql`SELECT COUNT(*)::int AS count FROM users`;
   if ((userCount[0]?.count as number) === 0) {
     // @ts-expect-error Neon type compatibility issue

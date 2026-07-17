@@ -56,7 +56,33 @@ export async function GET(request: Request) {
       `;
     }
 
-    return jsonSuccess({ products: rows });
+    // Fetch product images for each product
+    const productIds = rows.map((p: any) => p.id);
+    let images: any[] = [];
+    if (productIds.length > 0) {
+      images = await sql`
+        SELECT * FROM product_images
+        WHERE product_id = ANY(${productIds})
+        ORDER BY is_primary DESC, id ASC
+      `;
+    }
+
+    // Group images by product_id
+    const imagesByProduct: Record<number, any[]> = {};
+    for (const img of images) {
+      if (!imagesByProduct[img.product_id]) {
+        imagesByProduct[img.product_id] = [];
+      }
+      imagesByProduct[img.product_id].push(img);
+    }
+
+    // Attach images to products
+    const productsWithImages = rows.map((p: any) => ({
+      ...p,
+      images: imagesByProduct[p.id] || []
+    }));
+
+    return jsonSuccess({ products: productsWithImages });
   } catch (error) {
     console.error("Products fetch error:", error);
     return jsonError("Failed to fetch products", 500);
@@ -98,7 +124,24 @@ export async function POST(request: Request) {
       RETURNING *
     `;
 
-    return jsonSuccess({ product: rows[0] }, 201);
+    const product = rows[0];
+
+    // Handle multiple images with color options
+    if (body.images && Array.isArray(body.images) && body.images.length > 0) {
+      for (const img of body.images) {
+        await sql`
+          INSERT INTO product_images (product_id, image_url, color_name, is_primary)
+          VALUES (
+            ${product.id},
+            ${sanitizeString(img.imageUrl, 500)},
+            ${img.colorName ? sanitizeString(img.colorName, 50) : null},
+            ${img.isPrimary || false}
+          )
+        `;
+      }
+    }
+
+    return jsonSuccess({ product }, 201);
   } catch (error) {
     console.error("Product create error:", error);
     return jsonError("Failed to create product", 500);
