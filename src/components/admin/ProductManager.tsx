@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { useUploadThing } from "@/lib/uploadthing";
 import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 import ImagePositionEditor from "./ImagePositionEditor";
@@ -37,6 +38,8 @@ export default function ProductManager() {
   const [loading, setLoading] = useState(false);
   const [inventoryFilter, setInventoryFilter] = useState<"all" | "jewelry" | "clothing">("all");
   const [uploading, setUploading] = useState(false);
+  
+  const { startUpload } = useUploadThing("imageUploader");
 
   const loadProducts = useCallback(() => {
     fetch("/api/products?admin=true")
@@ -186,21 +189,12 @@ export default function ProductManager() {
     setMessage("");
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setMessage(data.error || 'Upload failed');
+      const [response] = await startUpload([file]);
+      if (!response) {
+        setMessage('Upload failed');
         return;
       }
-
-      setForm({ ...form, imageUrl: data.fileUrl });
+      setForm({ ...form, imageUrl: response.fileUrl });
     } catch {
       setMessage('Upload failed. Please try again.');
     } finally {
@@ -216,22 +210,13 @@ export default function ProductManager() {
     setMessage("");
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        setMessage(data.error || 'Upload failed');
+      const [response] = await startUpload([file]);
+      if (!response) {
+        setMessage('Upload failed');
         return;
       }
-
       const newImages = [...form.images];
-      newImages[index].imageUrl = data.fileUrl;
+      newImages[index].imageUrl = response.fileUrl;
       setForm({ ...form, images: newImages });
     } catch {
       setMessage('Upload failed. Please try again.');
