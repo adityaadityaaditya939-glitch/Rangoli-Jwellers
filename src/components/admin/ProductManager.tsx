@@ -4,7 +4,8 @@ import { useCallback, useEffect, useState } from "react";
 import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 import ImagePositionEditor from "./ImagePositionEditor";
-import { UploadDropzone } from "@/lib/uploadthing";
+import { UploadDropzone } from "@uploadthing/react";
+import type { OurFileRouter } from "@/app/api/uploadthing/core";
 
 const JEWELRY_CATEGORIES = PRODUCT_CATEGORIES.filter(
   (cat) => cat !== "all" && 
@@ -304,7 +305,7 @@ export default function ProductManager() {
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
-            <UploadDropzone
+            <UploadDropzone<OurFileRouter>
               endpoint="imageUploader"
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               onClientUploadComplete={(res: any) => {
