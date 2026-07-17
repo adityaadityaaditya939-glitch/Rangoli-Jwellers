@@ -1,4 +1,4 @@
-import { getDb } from "@/lib/db";
+import { getDb, type Product, type ProductImage } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { jsonError, jsonSuccess, requireAuth, sanitizeString } from "@/lib/api-utils";
 import { productSchema } from "@/lib/validations";
@@ -12,7 +12,7 @@ export async function GET(request: Request) {
     const admin = searchParams.get("admin"); // 'true' for admin dashboard
     const sql = getDb();
 
-    let rows;
+    let rows: Product[];
     if (category && category !== "all") {
       // For traditional-wears, sort by id ASC to maintain seed order
       if (category === "traditional-wears") {
@@ -20,55 +20,55 @@ export async function GET(request: Request) {
           SELECT * FROM products
           WHERE category = ${category}
           ORDER BY id ASC
-        `;
+        ` as Product[];
       } else {
         rows = await sql`
           SELECT * FROM products
           WHERE category = ${category}
           ORDER BY created_at DESC
-        `;
+        ` as Product[];
       }
     } else if (featured === "true") {
       rows = await sql`
         SELECT * FROM products
         WHERE is_featured = true
         ORDER BY created_at DESC
-      `;
+      ` as Product[];
     } else if (type === "clothing") {
       // Only clothing categories
       rows = await sql`
         SELECT * FROM products
         WHERE category IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears')
         ORDER BY created_at DESC
-      `;
+      ` as Product[];
     } else if (admin === "true") {
       // Admin dashboard: return all products
       rows = await sql`
         SELECT * FROM products
         ORDER BY created_at DESC
-      `;
+      ` as Product[];
     } else {
       // Default: exclude clothing categories (jewellery)
       rows = await sql`
         SELECT * FROM products
         WHERE category NOT IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears')
         ORDER BY created_at DESC
-      `;
+      ` as Product[];
     }
 
     // Fetch product images for each product
-    const productIds = rows.map((p: any) => p.id);
-    let images: any[] = [];
+    const productIds = rows.map((p) => p.id);
+    let images: ProductImage[] = [];
     if (productIds.length > 0) {
       images = await sql`
         SELECT * FROM product_images
         WHERE product_id = ANY(${productIds})
         ORDER BY is_primary DESC, id ASC
-      `;
+      ` as ProductImage[];
     }
 
     // Group images by product_id
-    const imagesByProduct: Record<number, any[]> = {};
+    const imagesByProduct: Record<number, ProductImage[]> = {};
     for (const img of images) {
       if (!imagesByProduct[img.product_id]) {
         imagesByProduct[img.product_id] = [];
@@ -77,7 +77,7 @@ export async function GET(request: Request) {
     }
 
     // Attach images to products
-    const productsWithImages = rows.map((p: any) => ({
+    const productsWithImages = rows.map((p) => ({
       ...p,
       images: imagesByProduct[p.id] || []
     }));

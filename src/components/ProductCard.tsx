@@ -16,7 +16,6 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false);
-  const [showQuickView, setShowQuickView] = useState(false);
   const [selectedImage, setSelectedImage] = useState(product.image_url);
   
   const whatsappUrl = buildWhatsAppUrl(

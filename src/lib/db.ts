@@ -284,6 +284,15 @@ export interface Consultation {
   created_at: string;
 }
 
+export interface ProductImage {
+  id: number;
+  product_id: number;
+  image_url: string;
+  color_name: string | null;
+  is_primary: boolean;
+  created_at: string;
+}
+
 export interface User {
   id: number;
   email: string;
