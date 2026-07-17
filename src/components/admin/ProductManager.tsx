@@ -197,8 +197,9 @@ export default function ProductManager() {
       }
       const [response] = result;
       setForm({ ...form, imageUrl: (response as unknown as { fileUrl: string }).fileUrl });
-    } catch {
-      setMessage('Upload failed. Please try again.');
+    } catch (error) {
+      console.error('Upload error:', error);
+      setMessage(`Upload failed: ${error instanceof Error ? error.message : 'Please try again.'}`);
     } finally {
       setUploading(false);
     }
@@ -221,8 +222,9 @@ export default function ProductManager() {
       const newImages = [...form.images];
       newImages[index].imageUrl = (response as unknown as { fileUrl: string }).fileUrl;
       setForm({ ...form, images: newImages });
-    } catch {
-      setMessage('Upload failed. Please try again.');
+    } catch (error) {
+      console.error('Upload error:', error);
+      setMessage(`Upload failed: ${error instanceof Error ? error.message : 'Please try again.'}`);
     } finally {
       setUploading(false);
     }
