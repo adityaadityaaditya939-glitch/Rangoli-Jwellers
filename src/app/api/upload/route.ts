@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { put } from '@vercel/blob';
+import { writeFile, mkdir } from 'fs/promises';
+import { existsSync } from 'fs';
 import path from 'path';
 
 export async function POST(request: NextRequest) {
@@ -22,19 +23,27 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File size must be less than 4MB' }, { status: 400 });
     }
 
+    // Create uploads directory if it doesn't exist
+    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+    if (!existsSync(uploadsDir)) {
+      await mkdir(uploadsDir, { recursive: true });
+    }
+
     // Generate unique filename
     const timestamp = Date.now();
     const randomString = Math.random().toString(36).substring(2, 8);
     const extension = path.extname(file.name);
     const filename = `${timestamp}-${randomString}${extension}`;
+    const filepath = path.join(uploadsDir, filename);
 
-    // Upload to Vercel Blob
-    const blob = await put(filename, file, {
-      access: 'public',
-    });
+    // Convert file to buffer and save
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    await writeFile(filepath, buffer);
 
     // Return the URL
-    return NextResponse.json({ fileUrl: blob.url });
+    const fileUrl = `/uploads/${filename}`;
+    return NextResponse.json({ fileUrl });
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json({ error: 'Failed to upload file' }, { status: 500 });

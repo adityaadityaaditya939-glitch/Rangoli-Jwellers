@@ -24,7 +24,7 @@ cp .env.example .env.local
 - `ADMIN_EMAIL` / `ADMIN_PASSWORD` — staff login credentials
 - `WHATSAPP_NUMBER` — e.g. `919876543210` (no + prefix)
 - `SHOP_PHONE` — display/call number for the phone FAB
-- `BLOB_READ_WRITE_TOKEN` — from Vercel Blob Storage settings
+- `UPLOADTHING_SECRET` — from https://uploadthing.com/dashboard
 
 3. Install and run:
 
