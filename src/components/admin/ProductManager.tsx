@@ -306,7 +306,7 @@ export default function ProductManager() {
             <label className="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
             <UploadDropzone
               endpoint="imageUploader"
-              onClientUploadComplete={(res) => {
+              onClientUploadComplete={(res: any) => {
                 if (res && res[0]) {
                   setForm({ ...form, imageUrl: res[0].fileUrl });
                 }
