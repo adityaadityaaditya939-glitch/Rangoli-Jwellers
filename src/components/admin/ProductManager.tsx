@@ -196,7 +196,7 @@ export default function ProductManager() {
         return;
       }
       const [response] = result;
-      setForm({ ...form, imageUrl: (response as { fileUrl: string }).fileUrl });
+      setForm({ ...form, imageUrl: (response as unknown as { fileUrl: string }).fileUrl });
     } catch {
       setMessage('Upload failed. Please try again.');
     } finally {
@@ -219,7 +219,7 @@ export default function ProductManager() {
       }
       const [response] = result;
       const newImages = [...form.images];
-      newImages[index].imageUrl = (response as { fileUrl: string }).fileUrl;
+      newImages[index].imageUrl = (response as unknown as { fileUrl: string }).fileUrl;
       setForm({ ...form, images: newImages });
     } catch {
       setMessage('Upload failed. Please try again.');
