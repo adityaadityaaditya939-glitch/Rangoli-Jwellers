@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { useUploadThing } from "@/lib/uploadthing";
 import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 import ImagePositionEditor from "./ImagePositionEditor";
@@ -39,8 +38,6 @@ export default function ProductManager() {
   const [loading, setLoading] = useState(false);
   const [inventoryFilter, setInventoryFilter] = useState<"all" | "jewelry" | "clothing">("all");
   const [uploading, setUploading] = useState(false);
-  
-  const { startUpload } = useUploadThing("imageUploader");
 
   const loadProducts = useCallback(() => {
     fetch("/api/products?admin=true")
@@ -190,13 +187,18 @@ export default function ProductManager() {
     setMessage("");
 
     try {
-      const result = await startUpload([file]);
-      if (!result || result.length === 0) {
-        setMessage('Upload failed');
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setMessage(data.error || 'Upload failed');
         return;
       }
-      const [response] = result;
-      setForm({ ...form, imageUrl: (response as unknown as { fileUrl: string }).fileUrl });
+      setForm({ ...form, imageUrl: data.fileUrl });
     } catch (error) {
       console.error('Upload error:', error);
       setMessage(`Upload failed: ${error instanceof Error ? error.message : 'Please try again.'}`);
@@ -213,14 +215,19 @@ export default function ProductManager() {
     setMessage("");
 
     try {
-      const result = await startUpload([file]);
-      if (!result || result.length === 0) {
-        setMessage('Upload failed');
+      const formData = new FormData();
+      formData.append('file', file);
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setMessage(data.error || 'Upload failed');
         return;
       }
-      const [response] = result;
       const newImages = [...form.images];
-      newImages[index].imageUrl = (response as unknown as { fileUrl: string }).fileUrl;
+      newImages[index].imageUrl = data.fileUrl;
       setForm({ ...form, images: newImages });
     } catch (error) {
       console.error('Upload error:', error);
