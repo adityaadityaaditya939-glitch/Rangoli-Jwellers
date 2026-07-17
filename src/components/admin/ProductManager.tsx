@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import Image from "next/image";
 import { useUploadThing } from "@/lib/uploadthing";
 import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
@@ -195,7 +196,7 @@ export default function ProductManager() {
         return;
       }
       const [response] = result;
-      setForm({ ...form, imageUrl: (response as any).fileUrl });
+      setForm({ ...form, imageUrl: (response as { fileUrl: string }).fileUrl });
     } catch {
       setMessage('Upload failed. Please try again.');
     } finally {
@@ -218,7 +219,7 @@ export default function ProductManager() {
       }
       const [response] = result;
       const newImages = [...form.images];
-      newImages[index].imageUrl = (response as any).fileUrl;
+      newImages[index].imageUrl = (response as { fileUrl: string }).fileUrl;
       setForm({ ...form, images: newImages });
     } catch {
       setMessage('Upload failed. Please try again.');
@@ -440,9 +441,11 @@ export default function ProductManager() {
                       className="flex-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-rangoli-maroon file:text-white hover:file:bg-rangoli-maroon-dark disabled:opacity-50"
                     />
                     {img.imageUrl && (
-                      <img
+                      <Image
                         src={img.imageUrl}
                         alt="Color preview"
+                        width={48}
+                        height={48}
                         className="w-12 h-12 object-cover rounded-lg border border-gray-200"
                       />
                     )}
