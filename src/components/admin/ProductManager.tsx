@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 import ImagePositionEditor from "./ImagePositionEditor";
+import { UploadDropzone } from "@/lib/uploadthing";
 
 const JEWELRY_CATEGORIES = PRODUCT_CATEGORIES.filter(
   (cat) => cat !== "all" && 
@@ -301,27 +302,34 @@ export default function ProductManager() {
               <option value="kids">Kids</option>
             </select>
           </div>
-          <input
-            required
-            placeholder="Image URL"
-            value={form.imageUrl}
-            onChange={(e) => setForm({ ...form, imageUrl: e.target.value })}
-            className="w-full rounded-lg border border-gray-300 px-4 py-2.5"
-          />
-          {form.imageUrl && (
-            <div className="mt-2">
-              <p className="text-xs text-gray-500 mb-1">Preview:</p>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={form.imageUrl}
-                alt="Product preview"
-                className="w-full max-h-48 object-contain rounded-lg border border-gray-200"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
-              />
-            </div>
-          )}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
+            <UploadDropzone
+              endpoint="imageUploader"
+              onClientUploadComplete={(res) => {
+                if (res && res[0]) {
+                  setForm({ ...form, imageUrl: res[0].fileUrl });
+                }
+              }}
+              onUploadError={(error: Error) => {
+                setMessage(`Upload failed: ${error.message}`);
+              }}
+            />
+            {form.imageUrl && (
+              <div className="mt-2">
+                <p className="text-xs text-gray-500 mb-1">Preview:</p>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={form.imageUrl}
+                  alt="Product preview"
+                  className="w-full max-h-48 object-contain rounded-lg border border-gray-200"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = 'none';
+                  }}
+                />
+              </div>
+            )}
+          </div>
           {form.imageUrl && (
             <ImagePositionEditor
               imageUrl={form.imageUrl}
