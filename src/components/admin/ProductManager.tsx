@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 import ImagePositionEditor from "./ImagePositionEditor";
