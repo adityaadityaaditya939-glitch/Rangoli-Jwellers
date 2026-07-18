@@ -196,7 +196,7 @@ export default function ProductManager() {
         return;
       }
       const [response] = result;
-      setForm({ ...form, imageUrl: (response as unknown as { fileUrl: string }).fileUrl });
+      setForm({ ...form, imageUrl: response.ufsUrl });
     } catch (error) {
       console.error('Upload error:', error);
       setMessage(`Upload failed: ${error instanceof Error ? error.message : 'Please try again.'}`);
@@ -220,7 +220,7 @@ export default function ProductManager() {
       }
       const [response] = result;
       const newImages = [...form.images];
-      newImages[index].imageUrl = (response as unknown as { fileUrl: string }).fileUrl;
+      newImages[index].imageUrl = response.ufsUrl;
       setForm({ ...form, images: newImages });
     } catch (error) {
       console.error('Upload error:', error);
