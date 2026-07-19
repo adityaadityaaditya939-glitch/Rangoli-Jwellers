@@ -30,18 +30,18 @@ export function ConsultationProvider({ children }: { children: React.ReactNode }
     setDismissCount((count) => count + 1);
   }, []);
 
-  useEffect(() => {
-    if (isOpen) return;
+  // useEffect(() => {
+  //   if (isOpen) return;
 
-    const delay =
-      dismissCount === 0 ? INITIAL_DELAY : dismissCount === 1 ? SECOND_DELAY : THIRD_DELAY;
+  //   const delay =
+  //     dismissCount === 0 ? INITIAL_DELAY : dismissCount === 1 ? SECOND_DELAY : THIRD_DELAY;
 
-    const timer = window.setTimeout(() => {
-      openConsultation("popup");
-    }, delay);
+  //   const timer = window.setTimeout(() => {
+  //     openConsultation("popup");
+  //   }, delay);
 
-    return () => window.clearTimeout(timer);
-  }, [dismissCount, isOpen, openConsultation]);
+  //   return () => window.clearTimeout(timer);
+  // }, [dismissCount, isOpen, openConsultation]);
 
   return (
     <ConsultationContext.Provider

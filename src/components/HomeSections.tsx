@@ -91,10 +91,10 @@ const onTouchEnd = () => {
     <>
       <section
         id="section-collections"
-        className="mx-auto max-w-7xl px-4 py-14 lg:px-8"
+        className="mx-auto max-w-7xl px-4 py-10 lg:px-8"
       >
         <SectionHeading
-          title="Our Signature Collections"
+          title="Our Signature Jewelery Collection"
           subtitle="Discover timeless jewellery crafted with elegance, tradition and unmatched craftsmanship."
         />
 
@@ -104,9 +104,9 @@ const onTouchEnd = () => {
 
           <Link
             href="/catalog?category=gold"
-            className="group relative overflow-hidden rounded-3xl"
+            className="group relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
           >
-            <div className="relative aspect-[4/5]">
+            <div className="relative aspect-[16/9] lg:aspect-[4/5]">
 
               <Image
                 src="/images/Collec_Gold.jpg"
@@ -115,23 +115,23 @@ const onTouchEnd = () => {
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
 
-              <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
 
-                <p className="text-sm uppercase tracking-[0.35em] text-rangoli-gold">
+                <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
                   Signature
                 </p>
 
-                <h3 className="mt-2 font-serif text-3xl font-bold text-white">
+                <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
                   Gold Jewellery
                 </h3>
 
-                <p className="mt-3 max-w-xs text-sm leading-6 text-white/85">
+                <p className="mt-2 lg:mt-3 max-w-xs text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
                   Elegant necklaces, bangles and timeless pieces crafted in pure gold.
                 </p>
 
-                <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+                <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
 
                   Explore Collection
 
@@ -148,9 +148,9 @@ const onTouchEnd = () => {
 
           <Link
             href="/catalog?category=diamond"
-            className="group relative overflow-hidden rounded-3xl"
+            className="group relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
           >
-            <div className="relative aspect-[4/5]">
+            <div className="relative aspect-[16/9] lg:aspect-[4/5]">
 
               <Image
                 src="/images/Collec_Diamond.jpg"
@@ -159,23 +159,23 @@ const onTouchEnd = () => {
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
 
-              <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
 
-                <p className="text-sm uppercase tracking-[0.35em] text-rangoli-gold">
+                <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
                   Luxury
                 </p>
 
-                <h3 className="mt-2 font-serif text-3xl font-bold text-white">
+                <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
                   Diamond
                 </h3>
 
-                <p className="mt-3 text-sm leading-6 text-white/85">
+                <p className="mt-2 lg:mt-3 text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
                   Sparkling brilliance crafted to celebrate life&apos;s finest moments.
                 </p>
 
-                <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+                <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
 
                   Discover
 
@@ -192,9 +192,9 @@ const onTouchEnd = () => {
 
           <Link
             href="/catalog?category=wedding"
-            className="group relative overflow-hidden rounded-3xl"
+            className="group relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
           >
-            <div className="relative aspect-[4/5]">
+            <div className="relative aspect-[16/9] lg:aspect-[4/5]">
 
               <Image
                 src="/images/Collec_Wedding.jpg"
@@ -203,23 +203,23 @@ const onTouchEnd = () => {
                 className="object-cover transition duration-700 group-hover:scale-110"
               />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
 
-              <div className="absolute bottom-0 left-0 right-0 p-8">
+              <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
 
-                <p className="text-sm uppercase tracking-[0.35em] text-rangoli-gold">
+                <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
                   Bridal
                 </p>
 
-                <h3 className="mt-2 font-serif text-3xl font-bold text-white">
+                <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
                   Wedding
                 </h3>
 
-                <p className="mt-3 text-sm leading-6 text-white/85">
+                <p className="mt-2 lg:mt-3 text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
                   Beautiful bridal jewellery for unforgettable celebrations.
                 </p>
 
-                <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-3 text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+                <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
 
                   View Collection
 
@@ -235,8 +235,8 @@ const onTouchEnd = () => {
         </div>
       </section>
       <section id="section-clothing" className="w-full">
-        <div className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
-          <SectionHeading title="Clothing Collection" subtitle="Traditional & Contemporary Wear" />
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:py-10 lg:px-8">
+          <SectionHeading title="Clothing Collection" subtitle="Traditional & Contemporary Wear - Discover the rich heritage of Pahari culture with exquisite handwoven textiles, vibrant patterns, and timeless designs that celebrate the mountain traditions." />
         </div>
         {/* Mobile: Horizontal scroll cards, Desktop: Grid */}
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
