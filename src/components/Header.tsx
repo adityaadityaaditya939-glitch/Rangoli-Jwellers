@@ -101,10 +101,10 @@ export default function Header() {
             <Image
               src={IMAGES.logo}
               alt={SHOP.name}
-              width={120}
-              height={120}
+              width={220}
+              height={220}
               priority
-              className="h-20 w-20 object-contain transition duration-300 hover:scale-105 lg:h-24 lg:w-24"
+              className="h-52 w-52 object-contain transition duration-300 hover:scale-225 lg:h-56 lg:w-56"
             />
           </Link>
 

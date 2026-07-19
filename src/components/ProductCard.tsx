@@ -121,13 +121,13 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Product Image */}
       <Link
         href={`/catalog/${product.id}`}
-        className="relative block aspect-[3/4] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100"
+        className="relative block aspect-[3/4] overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 cursor-zoom-in"
       >
         <Image
           src={selectedImage}
           alt={product.name}
           fill
-          className="bg-white transition duration-500 group-hover:scale-105"
+          className="bg-white transition duration-500 group-hover:scale-125 ease-out"
           style={imageStyle}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
         />
