@@ -79,7 +79,9 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://www.facebook.com/vik.wadhwa.1"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
                 aria-label="Facebook"
               >
@@ -88,7 +90,9 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="#"
+                href="https://www.instagram.com/rangoliexclusive_1?igsh=MXc1dDI0cGxjMng0ZA=="
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 transition hover:bg-white/20"
                 aria-label="Instagram"
               >
@@ -130,7 +134,14 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} {SHOP.name}. All rights reserved.</p>
           <p className="mt-2">
             Powered by{" "}
-            <span className="font-semibold text-rangoli-gold">{SHOP.poweredBy}</span>
+            <a
+              href="https://tech-explorer-nine.vercel.app/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-rangoli-gold hover:text-rangoli-gold/80 transition-colors"
+            >
+              {SHOP.poweredBy}
+            </a>
           </p>
         </div>
       </div>
