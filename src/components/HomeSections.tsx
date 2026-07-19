@@ -98,140 +98,149 @@ const onTouchEnd = () => {
           subtitle="Discover timeless jewellery crafted with elegance, tradition and unmatched craftsmanship."
         />
 
-        <div className="grid gap-5 lg:grid-cols-3">
+        {/* Mobile: Horizontal scroll cards, Desktop: Grid */}
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:overflow-visible">
 
           {/* Gold */}
 
           <Link
             href="/catalog?category=gold"
-            className="group relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
+            className="group relative flex-shrink-0 w-[280px] sm:w-full overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
+            style={{
+              aspectRatio: '4/5',
+              minHeight: '350px'
+            }}
           >
-            <div className="relative aspect-[16/9] lg:aspect-[4/5]">
+            <Image
+              src="/images/Collec_Gold.jpg"
+              alt="Gold Collection"
+              fill
+              className="object-cover transition duration-700 group-hover:scale-110"
+              sizes="(max-width: 768px) 280px, (max-width: 1024px) 50vw, 33vw"
+            />
 
-              <Image
-                src="/images/Collec_Gold.jpg"
-                alt="Gold Collection"
-                fill
-                className="object-cover transition duration-700 group-hover:scale-110"
-              />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
 
-              <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
+              <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
+                Signature
+              </p>
 
-                <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
-                  Signature
-                </p>
+              <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
+                Gold Jewellery
+              </h3>
 
-                <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
-                  Gold Jewellery
-                </h3>
+              <p className="mt-2 lg:mt-3 max-w-xs text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
+                Elegant necklaces, bangles and timeless pieces crafted in pure gold.
+              </p>
 
-                <p className="mt-2 lg:mt-3 max-w-xs text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
-                  Elegant necklaces, bangles and timeless pieces crafted in pure gold.
-                </p>
+              <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
 
-                <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+                Explore Collection
 
-                  Explore Collection
-
-                  →
-
-                </div>
+                →
 
               </div>
 
             </div>
+
           </Link>
 
           {/* Diamond */}
 
           <Link
             href="/catalog?category=diamond"
-            className="group relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
+            className="group relative flex-shrink-0 w-[280px] sm:w-full overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
+            style={{
+              aspectRatio: '4/5',
+              minHeight: '350px'
+            }}
           >
-            <div className="relative aspect-[16/9] lg:aspect-[4/5]">
+            <Image
+              src="/images/Collec_Diamond.jpg"
+              alt="Diamond Collection"
+              fill
+              className="object-cover transition duration-700 group-hover:scale-110"
+              sizes="(max-width: 768px) 280px, (max-width: 1024px) 50vw, 33vw"
+            />
 
-              <Image
-                src="/images/Collec_Diamond.jpg"
-                alt="Diamond Collection"
-                fill
-                className="object-cover transition duration-700 group-hover:scale-110"
-              />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
 
-              <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
+              <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
+                Luxury
+              </p>
 
-                <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
-                  Luxury
-                </p>
+              <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
+                Diamond
+              </h3>
 
-                <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
-                  Diamond
-                </h3>
+              <p className="mt-2 lg:mt-3 text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
+                Sparkling brilliance crafted to celebrate life&apos;s finest moments.
+              </p>
 
-                <p className="mt-2 lg:mt-3 text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
-                  Sparkling brilliance crafted to celebrate life&apos;s finest moments.
-                </p>
+              <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
 
-                <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+                Discover
 
-                  Discover
-
-                  →
-
-                </div>
+                →
 
               </div>
 
             </div>
+
           </Link>
 
           {/* Wedding */}
 
           <Link
             href="/catalog?category=wedding"
-            className="group relative overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
+            className="group relative flex-shrink-0 w-[280px] sm:w-full overflow-hidden rounded-2xl lg:rounded-3xl shadow-lg lg:shadow-none border-2 border-amber-200 lg:border-0"
+            style={{
+              aspectRatio: '4/5',
+              minHeight: '350px'
+            }}
           >
-            <div className="relative aspect-[16/9] lg:aspect-[4/5]">
+            <Image
+              src="/images/Collec_Wedding.jpg"
+              alt="Wedding Collection"
+              fill
+              className="object-cover transition duration-700 group-hover:scale-110"
+              sizes="(max-width: 768px) 280px, (max-width: 1024px) 50vw, 33vw"
+            />
 
-              <Image
-                src="/images/Collec_Wedding.jpg"
-                alt="Wedding Collection"
-                fill
-                className="object-cover transition duration-700 group-hover:scale-110"
-              />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent lg:from-black lg:via-black/20 lg:to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
 
-              <div className="absolute bottom-0 left-0 right-0 p-5 lg:p-8">
+              <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
+                Bridal
+              </p>
 
-                <p className="text-xs lg:text-sm uppercase tracking-[0.25em] lg:tracking-[0.35em] text-rangoli-gold">
-                  Bridal
-                </p>
+              <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
+                Wedding
+              </h3>
 
-                <h3 className="mt-1 lg:mt-2 font-serif text-xl lg:text-3xl font-bold text-white">
-                  Wedding
-                </h3>
+              <p className="mt-2 lg:mt-3 text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
+                Beautiful bridal jewellery for unforgettable celebrations.
+              </p>
 
-                <p className="mt-2 lg:mt-3 text-xs lg:text-sm leading-5 lg:leading-6 text-white/85 hidden lg:block">
-                  Beautiful bridal jewellery for unforgettable celebrations.
-                </p>
+              <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
 
-                <div className="mt-4 lg:mt-6 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 lg:px-5 lg:py-3 text-xs lg:text-sm font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black">
+                View Collection
 
-                  View Collection
-
-                  →
-
-                </div>
+                →
 
               </div>
 
             </div>
+
           </Link>
 
+          </div>
         </div>
       </section>
       <section id="section-clothing" className="w-full">
@@ -266,11 +275,15 @@ const onTouchEnd = () => {
                   {cat.tall && (
                     <p className="mt-1 text-xs text-white/90 sm:text-sm md:text-base">Premium Collection</p>
                   )}
-                  <div className="mt-3 flex items-center gap-2 text-amber-300 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 sm:mt-4">
+                  <div className="mt-3 flex items-center gap-2 text-amber-300 opacity-100 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0 sm:mt-4">
                     <span className="text-xs font-medium sm:text-sm">Explore</span>
                     <svg className="h-4 w-4 sm:h-5 sm:w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                     </svg>
+                  </div>
+                  <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/30 px-4 py-2 text-xs font-semibold text-white backdrop-blur-sm transition group-hover:bg-rangoli-gold group-hover:text-black sm:mt-6 sm:px-5 sm:py-3 sm:text-sm">
+                    Explore Collection
+                    →
                   </div>
                 </div>
               </Link>
