@@ -12,8 +12,8 @@ interface ConsultationContextValue {
 const ConsultationContext = createContext<ConsultationContextValue | null>(null);
 
 const INITIAL_DELAY = 12000;
-const SECOND_DELAY = 120000;
-const THIRD_DELAY = 300000;
+const SECOND_DELAY = 600000;
+const THIRD_DELAY = 600000;
 
 export function ConsultationProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
