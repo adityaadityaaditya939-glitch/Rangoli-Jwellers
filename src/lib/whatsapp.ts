@@ -32,7 +32,7 @@ export function buildConsultationWhatsAppMessage(data: {
 
   if (data.queryType) lines.push(`Query Type: ${data.queryType === "clothing" ? "Clothing" : "Jewellery"}`);
   if (data.budget) lines.push(`Budget: ${data.budget}`);
-  if (data.metalPreference) lines.push(`Metal Preference: ${data.metalPreference}`);
+  if (data.metalPreference) lines.push(`Preference: ${data.metalPreference}`);
   if (data.notes) lines.push(`Notes: ${data.notes}`);
 
   return lines.join("\n");

@@ -148,14 +148,14 @@ export default function ConsultationForm({
           </div>
         </div>
         <div>
-          <label className="mb-1.5 block text-xs font-medium text-gray-700 sm:text-sm">Metal Preference</label>
+          <label className="mb-1.5 block text-xs font-medium text-gray-700 sm:text-sm">Your Preference</label>
           <div className="relative">
             <select
               value={metalPreference}
               onChange={(e) => setMetalPreference(e.target.value)}
               className="w-full rounded-xl border border-gray-300 px-3 py-2.5 pl-10 text-sm focus:border-rangoli-maroon focus:outline-none focus:ring-2 focus:ring-rangoli-maroon/20 transition-all appearance-none bg-white sm:px-4 sm:py-3"
             >
-              <option value="">Select metal</option>
+              <option value="">Select preference</option>
               {METAL_OPTIONS.map((metal) => (
                 <option key={metal} value={metal}>
                   {metal}

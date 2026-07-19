@@ -101,7 +101,7 @@ export const EXPERIENCE_SLIDES = [
   },
 ] as const;
 
-export const METAL_OPTIONS = ["Gold", "Silver", "Diamond", "Platinum", "Mixed"] as const;
+export const METAL_OPTIONS = ["Gold", "Silver", "Diamond", "Platinum", "Mixed", "Traditional", "Suit", "Saree", "Lehenga"] as const;
 
 export const PRODUCT_CATEGORIES = [
   "all",

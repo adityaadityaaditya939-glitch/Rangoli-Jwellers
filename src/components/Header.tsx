@@ -7,11 +7,13 @@ import { usePathname, useRouter } from "next/navigation";
 
 import { IMAGES, SHOP } from "@/lib/constants";
 import { useConsultation } from "@/components/ConsultationProvider";
+import { useCart } from "@/components/CartProvider";
 
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
   const { openConsultation } = useConsultation();
+  const { cartCount } = useCart();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -147,6 +149,20 @@ export default function Header() {
 
           <div className="hidden items-center gap-3 lg:flex">
 
+            <Link
+              href="/cart"
+              className="relative rounded-full border border-gray-200 p-3 transition hover:border-rangoli-gold hover:bg-rangoli-cream"
+            >
+              <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-rangoli-maroon text-[10px] font-bold text-white">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+
             <a
               href={`tel:${SHOP.phone}`}
               className="flex items-center gap-2 rounded-full border border-gray-200 px-4 py-2 text-sm font-medium text-rangoli-maroon transition hover:border-rangoli-gold hover:bg-rangoli-cream"
@@ -213,6 +229,20 @@ export default function Header() {
           {/* Mobile Icons */}
 
           <div className="flex items-center gap-2 lg:hidden">
+
+            <Link
+              href="/cart"
+              className="relative rounded-xl p-2.5 text-rangoli-maroon transition hover:bg-rangoli-cream hover:scale-105"
+            >
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-rangoli-maroon text-[10px] font-bold text-white">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
 
             <Link
               href="/catalog"

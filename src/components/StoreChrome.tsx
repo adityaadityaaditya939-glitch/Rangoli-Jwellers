@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import PhoneFab from "@/components/PhoneFab";
 import ConsultationModal from "@/components/ConsultationModal";
 import { ConsultationProvider } from "@/components/ConsultationProvider";
+import { CartProvider } from "@/components/CartProvider";
 
 interface StoreChromeProps {
   children: React.ReactNode;
@@ -23,17 +24,19 @@ export default function StoreChrome({ children }: StoreChromeProps) {
 
   return (
     <ConsultationProvider>
-      <div className="flex min-h-screen flex-col">
-        <Header />
+      <CartProvider>
+        <div className="flex min-h-screen flex-col">
+          <Header />
 
-        <main className="flex-1">
-          {children}
-        </main>
+          <main className="flex-1">
+            {children}
+          </main>
 
-        <Footer />
-        <PhoneFab />
-        <ConsultationModal />
-      </div>
+          <Footer />
+          <PhoneFab />
+          <ConsultationModal />
+        </div>
+      </CartProvider>
     </ConsultationProvider>
   );
 }

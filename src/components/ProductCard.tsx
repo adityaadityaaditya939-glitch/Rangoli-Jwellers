@@ -9,6 +9,7 @@ import {
   buildWhatsAppUrl,
   formatPrice,
 } from "@/lib/whatsapp";
+import { useCart } from "@/components/CartProvider";
 
 interface ProductCardProps {
   product: Product & { images?: Array<{ id: number; image_url: string; color_name: string | null; is_primary: boolean }> };
@@ -17,6 +18,8 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [selectedImage, setSelectedImage] = useState(product.image_url);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const { addToCart } = useCart();
   
   const whatsappUrl = buildWhatsAppUrl(
     buildProductWhatsAppMessage({
@@ -44,6 +47,18 @@ export default function ProductCard({ product }: ProductCardProps) {
     
     localStorage.setItem('wishlist', JSON.stringify(newWishlist));
     setIsLiked(!isLiked);
+  };
+
+  // Add to cart handler
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    addToCart(product);
+    setAddedToCart(true);
+    
+    // Reset the added state after 2 seconds
+    setTimeout(() => setAddedToCart(false), 2000);
   };
 
   // Calculate image positioning using database fields
@@ -174,12 +189,19 @@ export default function ProductCard({ product }: ProductCardProps) {
 
         {/* Action Buttons */}
         <div className="mt-3 sm:mt-4 flex gap-2">
-          <Link
-            href={`/catalog/${product.id}`}
-            className="flex-1 rounded-xl border-2 border-gray-200 py-2 text-center text-xs font-semibold text-rangoli-maroon transition-all duration-200 hover:border-rangoli-maroon hover:bg-rangoli-maroon hover:text-white hover:shadow-md"
+          <button
+            onClick={handleAddToCart}
+            disabled={product.stock <= 0}
+            className={`flex-1 rounded-xl py-2 text-center text-xs font-semibold transition-all duration-200 ${
+              addedToCart
+                ? "bg-green-500 text-white"
+                : product.stock <= 0
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-rangoli-gold text-white hover:bg-rangoli-gold/90 hover:shadow-md"
+            }`}
           >
-            View
-          </Link>
+            {addedToCart ? "✓ Added" : product.stock <= 0 ? "Out of Stock" : "Add to Cart"}
+          </button>
 
           <a
             href={whatsappUrl}
