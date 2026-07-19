@@ -1,7 +1,7 @@
 import { SHOP } from "./constants";
 
-export function buildWhatsAppUrl(message: string) {
-  const number = SHOP.whatsapp.replace(/\D/g, "");
+export function buildWhatsAppUrl(message: string, customNumber?: string) {
+  const number = customNumber || SHOP.whatsapp.replace(/\D/g, "");
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
@@ -20,6 +20,7 @@ export function buildConsultationWhatsAppMessage(data: {
   mobile: string;
   budget?: string;
   metalPreference?: string;
+  queryType?: string;
   notes?: string;
 }) {
   const lines = [
@@ -29,6 +30,7 @@ export function buildConsultationWhatsAppMessage(data: {
     `Mobile: ${data.mobile}`,
   ];
 
+  if (data.queryType) lines.push(`Query Type: ${data.queryType === "clothing" ? "Clothing" : "Jewellery"}`);
   if (data.budget) lines.push(`Budget: ${data.budget}`);
   if (data.metalPreference) lines.push(`Metal Preference: ${data.metalPreference}`);
   if (data.notes) lines.push(`Notes: ${data.notes}`);

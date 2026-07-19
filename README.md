@@ -1,6 +1,6 @@
-# Rangoli Jwellers
+# Rangoli Exclusive
 
-Premium jewellery website for **Rangoli Jwellers**, Rohru, Himachal Pradesh.
+Premium jewellery website for **Rangoli Exclusive**, Rohru, Himachal Pradesh.
 
 ## Tech Stack
 

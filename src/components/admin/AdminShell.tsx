@@ -25,7 +25,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 lg:px-8">
           <div>
             <p className="text-xs uppercase tracking-wider text-gray-500">Admin Dashboard</p>
-            <h1 className="font-serif text-xl font-bold text-rangoli-maroon">Rangoli Jwellers</h1>
+            <h1 className="font-serif text-xl font-bold text-rangoli-maroon">Rangoli Exclusive</h1>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/" className="text-sm text-gray-600 hover:text-rangoli-maroon">

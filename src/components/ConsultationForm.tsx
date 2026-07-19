@@ -19,6 +19,7 @@ export default function ConsultationForm({
   const [mobile, setMobile] = useState("");
   const [budget, setBudget] = useState("");
   const [metalPreference, setMetalPreference] = useState("");
+  const [queryType, setQueryType] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -37,6 +38,7 @@ export default function ConsultationForm({
           mobile,
           budget,
           metalPreference,
+          queryType,
           notes,
           source,
         }),
@@ -53,15 +55,18 @@ export default function ConsultationForm({
         mobile,
         budget,
         metalPreference,
+        queryType,
         notes,
       });
 
-      window.open(buildWhatsAppUrl(message), "_blank");
+      const phoneNumber = queryType === "clothing" ? "918894506405" : undefined;
+      window.open(buildWhatsAppUrl(message, phoneNumber), "_blank");
       onSuccess?.();
       setName("");
       setMobile("");
       setBudget("");
       setMetalPreference("");
+      setQueryType("");
       setNotes("");
     } catch {
       setError("Something went wrong. Please try again.");
@@ -103,6 +108,27 @@ export default function ConsultationForm({
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
           </div>
+        </div>
+      </div>
+
+      <div>
+        <label className="mb-1.5 block text-xs font-medium text-gray-700 sm:text-sm">Query Type</label>
+        <div className="relative">
+          <select
+            value={queryType}
+            onChange={(e) => setQueryType(e.target.value)}
+            className="w-full rounded-xl border border-gray-300 px-3 py-2.5 pl-10 text-sm focus:border-rangoli-maroon focus:outline-none focus:ring-2 focus:ring-rangoli-maroon/20 transition-all appearance-none bg-white sm:px-4 sm:py-3"
+          >
+            <option value="">Select query type</option>
+            <option value="jewellery">Jewellery</option>
+            <option value="clothing">Clothing</option>
+          </select>
+          <svg className="absolute left-3 top-2.5 h-4 w-4 text-gray-400 sm:top-3 sm:h-5 sm:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+          </svg>
+          <svg className="absolute right-3 top-2.5 h-4 w-4 text-gray-400 sm:top-3 sm:h-5 sm:w-5 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
         </div>
       </div>
 

@@ -1,15 +1,16 @@
 export const SHOP = {
-  name: "Rangoli Jwellers",
+  name: "Rangoli Exclusive",
   tagline: "Crafted with love, worn with pride",
   address: "The Mall Rd, Upper Bazar, Rohru, Himachal Pradesh 171207",
   email: "info@rangolijwellers.com",
-  whatsapp: process.env.WHATSAPP_NUMBER || "919805837108",
-  phone: process.env.SHOP_PHONE || "+919805837108",
+  whatsapp: process.env.WHATSAPP_NUMBER || "918894506405",
+  phone: process.env.SHOP_PHONE || "+918894506405",
+  clothingPhone: process.env.CLOTHING_PHONE || "+918894506405",
   poweredBy: "TechExplorers",
 } as const;
 
 export const IMAGES = {
-  logo: "/images/New_logo1.png",
+  logo: "/images/Updated logo.png",
   hero: [
     "/images/Hero_sec_1_updated.jpg.JPG",
     "/images/Hero_sec_2_new.JPG",
