@@ -28,6 +28,7 @@ export default function Header() {
     { title: "Home", href: "/" },
     { title: "Jewellery", href: "/catalog" },
     { title: "Clothing", href: "/clothing" },
+    { title: "Kitty Plan", href: "/kitty-plan" },
     { title: "Contact", href: "/contact" },
   ];
 

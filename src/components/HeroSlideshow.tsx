@@ -169,7 +169,7 @@ export default function HeroSlideshow({
                 className="
 absolute
 h-full
-w-[88%]
+w-[94%]
 sm:w-[72%]
 lg:w-[60%]
 overflow-hidden
@@ -193,7 +193,7 @@ shadow-3xl
                   alt={`Hero Slide ${index + 1}`}
                   fill
                   priority={index === 0}
-                  className="object-cover object-top hidden lg:block"
+                  className={`object-cover hidden lg:block ${index === 0 ? 'object-top' : 'object-center'}`}
                   sizes="100vw"
                 />
 
@@ -202,7 +202,7 @@ shadow-3xl
 
                 {/* Slide Content - Only show for active slide */}
                 {isActive && (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white">
+                  <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white opacity-90">
                     <span className="mb-3 h-0.5 w-12 rounded-full bg-rangoli-gold sm:mb-4 sm:w-16" />
 
                     <p className="text-[10px] uppercase tracking-[0.35em] text-rangoli-gold sm:text-xs sm:tracking-[0.4em]">

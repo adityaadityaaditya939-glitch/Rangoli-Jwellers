@@ -303,6 +303,43 @@ const onTouchEnd = () => {
         </div>
       </section>
 
+      {/* Kitty Plan Section */}
+      <section id="section-kitty-plan" className="mx-auto max-w-7xl px-4 py-10 sm:py-14 lg:px-8">
+        <SectionHeading 
+          title="GINNI GOLD KITTY" 
+          subtitle="Start your journey with just ₹1000. Invest up to ₹50,000." 
+        />
+        <div className="relative overflow-hidden rounded-3xl shadow-2xl" style={{ aspectRatio: '16/9' }}>
+          <Image
+            src="/images/Kitty_plan.png"
+            alt="Ginni Gold Kitty Plan"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 100vw, 100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+          <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-12">
+            <Link
+              href="/kitty-plan"
+              className="inline-flex items-center gap-2 rounded-full bg-amber-400/80 px-5 py-2.5 text-sm font-semibold text-gray-900 transition hover:bg-amber-500 sm:px-6 sm:py-3 sm:text-base"
+            >
+              Learn More
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+        <div className="mt-6 text-center sm:mt-8">
+          <h3 className="font-serif text-xl font-bold text-gray-900 sm:text-2xl md:text-3xl">
+            Safe & Reliable Investment
+          </h3>
+          <p className="mt-2 text-sm text-gray-600 sm:text-base md:text-lg">
+            Gift + Profit = Double Happiness
+          </p>
+        </div>
+      </section>
+
       <section className="bg-rangoli-cream py-10 sm:py-14">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <SectionHeading title="Find Your Perfect Match" subtitle="Shop by Categories" />
