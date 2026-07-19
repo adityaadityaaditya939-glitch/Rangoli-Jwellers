@@ -29,7 +29,7 @@ export default function CartPage() {
             Your cart is empty
           </h2>
           <p className="mt-2 text-gray-600">
-            Looks like you haven't added any items yet.
+            Looks like you haven&apos;t added any items yet.
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <Link

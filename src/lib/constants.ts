@@ -12,6 +12,7 @@ export const SHOP = {
 export const IMAGES = {
   logo: "/images/Updated logo.png",
   hero: [
+    "/images/New_hero_sec_1.jpg",
     "/images/Hero_sec_1_updated.jpg.JPG",
     "/images/Hero_sec_2_new.JPG",
     "/images/Hero_sec_3_new.JPG",
