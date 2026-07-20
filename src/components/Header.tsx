@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-import { IMAGES, SHOP, TRADITIONAL_SUB_CATEGORIES, NAV_CATEGORIES } from "@/lib/constants";
+import { IMAGES, SHOP, TRADITIONAL_SUB_CATEGORIES, NAV_CATEGORIES, CLOTHING_NAV_CATEGORIES } from "@/lib/constants";
 import { useConsultation } from "@/components/ConsultationProvider";
 import { useCart } from "@/components/CartProvider";
 
@@ -19,6 +19,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [traditionalDropdownOpen, setTraditionalDropdownOpen] = useState(false);
   const [jewelleryDropdownOpen, setJewelleryDropdownOpen] = useState(false);
+  const [traditionalSubDropdownOpen, setTraditionalSubDropdownOpen] = useState(false);
 
   const [user, setUser] = useState<{
     name: string;
@@ -171,23 +172,49 @@ export default function Header() {
                     </div>
                   )}
 
-                  {/* Dropdown Menu for Traditional Wear */}
+                  {/* Dropdown Menu for Clothing */}
                   {item.title === "Clothing" && traditionalDropdownOpen && (
-                    <div className="absolute left-0 top-full mt-2 w-48 rounded-xl bg-white shadow-2xl border border-gray-100 py-2 z-50">
-                      <Link
-                        href="/clothing?category=traditional-wears"
-                        className="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
-                      >
-                        All Traditional Wear
-                      </Link>
-                      {TRADITIONAL_SUB_CATEGORIES.map((sub) => (
-                        <Link
-                          key={sub.slug}
-                          href={`/clothing?category=${sub.slug}`}
-                          className="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                    <div className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-white shadow-2xl border border-gray-100 py-2 z-50">
+                      {CLOTHING_NAV_CATEGORIES.map((cat) => (
+                        <div
+                          key={cat.slug}
+                          className="relative"
+                          onMouseEnter={() => {
+                            if (cat.hasSubCategories) setTraditionalSubDropdownOpen(true);
+                          }}
+                          onMouseLeave={() => {
+                            if (cat.hasSubCategories) setTraditionalSubDropdownOpen(false);
+                          }}
                         >
-                          {sub.label}
-                        </Link>
+                          <Link
+                            href={cat.slug === "all" ? "/clothing" : `/clothing?category=${cat.slug}`}
+                            className="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                          >
+                            <span className="flex items-center justify-between">
+                              <span>{cat.icon} {cat.label}</span>
+                              {cat.hasSubCategories && (
+                                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                </svg>
+                              )}
+                            </span>
+                          </Link>
+
+                          {/* Sub-dropdown for Traditional Wear */}
+                          {cat.hasSubCategories && traditionalSubDropdownOpen && (
+                            <div className="absolute left-full top-0 ml-1 w-48 rounded-xl bg-white shadow-2xl border border-gray-100 py-2 z-50">
+                              {TRADITIONAL_SUB_CATEGORIES.map((sub) => (
+                                <Link
+                                  key={sub.slug}
+                                  href={`/clothing?category=${sub.slug}`}
+                                  className="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                                >
+                                  {sub.label}
+                                </Link>
+                              ))}
+                            </div>
+                          )}
+                        </div>
                       ))}
                     </div>
                   )}
@@ -448,25 +475,53 @@ export default function Header() {
                         </div>
                       )}
 
-                      {/* Mobile Dropdown for Traditional Wear */}
+                      {/* Mobile Dropdown for Clothing */}
                       {item.title === "Clothing" && traditionalDropdownOpen && (
                         <div className="ml-8 mt-1 space-y-1">
-                          <Link
-                            href="/clothing?category=traditional-wears"
-                            onClick={() => setMenuOpen(false)}
-                            className="block rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
-                          >
-                            All Traditional Wear
-                          </Link>
-                          {TRADITIONAL_SUB_CATEGORIES.map((sub) => (
-                            <Link
-                              key={sub.slug}
-                              href={`/clothing?category=${sub.slug}`}
-                              onClick={() => setMenuOpen(false)}
-                              className="block rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
-                            >
-                              {sub.label}
-                            </Link>
+                          {CLOTHING_NAV_CATEGORIES.map((cat) => (
+                            <div key={cat.slug}>
+                              <Link
+                                href={cat.slug === "all" ? "/clothing" : `/clothing?category=${cat.slug}`}
+                                onClick={() => {
+                                  if (!cat.hasSubCategories) setMenuOpen(false);
+                                }}
+                                className="flex items-center justify-between rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                              >
+                                <span>{cat.icon} {cat.label}</span>
+                                {cat.hasSubCategories && (
+                                  <svg
+                                    className={`h-4 w-4 transition-transform ${
+                                      traditionalSubDropdownOpen ? 'rotate-180' : ''
+                                    }`}
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      setTraditionalSubDropdownOpen(!traditionalSubDropdownOpen);
+                                    }}
+                                  >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                  </svg>
+                                )}
+                              </Link>
+
+                              {/* Mobile Sub-dropdown for Traditional Wear */}
+                              {cat.hasSubCategories && traditionalSubDropdownOpen && (
+                                <div className="ml-6 mt-1 space-y-1">
+                                  {TRADITIONAL_SUB_CATEGORIES.map((sub) => (
+                                    <Link
+                                      key={sub.slug}
+                                      href={`/clothing?category=${sub.slug}`}
+                                      onClick={() => setMenuOpen(false)}
+                                      className="block rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                                    >
+                                      {sub.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
                           ))}
                         </div>
                       )}

@@ -88,6 +88,14 @@ export const TRADITIONAL_SUB_CATEGORIES = [
   { label: "Rejta", slug: "rejta", image: "/images/Clothes/Traditional_10.1.jpg.jpg" },
 ] as const;
 
+export const CLOTHING_NAV_CATEGORIES = [
+  { label: "All", slug: "all", icon: "👗", hasSubCategories: false },
+  { label: "Traditional wear", slug: "traditional-wears", icon: "👘", hasSubCategories: true },
+  { label: "Suits", slug: "suits", icon: "�", hasSubCategories: false },
+  { label: "Saree", slug: "saree", icon: "👗", hasSubCategories: false },
+  { label: "Lehenga", slug: "lehenga", icon: "👗", hasSubCategories: false },
+] as const;
+
 export const TRADITIONAL_CATEGORIES = [
   { label: "Traditional dresses", slug: "traditional-first", image: "/images/Clothes/Traditional_firstPhoto.jpg.jpg" },
   { label: "Traditional dresses", slug: "lehenga", image: "/images/Traditional_Elegance_1.1.JPG" },

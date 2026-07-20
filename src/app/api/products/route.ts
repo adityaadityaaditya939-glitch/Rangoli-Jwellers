@@ -38,7 +38,7 @@ export async function GET(request: Request) {
       // Only clothing categories
       rows = await sql`
         SELECT * FROM products
-        WHERE category IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears')
+        WHERE category IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears', 'sadri', 'dhatu', 'rejta')
         ORDER BY created_at DESC
       ` as Product[];
     } else if (admin === "true") {
