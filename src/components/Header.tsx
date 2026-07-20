@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 
-import { IMAGES, SHOP } from "@/lib/constants";
+import { IMAGES, SHOP, TRADITIONAL_SUB_CATEGORIES, NAV_CATEGORIES } from "@/lib/constants";
 import { useConsultation } from "@/components/ConsultationProvider";
 import { useCart } from "@/components/CartProvider";
 
@@ -17,6 +17,8 @@ export default function Header() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [traditionalDropdownOpen, setTraditionalDropdownOpen] = useState(false);
+  const [jewelleryDropdownOpen, setJewelleryDropdownOpen] = useState(false);
 
   const [user, setUser] = useState<{
     name: string;
@@ -26,8 +28,8 @@ export default function Header() {
 
   const navigation = [
     { title: "Home", href: "/" },
-    { title: "Jewellery", href: "/catalog" },
-    { title: "Clothing", href: "/clothing" },
+    { title: "Jewellery", href: "/catalog", hasDropdown: true },
+    { title: "Clothing", href: "/clothing", hasDropdown: true },
     { title: "Kitty Plan", href: "/kitty-plan" },
     { title: "Contact", href: "/contact" },
   ];
@@ -119,29 +121,77 @@ export default function Header() {
                   : pathname.startsWith(item.href);
 
               return (
-                <Link
+                <div
                   key={item.href}
-                  href={item.href}
-                  className="group relative py-2 font-medium tracking-wide text-rangoli-maroon"
+                  className="relative"
+                  onMouseEnter={() => {
+                    if (item.title === "Jewellery") setJewelleryDropdownOpen(true);
+                    if (item.title === "Clothing") setTraditionalDropdownOpen(true);
+                  }}
+                  onMouseLeave={() => {
+                    if (item.title === "Jewellery") setJewelleryDropdownOpen(false);
+                    if (item.title === "Clothing") setTraditionalDropdownOpen(false);
+                  }}
                 >
-                  <span
-                    className={`transition ${
-                      active
-                        ? "text-rangoli-gold"
-                        : "group-hover:text-rangoli-gold"
-                    }`}
+                  <Link
+                    href={item.href}
+                    className="group relative py-2 font-medium tracking-wide text-rangoli-maroon"
                   >
-                    {item.title}
-                  </span>
+                    <span
+                      className={`transition ${
+                        active
+                          ? "text-rangoli-gold"
+                          : "group-hover:text-rangoli-gold"
+                      }`}
+                    >
+                      {item.title}
+                    </span>
 
-                  <span
-                    className={`absolute bottom-0 left-0 h-[2px] rounded-full bg-rangoli-gold transition-all duration-300 ${
-                      active
-                        ? "w-full"
-                        : "w-0 group-hover:w-full"
-                    }`}
-                  />
-                </Link>
+                    <span
+                      className={`absolute bottom-0 left-0 h-[2px] rounded-full bg-rangoli-gold transition-all duration-300 ${
+                        active
+                          ? "w-full"
+                          : "w-0 group-hover:w-full"
+                      }`}
+                    />
+                  </Link>
+
+                  {/* Dropdown Menu for Jewellery */}
+                  {item.title === "Jewellery" && jewelleryDropdownOpen && (
+                    <div className="absolute left-0 top-full mt-2 w-56 rounded-xl bg-white shadow-2xl border border-gray-100 py-2 z-50">
+                      {NAV_CATEGORIES.filter(cat => cat.slug !== "clothing").map((cat) => (
+                        <Link
+                          key={cat.slug}
+                          href={cat.slug === "all" ? "/catalog" : `/catalog?category=${cat.slug}`}
+                          className="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                        >
+                          {cat.icon} {cat.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Dropdown Menu for Traditional Wear */}
+                  {item.title === "Clothing" && traditionalDropdownOpen && (
+                    <div className="absolute left-0 top-full mt-2 w-48 rounded-xl bg-white shadow-2xl border border-gray-100 py-2 z-50">
+                      <Link
+                        href="/clothing?category=traditional-wears"
+                        className="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                      >
+                        All Traditional Wear
+                      </Link>
+                      {TRADITIONAL_SUB_CATEGORIES.map((sub) => (
+                        <Link
+                          key={sub.slug}
+                          href={`/clothing?category=${sub.slug}`}
+                          className="block px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
               );
             })}
           </nav>
@@ -338,27 +388,89 @@ export default function Header() {
                       : pathname.startsWith(item.href);
 
                   return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={() => setMenuOpen(false)}
-                      className={`flex items-center gap-3 rounded-xl px-4 py-3.5 font-medium transition ${
-                        active
-                          ? "bg-rangoli-maroon text-white shadow-md"
-                          : "text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon"
-                      }`}
-                    >
-                      {active ? (
-                        <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
-                        </svg>
-                      ) : (
-                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
+                    <div key={item.href}>
+                      <Link
+                        href={item.href}
+                        onClick={() => {
+                          if (!item.hasDropdown) setMenuOpen(false);
+                        }}
+                        className={`flex items-center justify-between rounded-xl px-4 py-3.5 font-medium transition ${
+                          active
+                            ? "bg-rangoli-maroon text-white shadow-md"
+                            : "text-gray-700 hover:bg-rangoli-cream hover:text-rangoli-maroon"
+                        }`}
+                      >
+                        <div className="flex items-center gap-3">
+                          {active ? (
+                            <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                            </svg>
+                          ) : (
+                            <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          )}
+                          {item.title}
+                        </div>
+                        {item.hasDropdown && (
+                          <svg
+                            className={`h-4 w-4 transition-transform ${
+                              (item.title === "Jewellery" && jewelleryDropdownOpen) || 
+                              (item.title === "Clothing" && traditionalDropdownOpen) ? 'rotate-180' : ''
+                            }`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (item.title === "Jewellery") setJewelleryDropdownOpen(!jewelleryDropdownOpen);
+                              if (item.title === "Clothing") setTraditionalDropdownOpen(!traditionalDropdownOpen);
+                            }}
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        )}
+                      </Link>
+
+                      {/* Mobile Dropdown for Jewellery */}
+                      {item.title === "Jewellery" && jewelleryDropdownOpen && (
+                        <div className="ml-8 mt-1 space-y-1">
+                          {NAV_CATEGORIES.filter(cat => cat.slug !== "clothing").map((cat) => (
+                            <Link
+                              key={cat.slug}
+                              href={cat.slug === "all" ? "/catalog" : `/catalog?category=${cat.slug}`}
+                              onClick={() => setMenuOpen(false)}
+                              className="block rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                            >
+                              {cat.icon} {cat.label}
+                            </Link>
+                          ))}
+                        </div>
                       )}
-                      {item.title}
-                    </Link>
+
+                      {/* Mobile Dropdown for Traditional Wear */}
+                      {item.title === "Clothing" && traditionalDropdownOpen && (
+                        <div className="ml-8 mt-1 space-y-1">
+                          <Link
+                            href="/clothing?category=traditional-wears"
+                            onClick={() => setMenuOpen(false)}
+                            className="block rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                          >
+                            All Traditional Wear
+                          </Link>
+                          {TRADITIONAL_SUB_CATEGORIES.map((sub) => (
+                            <Link
+                              key={sub.slug}
+                              href={`/clothing?category=${sub.slug}`}
+                              onClick={() => setMenuOpen(false)}
+                              className="block rounded-lg px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-rangoli-cream hover:text-rangoli-maroon transition-colors"
+                            >
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   );
                 })}
 

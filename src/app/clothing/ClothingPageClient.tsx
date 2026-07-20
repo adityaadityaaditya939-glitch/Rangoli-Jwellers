@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
-import { CLOTHING_CATEGORIES } from "@/lib/constants";
+import { CLOTHING_CATEGORIES, TRADITIONAL_SUB_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 
 // Fisher-Yates shuffle algorithm
@@ -66,6 +66,7 @@ export default function ClothingPageClient() {
  
   const categoryLabel =
     CLOTHING_CATEGORIES.find((c) => c.slug === category)?.label ||
+    TRADITIONAL_SUB_CATEGORIES.find((c) => c.slug === category)?.label ||
     "All Clothing";
  
   return (
@@ -90,7 +91,36 @@ export default function ClothingPageClient() {
           <p className="mt-1 text-sm text-gray-500">({displayProducts.length} results)</p>
         </div>
       </div>
- 
+
+      {/* Sub-navigation for Traditional Wears */}
+      {(category === "traditional-wears" || TRADITIONAL_SUB_CATEGORIES.some(cat => cat.slug === category)) && (
+        <div className="mb-6 flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+          <Link
+            href="/clothing?category=traditional-wears"
+            className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+              category === "traditional-wears"
+                ? "bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark text-white shadow-lg shadow-rangoli-maroon/30"
+                : "border-2 border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon hover:bg-rangoli-cream"
+            }`}
+          >
+            All Traditional Wear
+          </Link>
+          {TRADITIONAL_SUB_CATEGORIES.map((cat) => (
+            <Link
+              key={cat.slug}
+              href={`/clothing?category=${cat.slug}`}
+              className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                category === cat.slug
+                  ? "bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark text-white shadow-lg shadow-rangoli-maroon/30"
+                  : "border-2 border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon hover:bg-rangoli-cream"
+              }`}
+            >
+              {cat.label}
+            </Link>
+          ))}
+        </div>
+      )}
+
       <div className="mb-8 flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
         <Link
           href="/clothing"
@@ -102,7 +132,38 @@ export default function ClothingPageClient() {
         >
           All
         </Link>
-        {CLOTHING_CATEGORIES.map((cat) => (
+        {/* Only show Traditional Wears and sub-categories in main nav when sub-nav is not active */}
+        {!(category === "traditional-wears" || TRADITIONAL_SUB_CATEGORIES.some(cat => cat.slug === category)) && (
+          <>
+            {CLOTHING_CATEGORIES.filter(cat => cat.slug === "traditional-wears").map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/clothing?category=${cat.slug}`}
+                className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                  category === cat.slug
+                    ? "bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark text-white shadow-lg shadow-rangoli-maroon/30"
+                    : "border-2 border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon hover:bg-rangoli-cream"
+                }`}
+              >
+                {cat.label}
+              </Link>
+            ))}
+            {TRADITIONAL_SUB_CATEGORIES.map((cat) => (
+              <Link
+                key={cat.slug}
+                href={`/clothing?category=${cat.slug}`}
+                className={`shrink-0 rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+                  category === cat.slug
+                    ? "bg-gradient-to-r from-rangoli-maroon to-rangoli-maroon-dark text-white shadow-lg shadow-rangoli-maroon/30"
+                    : "border-2 border-gray-200 text-rangoli-maroon hover:border-rangoli-maroon hover:bg-rangoli-cream"
+                }`}
+              >
+                {cat.label}
+              </Link>
+            ))}
+          </>
+        )}
+        {CLOTHING_CATEGORIES.filter(cat => cat.slug !== "traditional-wears").map((cat) => (
           <Link
             key={cat.slug}
             href={`/clothing?category=${cat.slug}`}

@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { useUploadThing } from "@/lib/uploadthing";
-import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES } from "@/lib/constants";
+import { IMAGES, METAL_OPTIONS, PRODUCT_CATEGORIES, CLOTHING_CATEGORIES, TRADITIONAL_SUB_CATEGORIES } from "@/lib/constants";
 import type { Product } from "@/lib/db";
 import ImagePositionEditor from "./ImagePositionEditor";
 
@@ -12,7 +12,8 @@ const JEWELRY_CATEGORIES = PRODUCT_CATEGORIES.filter(
   !["lehenga", "suits", "saree", "sarees", "lehengas", "kurtis", "sherwanis", "traditional-wears"].includes(cat)
 );
 
-const CLOTHING_SLUGS = CLOTHING_CATEGORIES.map((c) => c.slug);
+const CLOTHING_SLUGS = [...CLOTHING_CATEGORIES.map((c) => c.slug), ...TRADITIONAL_SUB_CATEGORIES.map((c) => c.slug)];
+const TRADITIONAL_SLUGS = TRADITIONAL_SUB_CATEGORIES.map((c) => c.slug);
 
 const emptyForm = {
   name: "",
@@ -331,6 +332,23 @@ export default function ProductManager() {
                   ))
               }
             </select>
+            {form.productType === "clothing" && form.category === "traditional-wears" && (
+              <div className="mt-3">
+                <label className="block text-sm font-medium text-gray-700 mb-2">Traditional Sub-Category</label>
+                <select
+                  value={form.category}
+                  onChange={(e) => setForm({ ...form, category: e.target.value })}
+                  className="w-full rounded-lg border border-gray-300 px-4 py-2.5"
+                >
+                  <option value="traditional-wears">All Traditional Wear</option>
+                  {TRADITIONAL_SUB_CATEGORIES.map((cat) => (
+                    <option key={cat.slug} value={cat.slug}>
+                      {cat.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
           {form.productType === "jewelry" && (
             <div>

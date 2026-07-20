@@ -76,10 +76,16 @@ export const GENDER_CATEGORIES = [
 ] as const;
 
 export const CLOTHING_CATEGORIES = [
-  { label: "Traditional Wears", slug: "traditional-wears", image: "/images/Clothes/Traditional_1.jpg.jpg", tall: true },
+  { label: "Traditional Wears", slug: "traditional-wears", image: "/images/Clothes/Traditional_1.jpg.jpg", tall: true, hasSubCategories: true },
   { label: "Suits", slug: "suits", image: "/images/Clothes/Suit.jpg", tall: true },
   { label: "Lehenga", slug: "lehenga", image: "/images/Clothes/Lehenga_2.jpg.jpg", tall: true },
   { label: "Saree", slug: "saree", image: "/images/Clothes/Saree_2.jpg.jpg", tall: true },
+] as const;
+
+export const TRADITIONAL_SUB_CATEGORIES = [
+  { label: "Sadri", slug: "sadri", image: "/images/Clothes/Traditional_10.1.jpg.jpg" },
+  { label: "Dhatu", slug: "dhatu", image: "/images/Clothes/Traditional_10.1.jpg.jpg" },
+  { label: "Rejta", slug: "rejta", image: "/images/Clothes/Traditional_10.1.jpg.jpg" },
 ] as const;
 
 export const TRADITIONAL_CATEGORIES = [
@@ -103,7 +109,7 @@ export const EXPERIENCE_SLIDES = [
   },
 ] as const;
 
-export const METAL_OPTIONS = ["Gold", "Silver", "Diamond", "Platinum", "Mixed", "Traditional", "Suit", "Saree", "Lehenga"] as const;
+export const METAL_OPTIONS = ["Gold", "Silver", "Diamond", "Platinum", "Mixed", "Traditional", "Suit", "Saree", "Lehenga", "Sadri", "Dhatu", "Rejta"] as const;
 
 export const PRODUCT_CATEGORIES = [
   "all",
@@ -126,6 +132,9 @@ export const PRODUCT_CATEGORIES = [
   "kurtis",
   "sherwanis",
   "traditional-wears",
+  "sadri",
+  "dhatu",
+  "rejta",
 ] as const;
 
 export type ProductCategory = (typeof PRODUCT_CATEGORIES)[number];
