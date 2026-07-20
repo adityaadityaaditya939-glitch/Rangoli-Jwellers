@@ -51,7 +51,7 @@ export async function GET(request: Request) {
       // Default: exclude clothing categories (jewellery)
       rows = await sql`
         SELECT * FROM products
-        WHERE category NOT IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears')
+        WHERE category NOT IN ('lehenga', 'suits', 'saree', 'sarees', 'lehengas', 'kurtis', 'sherwanis', 'traditional-wears', 'sadri', 'dhatu', 'rejta', 'traditional-first')
         ORDER BY created_at DESC
       ` as Product[];
     }
