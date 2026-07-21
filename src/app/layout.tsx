@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Playfair_Display } from "next/font/google";
 import { NextSSRPlugin } from "@uploadthing/react/next-ssr-plugin";
 import { extractRouterConfig } from "uploadthing/server";
+import { Analytics } from "@vercel/analytics/next";
 import StoreChrome from "@/components/StoreChrome";
 import { ourFileRouter } from "@/app/api/uploadthing/core";
 import { SHOP } from "@/lib/constants";
@@ -40,6 +41,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col font-sans antialiased">
         <NextSSRPlugin routerConfig={extractRouterConfig(ourFileRouter)} />
         <StoreChrome>{children}</StoreChrome>
+        <Analytics />
       </body>
     </html>
   );
