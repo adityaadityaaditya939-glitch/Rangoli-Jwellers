@@ -18,6 +18,12 @@ export default function ProductDetailClient({ product, images }: { product: Prod
   const isClothing = CLOTHING_CATEGORIES.includes(product.category);
   const { addToCart } = useCart();
 
+  // Calculate image positioning using database fields
+  const imageStyle = {
+    objectPosition: `${product.image_position_x}% ${product.image_position_y}%`,
+    objectFit: 'contain' as const,
+  };
+
   const whatsappUrl = useMemo(() => buildWhatsAppUrl(
     buildProductWhatsAppMessage({
       name: product.name,
@@ -62,7 +68,8 @@ export default function ProductDetailClient({ product, images }: { product: Prod
               src={selectedImage}
               alt={product.name}
               fill
-              className="object-cover"
+              className="bg-white"
+              style={imageStyle}
               sizes="(max-width: 1024px) 100vw, 50vw"
               priority
             />
@@ -81,7 +88,8 @@ export default function ProductDetailClient({ product, images }: { product: Prod
                   src={product.image_url}
                   alt="Main image"
                   fill
-                  className="object-cover"
+                  className="bg-white"
+                  style={imageStyle}
                 />
               </button>
               {images.map((img, index) => (
@@ -97,7 +105,8 @@ export default function ProductDetailClient({ product, images }: { product: Prod
                     src={img.image_url}
                     alt={img.color_name || `Color ${index + 1}`}
                     fill
-                    className="object-cover"
+                    className="bg-white"
+                    style={imageStyle}
                   />
                 </button>
               ))}
