@@ -106,7 +106,7 @@ export async function POST(request: Request) {
     const sql = getDb();
 
     const rows = await sql`
-      INSERT INTO products (name, description, price, category, metal, gender, image_url, stock, is_featured, image_position_x, image_position_y, image_scale)
+      INSERT INTO products (name, description, price, category, metal, gender, image_url, stock, is_featured, sold_out, is_new, image_position_x, image_position_y, image_scale)
       VALUES (
         ${sanitizeString(data.name, 255)},
         ${data.description ? sanitizeString(data.description, 2000) : null},
@@ -117,6 +117,8 @@ export async function POST(request: Request) {
         ${data.imageUrl ? sanitizeString(data.imageUrl, 500) : null},
         ${data.stock},
         ${data.isFeatured},
+        ${data.soldOut},
+        ${data.isNew},
         ${data.imagePositionX ?? 50},
         ${data.imagePositionY ?? 50},
         ${data.imageScale ?? 100}

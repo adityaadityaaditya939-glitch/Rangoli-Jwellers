@@ -55,7 +55,7 @@ export default function ProductDetailClient({ product, images }: { product: Prod
         </Link>
         <span className="mx-2">›</span>
         <Link href="/catalog" className="hover:text-rangoli-maroon">
-          All Jewellery
+          {isClothing ? "Clothes" : "All Jewellery"}
         </Link>
         <span className="mx-2">›</span>
         <span className="text-rangoli-maroon">{product.name}</span>
@@ -64,6 +64,11 @@ export default function ProductDetailClient({ product, images }: { product: Prod
       <div className="grid gap-10 lg:grid-cols-2">
         <div className="space-y-4">
           <div className="relative aspect-square overflow-hidden rounded-3xl bg-gray-50">
+            {product.sold_out && (
+              <div className="absolute top-4 left-4 z-10 bg-red-600 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow-lg">
+                Sold Out
+              </div>
+            )}
             <Image
               src={selectedImage}
               alt={product.name}
@@ -218,11 +223,11 @@ export default function ProductDetailClient({ product, images }: { product: Prod
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <button
               onClick={handleAddToCart}
-              disabled={product.stock <= 0}
+              disabled={product.stock <= 0 || product.sold_out}
               className={`inline-flex items-center justify-center gap-2 rounded-xl px-8 py-4 text-base font-semibold transition ${
                 addedToCart
                   ? "bg-green-500 text-white"
-                  : product.stock <= 0
+                  : product.stock <= 0 || product.sold_out
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : "bg-rangoli-gold text-white hover:bg-rangoli-gold/90 hover:shadow-lg"
               }`}
@@ -230,7 +235,7 @@ export default function ProductDetailClient({ product, images }: { product: Prod
               <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
-              {addedToCart ? "✓ Added to Cart" : product.stock <= 0 ? "Out of Stock" : "Add to Cart"}
+              {addedToCart ? "✓ Added to Cart" : (product.stock <= 0 || product.sold_out) ? "Out of Stock" : "Add to Cart"}
             </button>
             <a
               href={whatsappUrl}

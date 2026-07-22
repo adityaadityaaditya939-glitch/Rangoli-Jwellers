@@ -24,6 +24,8 @@ export const productSchema = z.object({
   imageUrl: z.string().optional(),
   stock: z.number().int().min(0).default(1),
   isFeatured: z.boolean().default(false),
+  soldOut: z.boolean().default(false),
+  isNew: z.boolean().default(false),
   imagePositionX: z.number().min(0).max(100).optional(),
   imagePositionY: z.number().min(0).max(100).optional(),
   imageScale: z.number().min(10).max(300).optional(),

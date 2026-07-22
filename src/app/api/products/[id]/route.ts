@@ -52,6 +52,8 @@ export async function PUT(request: Request, { params }: RouteParams) {
         image_url = ${data.imageUrl ? sanitizeString(data.imageUrl, 500) : null},
         stock = ${data.stock},
         is_featured = ${data.isFeatured},
+        sold_out = ${data.soldOut},
+        is_new = ${data.isNew},
         image_position_x = ${data.imagePositionX ?? 50},
         image_position_y = ${data.imagePositionY ?? 50},
         image_scale = ${data.imageScale ?? 100},

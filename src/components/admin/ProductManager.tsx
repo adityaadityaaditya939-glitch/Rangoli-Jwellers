@@ -25,6 +25,8 @@ const emptyForm = {
   imageUrl: IMAGES.trending[0] as string,
   stock: "1",
   isFeatured: false,
+  soldOut: false,
+  isNew: false,
   productType: "jewelry" as "jewelry" | "clothing",
   imagePositionX: 50,
   imagePositionY: 50,
@@ -34,7 +36,7 @@ const emptyForm = {
 
 export default function ProductManager() {
   const [products, setProducts] = useState<Product[]>([]);
-  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean; productType: "jewelry" | "clothing"; imagePositionX: number; imagePositionY: number; imageScale: number; images: Array<{ imageUrl: string; colorName: string; isPrimary: boolean }> }>(emptyForm);
+  const [form, setForm] = useState<{name: string; description: string; price: string; category: string; metal: string; gender: string; imageUrl: string; stock: string; isFeatured: boolean; soldOut: boolean; isNew: boolean; productType: "jewelry" | "clothing"; imagePositionX: number; imagePositionY: number; imageScale: number; images: Array<{ imageUrl: string; colorName: string; isPrimary: boolean }> }>(emptyForm);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -101,6 +103,8 @@ export default function ProductManager() {
       imageUrl: form.imageUrl,
       stock: Number(form.stock),
       isFeatured: form.isFeatured,
+      soldOut: form.soldOut,
+      isNew: form.isNew,
       imagePositionX: Number(form.imagePositionX) || 50,
       imagePositionY: Number(form.imagePositionY) || 50,
       imageScale: Number(form.imageScale) || 100,
@@ -147,6 +151,8 @@ export default function ProductManager() {
       imageUrl: product.image_url || IMAGES.trending[0],
       stock: String(product.stock),
       isFeatured: product.is_featured,
+      soldOut: product.sold_out || false,
+      isNew: product.is_new || false,
       productType: isClothing ? "clothing" : "jewelry",
       imagePositionX: product.image_position_x || 50,
       imagePositionY: product.image_position_y || 50,
@@ -502,6 +508,22 @@ export default function ProductManager() {
               onChange={(e) => setForm({ ...form, isFeatured: e.target.checked })}
             />
             Featured on homepage
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={form.soldOut}
+              onChange={(e) => setForm({ ...form, soldOut: e.target.checked })}
+            />
+            Mark as sold out
+          </label>
+          <label className="flex items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              checked={form.isNew}
+              onChange={(e) => setForm({ ...form, isNew: e.target.checked })}
+            />
+            Mark as new
           </label>
           {message && (
             <div className={`p-3 rounded-lg text-sm ${

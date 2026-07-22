@@ -67,8 +67,8 @@ export default function ProductCard({ product }: ProductCardProps) {
     objectFit: 'contain' as const,
   };
 
-  // Check if product is new (created within last 7 days)
-  const isNew = new Date(product.created_at) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
+  // Check if product is new (manually set by admin)
+  const isNew = product.is_new;
   
   // Check if product is featured
   const isFeatured = product.is_featured;
@@ -111,7 +111,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             FEATURED
           </span>
         )}
-        {product.stock <= 0 && (
+        {(product.stock <= 0 || product.sold_out) && (
           <span className="rounded-full bg-red-500 px-2.5 py-1 text-[10px] font-bold text-white shadow-md">
             SOLD OUT
           </span>
@@ -191,16 +191,16 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="mt-3 sm:mt-4 flex gap-2">
           <button
             onClick={handleAddToCart}
-            disabled={product.stock <= 0}
+            disabled={product.stock <= 0 || product.sold_out}
             className={`flex-1 rounded-xl py-2 text-center text-xs font-semibold transition-all duration-200 ${
               addedToCart
                 ? "bg-green-500 text-white"
-                : product.stock <= 0
+                : product.stock <= 0 || product.sold_out
                 ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                 : "bg-rangoli-gold text-white hover:bg-rangoli-gold/90 hover:shadow-md"
             }`}
           >
-            {addedToCart ? "✓ Added" : product.stock <= 0 ? "Out of Stock" : "Add to Cart"}
+            {addedToCart ? "✓ Added" : (product.stock <= 0 || product.sold_out) ? "Out of Stock" : "Add to Cart"}
           </button>
 
           <a
